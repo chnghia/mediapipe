@@ -14,7 +14,7 @@
 
 licenses(["notice"])  # Apache 2.0
 
-package(default_visibility = ["//mediapipe/examples:__subpackages__"])
+package(default_visibility = ["//myMediapipe/examples:__subpackages__"])
 
 cc_binary(
     name = "simple_io",
