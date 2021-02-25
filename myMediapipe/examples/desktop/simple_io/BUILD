@@ -14,4 +14,11 @@
 
 licenses(["notice"])  # Apache 2.0
 
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = ["//mediapipe/examples:__subpackages__"])
+
+cc_binary(
+    name = "simple_io_tflite",
+    deps = [
+        "//mediapipe/examples/desktop:simple_run_graph_main",
+    ],
+)
