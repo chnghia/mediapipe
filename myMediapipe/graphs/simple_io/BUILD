@@ -14,4 +14,9 @@
 
 licenses(["notice"])  # Apache 2.0
 
+load(
+    "//mediapipe/framework/tool:mediapipe_graph.bzl",
+    "mediapipe_binary_graph",
+)
+
 package(default_visibility = ["//visibility:public"])
