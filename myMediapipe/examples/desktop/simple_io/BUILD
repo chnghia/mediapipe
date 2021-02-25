@@ -16,15 +16,10 @@ licenses(["notice"])  # Apache 2.0
 
 package(default_visibility = ["//mediapipe/examples:__subpackages__"])
 
-load("//mediapipe/framework/port:build_config.bzl", "mediapipe_cc_proto_library")
-load(
-    "//mediapipe/framework/tool:mediapipe_graph.bzl",
-    "mediapipe_binary_graph",
-)
-
 cc_binary(
-    name = "simple_io_tflite",
+    name = "simple_io",
     deps = [
         "//mediapipe/examples/desktop:simple_run_graph_main",
+        "//myMediapipe/graph/simple_io:desktop_simple_io",
     ],
 )

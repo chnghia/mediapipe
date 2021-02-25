@@ -21,3 +21,12 @@ load(
 )
 
 package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "desktop_simple_io",
+    deps = [
+        "//mediapipe/calculators/image:image_transformation_calculator",
+        "//mediapipe/calculators/video:opencv_video_decoder_calculator",
+        "//mediapipe/calculators/video:opencv_video_encoder_calculator",
+    ],
+)
