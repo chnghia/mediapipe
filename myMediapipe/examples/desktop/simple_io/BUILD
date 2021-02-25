@@ -20,6 +20,6 @@ cc_binary(
     name = "simple_io",
     deps = [
         "//mediapipe/examples/desktop:simple_run_graph_main",
-        "//myMediapipe/graph/simple_io:desktop_simple_io",
+        "//myMediapipe/graphs/simple_io:desktop_simple_io",
     ],
 )
