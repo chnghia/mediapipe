@@ -23,3 +23,19 @@ cc_binary(
         "//myMediapipe/graphs/simple_io:desktop_simple_io",
     ],
 )
+
+cc_binary(
+    name = "simple_io_demo",
+    deps = [
+        "//mediapipe/examples/desktop:demo_run_graph_main",
+        "//myMediapipe/graphs/simple_io:desktop_simple_io",
+    ],
+)
+
+cc_binary(
+    name = "simple_io_demo_gpu",
+    deps = [
+        "//mediapipe/examples/desktop:demo_run_graph_main_gpu",
+        "//myMediapipe/graphs/simple_io:desktop_simple_io",
+    ],
+)
