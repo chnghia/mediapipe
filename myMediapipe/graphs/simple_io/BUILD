@@ -35,6 +35,7 @@ cc_library(
     name = "desktop_simple_io_gpu_calculators",
     deps = [
         "//mediapipe/calculators/core:flow_limiter_calculator",
+        "//mediapipe/calculators/image:recolor_calculator",
         "//mediapipe/calculators/util:annotation_overlay_calculator",
         "//mediapipe/calculators/image:image_transformation_calculator",
         "//mediapipe/gpu:gpu_buffer_to_image_frame_calculator",
