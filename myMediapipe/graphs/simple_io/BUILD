@@ -30,3 +30,27 @@ cc_library(
         "//mediapipe/calculators/video:opencv_video_encoder_calculator",
     ],
 )
+
+cc_library(
+    name = "desktop_simple_io_gpu_calculators",
+    deps = [
+        "//mediapipe/calculators/core:flow_limiter_calculator",
+        "//mediapipe/calculators/core:previous_loopback_calculator",
+        "//mediapipe/calculators/image:image_transformation_calculator",
+        "//mediapipe/calculators/image:recolor_calculator",
+        "//mediapipe/calculators/image:set_alpha_calculator",
+        "//mediapipe/calculators/tflite:tflite_converter_calculator",
+        "//mediapipe/calculators/tflite:tflite_custom_op_resolver_calculator",
+        "//mediapipe/calculators/tflite:tflite_inference_calculator",
+        "//mediapipe/calculators/tflite:tflite_tensors_to_segmentation_calculator",
+        "//mediapipe/gpu:gpu_buffer_to_image_frame_calculator",
+        "//mediapipe/gpu:image_frame_to_gpu_buffer_calculator",
+    ],
+)
+
+mediapipe_binary_graph(
+    name = "desktop_gpu_binary_graph",
+    graph = "simple_io_graph_gpu.pbtxt",
+    output_name = "desktop_gpu.binarypb",
+    deps = [":desktop_simple_io_gpu_calculators"],
+)
