@@ -47,15 +47,9 @@ node: {
   }
 }
 
-# Colors the hair segmentation with the color specified in the option.
+# Draws annotations and overlays them on top of the input images.
 node {
-  calculator: "RecolorCalculator"
+  calculator: "AnnotationOverlayCalculator"
   input_stream: "IMAGE_GPU:transformed_input_video"
   output_stream: "IMAGE_GPU:output_video"
-  node_options: {
-    [type.googleapis.com/mediapipe.RecolorCalculatorOptions] {
-      color { r: 0 g: 0 b: 255 }
-      mask_channel: RED
-    }
-  }
 }
