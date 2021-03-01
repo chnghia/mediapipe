@@ -17,9 +17,9 @@ licenses(["notice"])  # Apache 2.0
 package(default_visibility = ["//mediapipe/examples:__subpackages__"])
 
 cc_binary(
-    name = "static_gestures_cpu_tflite",
+    name = "static_gestures_cpu",
     deps = [
-        "//myMediapipe/projects/staticGesture:simple_run_graph_main",
+        "//mediapipe/examples/desktop:demo_run_graph_main",
         "//myMediapipe/graphs/staticGesture:static_gestures_desktop_cpu_calculators",
     ],
 )
