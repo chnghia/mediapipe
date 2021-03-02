@@ -25,7 +25,7 @@ load(
 cc_library(
     name = "static_gestures_desktop_cpu_calculators",
     deps = [
-        "//myMediapipe/graphs/staticGesture/subgraphs::hand_detection_cpu",
+        "//myMediapipe/graphs/staticGesture/subgraphs:hand_detection_cpu",
         "//myMediapipe/graphs/staticGesture/subgraphs:hand_landmark_cpu",
         "//myMediapipe/graphs/staticGesture/subgraphs:hand_renderer_cpu",
         "//mediapipe/calculators/core:flow_limiter_calculator",
