@@ -53,7 +53,7 @@ node {
   input_side_packet: "CUSTOM_OP_RESOLVER:opresolver"
   node_options: {
     [type.googleapis.com/mediapipe.TfLiteInferenceCalculatorOptions] {
-      model_path: "mediapipe/modules/palm_detection/palm_detection.tflite"
+      model_path: "myMediapipe/models/palm_detection.tflite"
       use_gpu: false
     }
   }
@@ -95,7 +95,7 @@ node {
   node_options: {
     [type.googleapis.com/mediapipe.TfLiteTensorsToDetectionsCalculatorOptions] {
       num_classes: 1
-      num_boxes: 896
+      num_boxes: 2944
       num_coords: 18
       box_coord_offset: 0
       keypoint_coord_offset: 4
@@ -137,7 +137,7 @@ node {
   output_stream: "labeled_detections"
   node_options: {
     [type.googleapis.com/mediapipe.DetectionLabelIdToTextCalculatorOptions] {
-      label_map_path: "myMediapipe/examples/desktop/staticGesture/palm_detection_labelmap.txt"
+      label_map_path: "myMediapipe/models/palm_detection_labelmap.txt"
     }
   }
 }
