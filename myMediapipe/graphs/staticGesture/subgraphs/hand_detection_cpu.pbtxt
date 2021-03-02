@@ -95,7 +95,7 @@ node {
   node_options: {
     [type.googleapis.com/mediapipe.TfLiteTensorsToDetectionsCalculatorOptions] {
       num_classes: 1
-      num_boxes: 2944
+      num_boxes: 896
       num_coords: 18
       box_coord_offset: 0
       keypoint_coord_offset: 4
