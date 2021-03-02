@@ -130,7 +130,7 @@ node {
 # Subgraph that renders annotations and overlays them on top of the input
 # images (see renderer_gpu.pbtxt).
 node {
-  calculator: "HandRendererSubgraph"
+  calculator: "RendererSubgraphCPU"
   input_stream: "IMAGE:throttled_input_video"
   input_stream: "LANDMARKS:hand_landmarks"
   input_stream: "NORM_RECT:hand_rect"

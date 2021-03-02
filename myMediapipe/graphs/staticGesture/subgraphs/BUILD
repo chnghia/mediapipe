@@ -21,19 +21,31 @@ licenses(["notice"])
 
 package(default_visibility = ["//visibility:public"])
 
+# mediapipe_simple_subgraph(
+#     name = "hand_renderer_cpu",
+#     graph = "hand_renderer_cpu.pbtxt",
+#     register_as = "HandRendererSubgraph",
+#     deps = [
+#         "//mediapipe/calculators/core:begin_loop_calculator",
+#         "//mediapipe/calculators/core:end_loop_calculator",
+#         "//mediapipe/calculators/core:gate_calculator",
+#         "//mediapipe/calculators/core:split_vector_calculator",
+#         "//mediapipe/calculators/util:annotation_overlay_calculator",
+#         "//mediapipe/calculators/util:collection_has_min_size_calculator",
+#         "//mediapipe/calculators/util:detections_to_render_data_calculator",
+#         "//mediapipe/calculators/util:labels_to_render_data_calculator",
+#         "//mediapipe/calculators/util:landmarks_to_render_data_calculator",
+#         "//mediapipe/calculators/util:rect_to_render_data_calculator",
+#     ],
+# )
+
 mediapipe_simple_subgraph(
-    name = "hand_renderer_cpu",
-    graph = "hand_renderer_cpu.pbtxt",
-    register_as = "HandRendererSubgraph",
+    name = "renderer_cpu",
+    graph = "renderer_cpu.pbtxt",
+    register_as = "RendererSubgraphCPU",
     deps = [
-        "//mediapipe/calculators/core:begin_loop_calculator",
-        "//mediapipe/calculators/core:end_loop_calculator",
-        "//mediapipe/calculators/core:gate_calculator",
-        "//mediapipe/calculators/core:split_vector_calculator",
         "//mediapipe/calculators/util:annotation_overlay_calculator",
-        "//mediapipe/calculators/util:collection_has_min_size_calculator",
         "//mediapipe/calculators/util:detections_to_render_data_calculator",
-        "//mediapipe/calculators/util:labels_to_render_data_calculator",
         "//mediapipe/calculators/util:landmarks_to_render_data_calculator",
         "//mediapipe/calculators/util:rect_to_render_data_calculator",
     ],
