@@ -134,6 +134,6 @@ node {
   input_stream: "IMAGE:throttled_input_video"
   input_stream: "LANDMARKS:hand_landmarks"
   input_stream: "NORM_RECT:hand_rect"
-  # input_stream: "DETECTIONS:merged_detections"
+  input_stream: "DETECTIONS:palm_detections"
   output_stream: "IMAGE:output_video"
 }
