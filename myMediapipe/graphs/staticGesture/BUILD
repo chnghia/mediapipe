@@ -27,7 +27,7 @@ cc_library(
     deps = [
         "//myMediapipe/graphs/staticGesture/subgraphs:hand_detection_cpu",
         "//myMediapipe/graphs/staticGesture/subgraphs:hand_landmark_cpu",
-        "//myMediapipe/graphs/staticGesture/subgraphs:hand_renderer_cpu",
+        "//myMediapipe/graphs/staticGesture/subgraphs:renderer_cpu",
         "//mediapipe/calculators/core:flow_limiter_calculator",
         "//mediapipe/calculators/core:gate_calculator",
         "//mediapipe/calculators/core:merge_calculator",
