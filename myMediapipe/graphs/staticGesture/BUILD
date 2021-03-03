@@ -28,6 +28,7 @@ cc_library(
         "//myMediapipe/graphs/staticGesture/subgraphs_v074:hand_detection_cpu",
         "//myMediapipe/graphs/staticGesture/subgraphs_v074:hand_landmark_cpu",
         "//myMediapipe/graphs/staticGesture/subgraphs_v074:renderer_cpu",
+        "//myMediapipe/graphs/staticGesture/subgraphs_v074:gestures_cpu",
         "//mediapipe/calculators/core:flow_limiter_calculator",
         "//mediapipe/calculators/core:gate_calculator",
         "//mediapipe/calculators/core:merge_calculator",

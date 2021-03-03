@@ -22,6 +22,20 @@ licenses(["notice"])
 package(default_visibility = ["//visibility:public"])
 
 mediapipe_simple_subgraph(
+    name = "gestures_cpu",
+    graph = "gestures_cpu.pbtxt",
+    register_as = "gesturesSubgraph",
+    deps = [
+        "//myMediapipe/calculators/tflite:angles_to_tflite_converter_calculator",
+        "//myMediapipe/calculators/util:landmarks_to_angles_calculator",
+        "//myMediapipe/calculators/util:angles_to_detection_calculator",
+        "//mediapipe/calculators/tflite:tflite_inference_calculator",
+        "//mediapipe/calculators/util:detection_label_id_to_text_calculator",
+        "//mediapipe/calculators/core:gate_calculator",
+    ],
+)
+
+mediapipe_simple_subgraph(
     name = "renderer_cpu",
     graph = "renderer_cpu.pbtxt",
     register_as = "RendererSubgraph",
