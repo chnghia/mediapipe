@@ -20,3 +20,18 @@ load(
 licenses(["notice"])
 
 package(default_visibility = ["//visibility:public"])
+
+mediapipe_simple_subgraph(
+    name = "dynamic_gestures_cpu",
+    graph = "dynamic_gestures_cpu.pbtxt",
+    register_as = "dynamicGesturesSubgraph",
+    deps = [
+        "//myMediapipe/calculators/gestures:gesture_classifier_calculator",
+        "//myMediapipe/calculators/gestures:transition_dynamic_gestures_calculator",
+        "//myMediapipe/calculators/gestures:moving_dynamic_gestures_calculator",
+        "//myMediapipe/calculators/gestures:writing_dynamic_gestures_calculator",
+        "//myMediapipe/calculators/gestures:fixed_dynamic_gestures_calculator",
+        "//myMediapipe/calculators/core:latch_calculator",
+        "//myMediapipe/calculators/util:mqtt_publisher_calculator",
+    ],
+)
