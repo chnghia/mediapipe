@@ -53,3 +53,22 @@ cc_library(
         "//mediapipe/calculators/video:opencv_video_encoder_calculator",
     ],
 )
+
+# dynamic gestures
+
+cc_library(
+    name = "dynamic_gestures_desktop_cpu_calculators",
+    deps = [
+        "//myMediapipe/graphs/staticGesture/subgraphs_v074:hand_detection_cpu",
+        "//myMediapipe/graphs/staticGesture/subgraphs_v074:hand_landmark_cpu",
+        "//myMediapipe/graphs/staticGesture/subgraphs_v074:renderer_cpu",
+        "//myMediapipe/graphs/staticGesture/subgraphs_v074:gestures_cpu",
+        # ":dynamic_gestures_cpu",
+        "//mediapipe/calculators/core:flow_limiter_calculator",
+        "//mediapipe/calculators/core:gate_calculator",
+        "//mediapipe/calculators/core:merge_calculator",
+        "//mediapipe/calculators/core:previous_loopback_calculator",
+        "//mediapipe/calculators/video:opencv_video_decoder_calculator",
+        "//mediapipe/calculators/video:opencv_video_encoder_calculator",
+    ],
+)

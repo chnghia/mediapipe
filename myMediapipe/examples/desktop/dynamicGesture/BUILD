@@ -20,6 +20,6 @@ cc_binary(
     name = "dynamic_gestures_cpu",
     deps = [
         "//mediapipe/examples/desktop:demo_run_graph_main",
-        "//myMediapipe/graphs/dynamicGesture:dynamic_gestures_desktop_cpu_calculators",
+        "//myMediapipe/graphs/gestures:dynamic_gestures_desktop_cpu_calculators",
     ],
 )

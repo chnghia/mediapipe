@@ -20,7 +20,7 @@ cc_binary(
     name = "static_gestures_cpu",
     deps = [
         "//mediapipe/examples/desktop:demo_run_graph_main",
-        "//myMediapipe/graphs/staticGesture:static_gestures_desktop_cpu_calculators",
+        "//myMediapipe/graphs/gestures:static_gestures_desktop_cpu_calculators",
     ],
 )
 
@@ -28,6 +28,6 @@ cc_binary(
     name = "static_gestures_gpu",
     deps = [
         "//mediapipe/examples/desktop:demo_run_graph_main_gpu",
-        "//myMediapipe/graphs/staticGesture:static_gestures_desktop_gpu_calculators",
+        "//myMediapipe/graphs/gestures:static_gestures_desktop_gpu_calculators",
     ],
 )
