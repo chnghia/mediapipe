@@ -25,9 +25,9 @@ load(
 cc_library(
     name = "static_gestures_desktop_cpu_calculators",
     deps = [
-        "//myMediapipe/graphs/staticGesture/subgraphs:hand_detection_cpu",
-        "//myMediapipe/graphs/staticGesture/subgraphs:hand_landmark_cpu",
-        "//myMediapipe/graphs/staticGesture/subgraphs:renderer_cpu",
+        "//myMediapipe/graphs/staticGesture/subgraphs_v074:hand_detection_cpu",
+        "//myMediapipe/graphs/staticGesture/subgraphs_v074:hand_landmark_cpu",
+        "//myMediapipe/graphs/staticGesture/subgraphs_v074:renderer_cpu",
         "//mediapipe/calculators/core:flow_limiter_calculator",
         "//mediapipe/calculators/core:gate_calculator",
         "//mediapipe/calculators/core:merge_calculator",
@@ -40,9 +40,9 @@ cc_library(
 cc_library(
     name = "static_gestures_desktop_gpu_calculators",
     deps = [
-        "//myMediapipe/graphs/staticGesture/subgraphs:hand_detection_gpu",
-        "//myMediapipe/graphs/staticGesture/subgraphs:hand_landmark_gpu",
-        "//myMediapipe/graphs/staticGesture/subgraphs:renderer_gpu",
+        "//myMediapipe/graphs/staticGesture/subgraphs_v074:hand_detection_gpu",
+        "//myMediapipe/graphs/staticGesture/subgraphs_v074:hand_landmark_gpu",
+        "//myMediapipe/graphs/staticGesture/subgraphs_v074:renderer_gpu",
         "//mediapipe/calculators/core:flow_limiter_calculator",
         "//mediapipe/calculators/core:gate_calculator",
         "//mediapipe/calculators/core:merge_calculator",
