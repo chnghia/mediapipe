@@ -36,3 +36,18 @@ cc_library(
         "//mediapipe/calculators/video:opencv_video_encoder_calculator",
     ],
 )
+
+cc_library(
+    name = "static_gestures_desktop_gpu_calculators",
+    deps = [
+        "//myMediapipe/graphs/staticGesture/subgraphs:hand_detection_gpu",
+        "//myMediapipe/graphs/staticGesture/subgraphs:hand_landmark_gpu",
+        "//myMediapipe/graphs/staticGesture/subgraphs:renderer_gpu",
+        "//mediapipe/calculators/core:flow_limiter_calculator",
+        "//mediapipe/calculators/core:gate_calculator",
+        "//mediapipe/calculators/core:merge_calculator",
+        "//mediapipe/calculators/core:previous_loopback_calculator",
+        "//mediapipe/calculators/video:opencv_video_decoder_calculator",
+        "//mediapipe/calculators/video:opencv_video_encoder_calculator",
+    ],
+)

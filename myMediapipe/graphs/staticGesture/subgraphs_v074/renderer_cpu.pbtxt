@@ -1,6 +1,6 @@
 # MediaPipe hand tracking rendering subgraph.
 
-type: "RendererSubgraphCPU"
+type: "RendererSubgraph"
 
 input_stream: "IMAGE:input_image"
 input_stream: "DETECTIONS:detections"
