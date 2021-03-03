@@ -25,10 +25,10 @@ load(
 cc_library(
     name = "static_gestures_desktop_cpu_calculators",
     deps = [
-        "//myMediapipe/graphs/staticGesture/subgraphs_v074:hand_detection_cpu",
-        "//myMediapipe/graphs/staticGesture/subgraphs_v074:hand_landmark_cpu",
-        "//myMediapipe/graphs/staticGesture/subgraphs_v074:renderer_cpu",
-        "//myMediapipe/graphs/staticGesture/subgraphs_v074:gestures_cpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:hand_detection_cpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:hand_landmark_cpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:renderer_cpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:gestures_cpu",
         "//mediapipe/calculators/core:flow_limiter_calculator",
         "//mediapipe/calculators/core:gate_calculator",
         "//mediapipe/calculators/core:merge_calculator",
@@ -41,10 +41,10 @@ cc_library(
 cc_library(
     name = "static_gestures_desktop_gpu_calculators",
     deps = [
-        "//myMediapipe/graphs/staticGesture/subgraphs_v074:hand_detection_gpu",
-        "//myMediapipe/graphs/staticGesture/subgraphs_v074:hand_landmark_gpu",
-        "//myMediapipe/graphs/staticGesture/subgraphs_v074:renderer_gpu",
-        "//myMediapipe/graphs/staticGesture/subgraphs_v074:gestures_cpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:hand_detection_gpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:hand_landmark_gpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:renderer_gpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:gestures_cpu",
         "//mediapipe/calculators/core:flow_limiter_calculator",
         "//mediapipe/calculators/core:gate_calculator",
         "//mediapipe/calculators/core:merge_calculator",
@@ -59,10 +59,10 @@ cc_library(
 cc_library(
     name = "dynamic_gestures_desktop_cpu_calculators",
     deps = [
-        "//myMediapipe/graphs/staticGesture/subgraphs_v074:hand_detection_cpu",
-        "//myMediapipe/graphs/staticGesture/subgraphs_v074:hand_landmark_cpu",
-        "//myMediapipe/graphs/staticGesture/subgraphs_v074:renderer_cpu",
-        "//myMediapipe/graphs/staticGesture/subgraphs_v074:gestures_cpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:hand_detection_cpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:hand_landmark_cpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:renderer_cpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:gestures_cpu",
         # ":dynamic_gestures_cpu",
         "//mediapipe/calculators/core:flow_limiter_calculator",
         "//mediapipe/calculators/core:gate_calculator",
