@@ -29,6 +29,7 @@ mediapipe_simple_subgraph(
         "//myMediapipe/calculators/tflite:angles_to_tflite_converter_calculator",
         "//myMediapipe/calculators/util:landmarks_to_angles_calculator",
         "//myMediapipe/calculators/util:angles_to_detection_calculator",
+        "//myMediapipe/calculators/util:landmarkslist_to_vector_landmarks_calculator",
         "//mediapipe/calculators/tflite:tflite_inference_calculator",
         "//mediapipe/calculators/util:detection_label_id_to_text_calculator",
         "//mediapipe/calculators/core:gate_calculator",

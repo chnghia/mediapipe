@@ -23,11 +23,19 @@ node {
   }
 }
 
+node {
+  calculator: "LandmarksListToVectorLandmarksCalculator"
+  input_stream: "NORM_LANDMARKS:gated_hand_landmarks"
+  output_stream: "NORM_LANDMARKS:vector_landmarks"
+  options {
+  }
+}
+
 
 # Calculates Angles from Landmarks
 node {
   calculator: "LandmarksToAnglesCalculator"
-  input_stream: "NORM_LANDMARKS:gated_hand_landmarks"
+  input_stream: "NORM_LANDMARKS:vector_landmarks"
   output_stream: "ANGLES:angles"
 }
 
