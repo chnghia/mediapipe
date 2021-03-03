@@ -22,8 +22,8 @@ licenses(["notice"])
 package(default_visibility = ["//visibility:public"])
 
 mediapipe_simple_subgraph(
-    name = "dynamic_gestures_cpu",
-    graph = "dynamic_gestures_cpu.pbtxt",
+    name = "dynamic_gestures_cpu_sub",
+    graph = "dynamic_gestures_cpu_sub.pbtxt",
     register_as = "dynamicGesturesSubgraph",
     deps = [
         "//myMediapipe/calculators/gestures:gesture_classifier_calculator",
@@ -37,9 +37,24 @@ mediapipe_simple_subgraph(
 )
 
 mediapipe_simple_subgraph(
-    name = "gestures_cpu",
-    graph = "gestures_cpu.pbtxt",
-    register_as = "gesturesSubgraph",
+    name = "dynamic_gestures_cpu",
+    graph = "dynamic_gestures_cpu.pbtxt",
+    register_as = "dynamicGesturesSubgraph",
+    deps = [
+        "//myMediapipe/calculators/tflite:angles_to_tflite_converter_calculator",
+        "//myMediapipe/calculators/util:landmarks_to_angles_calculator",
+        "//myMediapipe/calculators/util:angles_to_detection_calculator",
+        "//myMediapipe/calculators/util:landmarkslist_to_vector_landmarks_calculator",
+        "//mediapipe/calculators/tflite:tflite_inference_calculator",
+        "//mediapipe/calculators/util:detection_label_id_to_text_calculator",
+        "//mediapipe/calculators/core:gate_calculator",
+    ],
+)
+
+mediapipe_simple_subgraph(
+    name = "static_gestures_cpu",
+    graph = "static_gestures_cpu.pbtxt",
+    register_as = "staticGesturesSubgraph",
     deps = [
         "//myMediapipe/calculators/tflite:angles_to_tflite_converter_calculator",
         "//myMediapipe/calculators/util:landmarks_to_angles_calculator",
