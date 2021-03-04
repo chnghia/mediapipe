@@ -41,7 +41,7 @@ mediapipe_simple_subgraph(
 mediapipe_simple_subgraph(
     name = "dynamic_gestures_cpu",
     graph = "dynamic_gestures_cpu.pbtxt",
-    register_as = "dynamicGesturesSubgraph",
+    register_as = "gesturesSubgraph",
     deps = [
         "//myMediapipe/calculators/tflite:angles_to_tflite_converter_calculator",
         "//myMediapipe/calculators/util:landmarks_to_angles_calculator",
@@ -57,7 +57,7 @@ mediapipe_simple_subgraph(
 mediapipe_simple_subgraph(
     name = "static_gestures_cpu",
     graph = "static_gestures_cpu.pbtxt",
-    register_as = "staticGesturesSubgraph",
+    register_as = "gesturesSubgraph",
     deps = [
         "//myMediapipe/calculators/tflite:angles_to_tflite_converter_calculator",
         "//myMediapipe/calculators/util:landmarks_to_angles_calculator",
