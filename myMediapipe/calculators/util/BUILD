@@ -111,41 +111,6 @@ cc_library(
     alwayslink = 1,
 )
 
-
-# proto_library(
-#     name = "mqtt_publisher_calculator_proto",
-#     srcs = ["mqtt_publisher_calculator.proto"],
-#     visibility = ["//visibility:public"],
-#     deps = [
-#         "//mediapipe/framework:calculator_proto",
-#     ],
-# )
-
-# mediapipe_cc_proto_library(
-#     name = "mqtt_publisher_calculator_cc_proto",
-#     srcs = ["mqtt_publisher_calculator.proto"],
-#     cc_deps = [
-#         "//mediapipe/framework:calculator_cc_proto",
-#     ],
-#     visibility = ["//mediapipe:__subpackages__"],
-#     deps = [":mqtt_publisher_calculator_proto"],
-# )
-
-# cc_library(
-#     name = "mqtt_publisher_calculator",
-#     srcs = ["mqtt_publisher_calculator.cc"],
-#     visibility = ["//visibility:public"],
-#     deps = [
-#         ":mqtt_publisher_calculator_cc_proto",
-#         "//mediapipe/framework:calculator_framework",
-#         "//mediapipe/framework:calculator_options_cc_proto",
-#         "//myMediapipe/framework/formats:mqtt_message_cc_proto",
-#         "//mediapipe/framework/port:ret_check",
-#         "//myMediapipe/third_party/simple-mqtt-client:simple-mqtt-client",
-#     ],
-#     alwayslink = 1,
-# )
-
 cc_library(
     name = "landmarkslist_to_vector_landmarks_calculator",
     srcs = ["landmarkslist_to_vector_landmarks_calculator.cc"],
@@ -155,6 +120,40 @@ cc_library(
         "//mediapipe/framework:calculator_options_cc_proto",
         "//mediapipe/framework/formats:landmark_cc_proto",
         "//mediapipe/framework/port:ret_check",
+    ],
+    alwayslink = 1,
+)
+
+proto_library(
+    name = "mqtt_publisher_calculator_proto",
+    srcs = ["mqtt_publisher_calculator.proto"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//mediapipe/framework:calculator_proto",
+    ],
+)
+
+mediapipe_cc_proto_library(
+    name = "mqtt_publisher_calculator_cc_proto",
+    srcs = ["mqtt_publisher_calculator.proto"],
+    cc_deps = [
+        "//mediapipe/framework:calculator_cc_proto",
+    ],
+    visibility = ["//mediapipe:__subpackages__"],
+    deps = [":mqtt_publisher_calculator_proto"],
+)
+
+cc_library(
+    name = "mqtt_publisher_calculator",
+    srcs = ["mqtt_publisher_calculator.cc"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":mqtt_publisher_calculator_cc_proto",
+        "//mediapipe/framework:calculator_framework",
+        "//mediapipe/framework:calculator_options_cc_proto",
+        "//myMediapipe/framework/formats:mqtt_message_cc_proto",
+        "//mediapipe/framework/port:ret_check",
+        "//myMediapipe/third_party/simple-mqtt-client:simple-mqtt-client",
     ],
     alwayslink = 1,
 )
