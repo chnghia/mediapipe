@@ -165,7 +165,8 @@ cc_library(
         "//mediapipe:macos": [],
     }),
     visibility = [
-        "//mediapipe/framework:mediapipe_internal",
+        "//mediapipe:__subpackages__",
+        "//myMediapipe:__subpackages__",
     ],
     deps = [
         "//mediapipe/framework/port:ret_check",
