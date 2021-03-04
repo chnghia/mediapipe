@@ -40,7 +40,7 @@ node {
    output_stream: "TBD:tbd_gesture_clear"
     node_options: {
      [type.googleapis.com/mediapipe.gestureClassifierCalculatorOptions] {
-       gestures_types_file_name: "myMediapipe/projects/dynamicGestures/dynamic_gestures_map.txt"
+       gestures_types_file_name: "myMediapipe/models/dynamic_gestures_map.txt"
      }
    }
  }
