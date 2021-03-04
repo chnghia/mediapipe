@@ -10,6 +10,7 @@ def on_message(client, userdata, message):
     print("received message: " , msg)
     if msg == "KEY_VOLUMEUP":
       keyboard.press(Key.space)
+      keyboard.release(Key.space)
 
 mqttBroker ="192.168.8.218"
 
