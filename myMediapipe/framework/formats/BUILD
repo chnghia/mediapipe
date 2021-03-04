@@ -36,14 +36,14 @@ mediapipe_cc_proto_library(
     visibility = ["//myMediapipe:__subpackages__"],
 ) 
 
-# proto_library(
-#     name = "mqtt_message_proto",
-#     srcs = ["mqtt_message.proto"],
-#     visibility = ["//myMediapipe:__subpackages__"],
-# )
+proto_library(
+    name = "mqtt_message_proto",
+    srcs = ["mqtt_message.proto"],
+    visibility = ["//myMediapipe:__subpackages__"],
+)
 
-# mediapipe_cc_proto_library(
-#     name = "mqtt_message_cc_proto",
-#     srcs = ["mqtt_message.proto"],
-#     visibility = ["//myMediapipe:__subpackages__"],
-# ) 
+mediapipe_cc_proto_library(
+    name = "mqtt_message_cc_proto",
+    srcs = ["mqtt_message.proto"],
+    visibility = ["//myMediapipe:__subpackages__"],
+) 
