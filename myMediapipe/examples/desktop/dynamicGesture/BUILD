@@ -27,7 +27,7 @@ cc_binary(
 cc_binary(
     name = "dynamic_gestures_gpu",
     deps = [
-        "//mediapipe/examples/desktop:demo_run_graph_main",
+        "//mediapipe/examples/desktop:demo_run_graph_main_gpu",
         "//myMediapipe/graphs/gestures:dynamic_gestures_desktop_gpu_calculators",
     ],
 )
