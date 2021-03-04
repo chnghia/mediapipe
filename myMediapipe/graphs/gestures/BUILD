@@ -79,3 +79,20 @@ cc_library(
 )
 
 # dynamic gestures GPU
+
+cc_library(
+    name = "dynamic_gestures_desktop_gpu_calculators",
+    deps = [
+        "//myMediapipe/graphs/gestures/subgraphs_v074:hand_detection_gpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:hand_landmark_gpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:renderer_gpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:dynamic_gestures_cpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:dynamic_gestures_cpu_sub",
+        "//mediapipe/calculators/core:flow_limiter_calculator",
+        "//mediapipe/calculators/core:gate_calculator",
+        "//mediapipe/calculators/core:merge_calculator",
+        "//mediapipe/calculators/core:previous_loopback_calculator",
+        "//mediapipe/calculators/video:opencv_video_decoder_calculator",
+        "//mediapipe/calculators/video:opencv_video_encoder_calculator",
+    ],
+)
