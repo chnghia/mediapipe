@@ -94,7 +94,8 @@ cc_library(
     srcs = ["header_util.cc"],
     hdrs = ["header_util.h"],
     visibility = [
-        "//mediapipe/framework:mediapipe_internal",
+        "//mediapipe:__subpackages__",
+        "//myMediapipe:__subpackages__",
     ],
     deps = [
         "//mediapipe/framework:calculator_framework",
