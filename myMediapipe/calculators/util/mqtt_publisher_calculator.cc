@@ -103,7 +103,10 @@ REGISTER_CALCULATOR(MqttPublisherCalculator);
                                "", 
                                subscription_topic_list, 
                                options_.broker_ip(), 
-                               options_.broker_port());
+                               options_.broker_port(),
+                               options_.user(),
+                               options_.password(),
+                               );
   
   for (auto msg : input_messages){
     mqtt->publish_topic = msg.topic();
