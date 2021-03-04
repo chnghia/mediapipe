@@ -218,6 +218,19 @@ new_local_repository(
     path = "C:\\opencv\\build",
 )
 
+# Linux system libs & system headers
+new_local_repository(
+    name = "system_libs",
+    build_file = "@//third_party:system_libs.BUILD",
+    path = "/usr/lib/x86_64-linux-gnu/"
+)
+
+new_local_repository(
+    name = "system_headers",
+    build_file = "@//third_party:system_headers.BUILD",
+    path = "/usr/include",
+)
+
 http_archive(
     name = "android_opencv",
     build_file = "@//third_party:opencv_android.BUILD",
