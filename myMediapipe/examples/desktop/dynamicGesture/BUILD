@@ -31,3 +31,19 @@ cc_binary(
         "//myMediapipe/graphs/gestures:dynamic_gestures_desktop_gpu_calculators",
     ],
 )
+
+cc_binary(
+    name = "dynamic_gestures_cpu_tx2",
+    deps = [
+        "//myMediapipe/examples/desktop:demo_run_graph_main_tx2",
+        "//myMediapipe/graphs/gestures:dynamic_gestures_desktop_cpu_calculators",
+    ],
+)
+
+cc_binary(
+    name = "dynamic_gestures_gpu_tx2",
+    deps = [
+        "//myMediapipe/examples/desktop:demo_run_graph_main_gpu_tx2",
+        "//myMediapipe/graphs/gestures:dynamic_gestures_desktop_gpu_calculators",
+    ],
+)
