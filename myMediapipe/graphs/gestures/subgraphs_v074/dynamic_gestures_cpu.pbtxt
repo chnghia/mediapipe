@@ -74,6 +74,15 @@ node {
   }
 }
 
+# Subgraph for dynamic gestures proccesing
+# (see dynamic_gestures_cpu.pbtxt).
+node {
+  calculator: "dynamicGesturesSubgraph"
+  input_stream: "LANDMARKS:vector_landmarks"
+  input_stream: "ANGLES:angles"
+  input_stream: "DETECTIONS:detections"
+}
+
 node {
   calculator: "DetectionLabelIdToTextCalculator"
   input_stream: "detections"

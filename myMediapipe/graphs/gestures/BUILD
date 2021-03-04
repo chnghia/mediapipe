@@ -22,13 +22,15 @@ load(
     "mediapipe_simple_subgraph",
 )
 
+# static gestures CPU
+
 cc_library(
     name = "static_gestures_desktop_cpu_calculators",
     deps = [
         "//myMediapipe/graphs/gestures/subgraphs_v074:hand_detection_cpu",
         "//myMediapipe/graphs/gestures/subgraphs_v074:hand_landmark_cpu",
         "//myMediapipe/graphs/gestures/subgraphs_v074:renderer_cpu",
-        "//myMediapipe/graphs/gestures/subgraphs_v074:gestures_cpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:static_gestures_cpu",
         "//mediapipe/calculators/core:flow_limiter_calculator",
         "//mediapipe/calculators/core:gate_calculator",
         "//mediapipe/calculators/core:merge_calculator",
@@ -37,6 +39,8 @@ cc_library(
         "//mediapipe/calculators/video:opencv_video_encoder_calculator",
     ],
 )
+
+# static gestures GPU
 
 cc_library(
     name = "static_gestures_desktop_gpu_calculators",
@@ -44,7 +48,7 @@ cc_library(
         "//myMediapipe/graphs/gestures/subgraphs_v074:hand_detection_gpu",
         "//myMediapipe/graphs/gestures/subgraphs_v074:hand_landmark_gpu",
         "//myMediapipe/graphs/gestures/subgraphs_v074:renderer_gpu",
-        "//myMediapipe/graphs/gestures/subgraphs_v074:gestures_cpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:static_gestures_cpu",
         "//mediapipe/calculators/core:flow_limiter_calculator",
         "//mediapipe/calculators/core:gate_calculator",
         "//mediapipe/calculators/core:merge_calculator",
@@ -54,7 +58,7 @@ cc_library(
     ],
 )
 
-# dynamic gestures
+# dynamic gestures CPU
 
 cc_library(
     name = "dynamic_gestures_desktop_cpu_calculators",
@@ -62,7 +66,8 @@ cc_library(
         "//myMediapipe/graphs/gestures/subgraphs_v074:hand_detection_cpu",
         "//myMediapipe/graphs/gestures/subgraphs_v074:hand_landmark_cpu",
         "//myMediapipe/graphs/gestures/subgraphs_v074:renderer_cpu",
-        "//myMediapipe/graphs/gestures/subgraphs_v074:gestures_cpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:dynamic_gestures_cpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:dynamic_gestures_cpu_sub",
         # ":dynamic_gestures_cpu",
         "//mediapipe/calculators/core:flow_limiter_calculator",
         "//mediapipe/calculators/core:gate_calculator",
@@ -72,3 +77,5 @@ cc_library(
         "//mediapipe/calculators/video:opencv_video_encoder_calculator",
     ],
 )
+
+# dynamic gestures GPU

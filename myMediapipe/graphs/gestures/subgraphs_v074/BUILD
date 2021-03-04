@@ -21,6 +21,8 @@ licenses(["notice"])
 
 package(default_visibility = ["//visibility:public"])
 
+# dynamic gestures CPU subgraph
+
 mediapipe_simple_subgraph(
     name = "dynamic_gestures_cpu_sub",
     graph = "dynamic_gestures_cpu_sub.pbtxt",
@@ -51,6 +53,7 @@ mediapipe_simple_subgraph(
     ],
 )
 
+# static gestures CPU subgraph
 mediapipe_simple_subgraph(
     name = "static_gestures_cpu",
     graph = "static_gestures_cpu.pbtxt",
@@ -66,6 +69,7 @@ mediapipe_simple_subgraph(
     ],
 )
 
+# renderer CPU subgraph
 mediapipe_simple_subgraph(
     name = "renderer_cpu",
     graph = "renderer_cpu.pbtxt",
@@ -78,6 +82,7 @@ mediapipe_simple_subgraph(
     ],
 )
 
+# hand landmark CPU subgraph
 mediapipe_simple_subgraph(
     name = "hand_landmark_cpu",
     graph = "hand_landmark_cpu.pbtxt",
@@ -100,6 +105,7 @@ mediapipe_simple_subgraph(
     ],
 )
 
+# hand detection CPU subgraph
 mediapipe_simple_subgraph(
     name = "hand_detection_cpu",
     graph = "hand_detection_cpu.pbtxt",

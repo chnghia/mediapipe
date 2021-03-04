@@ -1,6 +1,6 @@
 # MyMediaPipe gestures recognition subgraph.
 
-type: "dynamicGesturesSubgraphCPU"
+type: "dynamicGesturesSubgraph"
 
 input_stream: "LANDMARKS:hand_landmarks"
 input_stream: "ANGLES:angles"
