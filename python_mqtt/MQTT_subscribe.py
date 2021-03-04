@@ -6,7 +6,10 @@ keyboard = Controller()
 
 def on_message(client, userdata, message):
     # keyboard.press(Key.space)
-    print("received message: " ,str(message.payload.decode("utf-8")))
+    msg = str(message.payload.decode("utf-8"))
+    print("received message: " , msg)
+    if msg == "KEY_VOLUMEUP":
+      keyboard.press(Key.space)
 
 mqttBroker ="192.168.8.218"
 
