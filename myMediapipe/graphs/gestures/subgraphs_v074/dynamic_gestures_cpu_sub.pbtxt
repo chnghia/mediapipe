@@ -213,10 +213,10 @@ node {
 
    [type.googleapis.com/mediapipe.MqttPublisherCalculatorOptions] {
       client_id: "HandCommander"
-      broker_ip:  "192.168.1.59"
+      broker_ip:  "localhost"
       broker_port: 1883
-      #user: user          #optional
-      #password: password  #optional
+      user: "nghia"          #optional
+      password: "123456"     #optional
       
     }
   }
