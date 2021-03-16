@@ -145,8 +145,7 @@ message RenderAnnotation {
 
     // The height of the text from top to baseline. When normalized=true, font
     // height is specified wrt the image height.
-    //optional double font_height = 4 [default = 8];
-    optional double font_height = 6 [default = 8];
+    optional double font_height = 4 [default = 12];
 
     optional bool normalized = 5 [default = false];
 
