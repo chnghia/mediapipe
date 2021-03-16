@@ -56,13 +56,11 @@ inline float NormalizeRadians(float angle) {
 //   }
 // }
 
-
 class LandmarksToAnglesCalculator : public CalculatorBase {
- public:
+public:
   LandmarksToAnglesCalculator() {}
   ~LandmarksToAnglesCalculator() override {}
-  LandmarksToAnglesCalculator(const LandmarksToAnglesCalculator&) =
-      delete;
+  LandmarksToAnglesCalculator(const LandmarksToAnglesCalculator&) = delete;
   LandmarksToAnglesCalculator& operator=(
       const LandmarksToAnglesCalculator&) = delete;
 
@@ -72,15 +70,14 @@ class LandmarksToAnglesCalculator : public CalculatorBase {
 
   ::mediapipe::Status Process(CalculatorContext* cc) override;
 
- private:
+private:
   float angleBetweenLines(float x0, float y0, float x1, float y1, float x2, float y2, bool rigth_hand);
 
   //LandmarksToAnglesCalculatorOptions options_;
 };
 REGISTER_CALCULATOR(LandmarksToAnglesCalculator);
 
-::mediapipe::Status LandmarksToAnglesCalculator::GetContract(
-    CalculatorContract* cc) {
+::mediapipe::Status LandmarksToAnglesCalculator::GetContract(CalculatorContract* cc) {
   RET_CHECK(cc->Inputs().HasTag(kLandmarksTag) ||
             cc->Inputs().HasTag(kNormLandmarksTag))
       << "None of the input streams are provided.";
@@ -102,16 +99,14 @@ REGISTER_CALCULATOR(LandmarksToAnglesCalculator);
   return ::mediapipe::OkStatus();
 }
 
-::mediapipe::Status LandmarksToAnglesCalculator::Open(
-    CalculatorContext* cc) {
+::mediapipe::Status LandmarksToAnglesCalculator::Open(CalculatorContext* cc) {
   cc->SetOffset(TimestampDiff(0));
   //options_ = cc->Options<LandmarksToAnglesCalculatorOptions>();
 
   return ::mediapipe::OkStatus();
 }
 
-::mediapipe::Status LandmarksToAnglesCalculator::Process(
-    CalculatorContext* cc) {
+::mediapipe::Status LandmarksToAnglesCalculator::Process(CalculatorContext* cc) {
   // Only process if there's input landmarks.
   
   if ((cc->Inputs().Tag(kNormLandmarksTag).IsEmpty())/* ||
@@ -123,13 +118,12 @@ REGISTER_CALCULATOR(LandmarksToAnglesCalculator);
   const auto &landmarks = cc->Inputs()
                               .Tag(kNormLandmarksTag)
                               .Get<std::vector<NormalizedLandmark>>();
-  auto output_angles =
-      absl::make_unique<std::vector<Angle>>();
+  
+  auto output_angles = absl::make_unique<std::vector<Angle>>();
   
   //this only works if palm is facing the camera,
   //TODO: add palm/back dettection
-  bool rigthHand = (landmarks[5].x()>landmarks[17].x());     
-  
+  bool rigthHand = (landmarks[5].x() > landmarks[17].x());
 
   for (const auto &landmark : landmarks)
   {
@@ -147,7 +141,6 @@ REGISTER_CALCULATOR(LandmarksToAnglesCalculator);
         ((new_angle.landmarkid() > 13) && (new_angle.landmarkid() < 16)) ||
         ((new_angle.landmarkid() > 17) && (new_angle.landmarkid() < 20)))
     {
-
       new_angle.set_angle1(angleBetweenLines(landmark.x(), landmark.y(),
                                              landmarks[new_angle.landmarkid() + 1].x(), landmarks[new_angle.landmarkid() + 1].y(),
                                              landmarks[new_angle.landmarkid() - 1].x(), landmarks[new_angle.landmarkid() - 1].y(),
@@ -167,20 +160,16 @@ REGISTER_CALCULATOR(LandmarksToAnglesCalculator);
     }
 
     // Palm angle
-
-
-  if(new_angle.landmarkid()== 0) 
-    new_angle.set_angle1( /*atan2(-(landmarks[0].y()-landmarks[9].y()), landmarks[0].x()-landmarks[9].x()));*/
-        angleBetweenLines(landmarks[0].x(),landmarks[0].y(),
-                                           landmarks[9].x(),landmarks[9].y(),
-                                           0,landmarks[0].y(),
-                                           0));
+    if (new_angle.landmarkid()== 0) 
+        new_angle.set_angle1( /*atan2(-(landmarks[0].y()-landmarks[9].y()), landmarks[0].x()-landmarks[9].x()));*/
+                             angleBetweenLines(landmarks[0].x(), landmarks[0].y(),
+                                               landmarks[9].x(), landmarks[9].y(),
+                                               0, landmarks[0].y(),
+                                               0));
   
 
-  //return NormalizeRadians(rotation)
-    
+    //return NormalizeRadians(rotation)
     //   new_angle.set_angle2(rigthHand);
-
     output_angles->emplace_back(new_angle);
 
     /*if((&landmark - &landmarks[0])==0){
@@ -188,9 +177,8 @@ REGISTER_CALCULATOR(LandmarksToAnglesCalculator);
       }*/
   }
 
-  cc->Outputs()
-      .Tag(kAngleDataTag)
-      .Add(output_angles.release(), cc->InputTimestamp());
+  cc->Outputs().Tag(kAngleDataTag)
+               .Add(output_angles.release(), cc->InputTimestamp());
   return ::mediapipe::OkStatus();
 }
 
@@ -199,7 +187,7 @@ float LandmarksToAnglesCalculator::angleBetweenLines(float x0, float y0, float x
   float angle2 = atan2((y0-y2), x0-x2);
   float result; 
   
-  if(rigth_hand) result = (angle2-angle1);
+  if (rigth_hand) result = (angle2-angle1);
   else result = (angle1-angle2);
   /*result *= 180 / 3.1415; //To degrees
   if (result<0) {
@@ -209,5 +197,3 @@ float LandmarksToAnglesCalculator::angleBetweenLines(float x0, float y0, float x
 }  
 
 }  // namespace mediapipe
-
-
