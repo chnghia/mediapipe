@@ -11,9 +11,14 @@ output_stream: "PRESENCE:hand_presence"
 # Crops the rectangle that contains a hand from the input image.
 node {
   calculator: "ImageCroppingCalculator"
-  input_stream: "IMAGE:input_video"
+  input_stream: "IMAGE_GPU:input_video"
   input_stream: "NORM_RECT:hand_rect"
-  output_stream: "IMAGE:hand_image"
+  output_stream: "IMAGE_GPU:hand_image"
+  node_options: {
+    [type.googleapis.com/mediapipe.ImageCroppingCalculatorOptions] {
+      border_mode: BORDER_REPLICATE
+    }
+  }
 }
 
 # Transforms the input image on GPU to a 256x256 image. To scale the input
@@ -21,8 +26,8 @@ node {
 # resulting in potential letterboxing in the transformed image.
 node: {
   calculator: "ImageTransformationCalculator"
-  input_stream: "IMAGE:hand_image"
-  output_stream: "IMAGE:transformed_hand_image"
+  input_stream: "IMAGE_GPU:hand_image"
+  output_stream: "IMAGE_GPU:transformed_hand_image"
   output_stream: "LETTERBOX_PADDING:letterbox_padding"
   node_options: {
     [type.googleapis.com/mediapipe.ImageTransformationCalculatorOptions] {
@@ -37,8 +42,13 @@ node: {
 # TfLiteTensor.
 node {
   calculator: "TfLiteConverterCalculator"
-  input_stream: "IMAGE:transformed_hand_image"
-  output_stream: "TENSORS:image_tensor"
+  input_stream: "IMAGE_GPU:transformed_hand_image"
+  output_stream: "TENSORS_GPU:image_tensor"
+  node_options: {
+    [type.googleapis.com/mediapipe.TfLiteConverterCalculatorOptions] {
+      zero_center: false
+    }
+  }
 }
 
 # Runs a TensorFlow Lite model on GPU that takes an image tensor and outputs a
@@ -46,13 +56,12 @@ node {
 # scores.
 node {
   calculator: "TfLiteInferenceCalculator"
-  input_stream: "TENSORS:image_tensor"
+  input_stream: "TENSORS_GPU:image_tensor"
   output_stream: "TENSORS:output_tensors"
   node_options: {
     [type.googleapis.com/mediapipe.TfLiteInferenceCalculatorOptions] {
-      model_path: "myMediapipe/models/hand_landmark.tflite" 
-      #model_path: "mediapipe/models/hand_landmark_3d.tflite" 
-      use_gpu: false
+      model_path: "myMediapipe/models/hand_landmark.tflite"
+      use_gpu: true
     }
   }
 }
@@ -87,12 +96,12 @@ node {
   output_stream: "FLAG:hand_presence"
   node_options: {
     [type.googleapis.com/mediapipe.ThresholdingCalculatorOptions] {
-      threshold: 0.3
+      threshold: 0.1
     }
   }
 }
 
-# Decodes the landmark tensors into a vector of lanmarks, where the landmark
+# Decodes the landmark tensors into a list of landmarks, where the landmark
 # coordinates are normalized by the size of the input image to the model.
 node {
   calculator: "TfLiteTensorsToLandmarksCalculator"
@@ -158,7 +167,7 @@ node {
 # Extracts image size from the input images.
 node {
   calculator: "ImagePropertiesCalculator"
-  input_stream: "IMAGE:input_video"
+  input_stream: "IMAGE_GPU:input_video"
   output_stream: "SIZE:image_size"
 }
 

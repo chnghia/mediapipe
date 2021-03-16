@@ -23,3 +23,11 @@ cc_binary(
         "//myMediapipe/graphs/gestures:static_gestures_to_file_desktop_cpu_calculators",
     ],
 )
+
+cc_binary(
+    name = "static_gestures_gpu_to_file",
+    deps = [
+        "//mediapipe/examples/desktop:demo_run_graph_main_gpu",
+        "//myMediapipe/graphs/gestures:static_gestures_to_file_desktop_gpu_calculators",
+    ],
+)
