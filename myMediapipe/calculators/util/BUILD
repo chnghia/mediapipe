@@ -36,44 +36,44 @@ cc_library(
     alwayslink = 1,
 )
 
-# proto_library(
-#     name = "landmarks_and_angles_to_file_calculator_proto",
-#     srcs = ["landmarks_and_angles_to_file_calculator.proto"],
-#     visibility = ["//visibility:public"],
-#     deps = [
-#         "//mediapipe/framework:calculator_proto",
-#     ],
-# )
+proto_library(
+    name = "landmarks_and_angles_to_file_calculator_proto",
+    srcs = ["landmarks_and_angles_to_file_calculator.proto"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//mediapipe/framework:calculator_proto",
+    ],
+)
 
-# mediapipe_cc_proto_library(
-#     name = "landmarks_and_angles_to_file_calculator_cc_proto",
-#     srcs = ["landmarks_and_angles_to_file_calculator.proto"],
-#     cc_deps = [
-#         "//mediapipe/framework:calculator_cc_proto",
-#     ],
-#     visibility = ["//mediapipe:__subpackages__",
-#                   "//myMediapipe:__subpackages__"],
-#     deps = [":landmarks_and_angles_to_file_calculator_proto"],
-# )
+mediapipe_cc_proto_library(
+    name = "landmarks_and_angles_to_file_calculator_cc_proto",
+    srcs = ["landmarks_and_angles_to_file_calculator.proto"],
+    cc_deps = [
+        "//mediapipe/framework:calculator_cc_proto",
+    ],
+    visibility = ["//mediapipe:__subpackages__",
+                  "//myMediapipe:__subpackages__"],
+    deps = [":landmarks_and_angles_to_file_calculator_proto"],
+)
 
-# cc_library(
-#     name = "landmarks_and_angles_to_file_calculator",
-#     srcs = ["landmarks_and_angles_to_file_calculator.cc"],
-#     visibility = ["//visibility:public"],
-#     deps = [
-#         ":landmarks_and_angles_to_file_calculator_cc_proto",
-#         "//mediapipe/framework:calculator_framework",
-#         "//mediapipe/framework:calculator_options_cc_proto",
-#         "//mediapipe/framework/formats:landmark_cc_proto",
-#         "//myMediapipe/framework/formats:angles_cc_proto",
-#         "//mediapipe/framework/port:ret_check",
-#         "@com_google_absl//absl/memory",
-#         "@com_google_absl//absl/strings",
-#         "@system_libs//:libncurses",
-#         "@system_headers//:headers",
-#     ],
-#     alwayslink = 1,
-# )
+cc_library(
+    name = "landmarks_and_angles_to_file_calculator",
+    srcs = ["landmarks_and_angles_to_file_calculator.cc"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":landmarks_and_angles_to_file_calculator_cc_proto",
+        "//mediapipe/framework:calculator_framework",
+        "//mediapipe/framework:calculator_options_cc_proto",
+        "//mediapipe/framework/formats:landmark_cc_proto",
+        "//myMediapipe/framework/formats:angles_cc_proto",
+        "//mediapipe/framework/port:ret_check",
+        "@com_google_absl//absl/memory",
+        "@com_google_absl//absl/strings",
+        "@system_libs//:libncurses",
+        "@system_headers//:headers",
+    ],
+    alwayslink = 1,
+)
 
 proto_library(
     name = "angles_to_detection_calculator_proto",
