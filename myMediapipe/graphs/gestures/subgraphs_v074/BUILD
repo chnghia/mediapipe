@@ -125,6 +125,7 @@ mediapipe_simple_subgraph(
         "//mediapipe/calculators/util:landmarks_to_detection_calculator",
         "//mediapipe/calculators/util:rect_transformation_calculator",
         "//mediapipe/calculators/util:thresholding_calculator",
+        "//myMediapipe/calculators/util:landmarkslist_to_vector_landmarks_calculator",
         "//myMediapipe/calculators/util:landmarks_to_angles_calculator",
         "//myMediapipe/calculators/util:landmarks_and_angles_to_file_calculator",
     ],
