@@ -58,6 +58,23 @@ cc_library(
     ],
 )
 
+# static gestures to file CPU
+
+cc_library(
+    name = "static_gestures_to_file_desktop_cpu_calculators",
+    deps = [
+        "//myMediapipe/graphs/gestures/subgraphs_v074:hand_detection_cpu",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:hand_landmark_cpu_to_file",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:renderer_cpu",
+        "//mediapipe/calculators/core:flow_limiter_calculator",
+        "//mediapipe/calculators/core:gate_calculator",
+        "//mediapipe/calculators/core:merge_calculator",
+        "//mediapipe/calculators/core:previous_loopback_calculator",
+        "//mediapipe/calculators/video:opencv_video_decoder_calculator",
+        "//mediapipe/calculators/video:opencv_video_encoder_calculator",
+    ],
+)
+
 # dynamic gestures CPU
 
 cc_library(

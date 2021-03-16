@@ -105,6 +105,31 @@ mediapipe_simple_subgraph(
     ],
 )
 
+# hand landmark to file CPU subgraph
+mediapipe_simple_subgraph(
+    name = "hand_landmark_cpu_to_file",
+    graph = "hand_landmark_cpu_to_file.pbtxt",
+    register_as = "HandLandmarkToFileSubgraph",
+    deps = [
+        "//mediapipe/calculators/core:split_vector_calculator",
+        "//mediapipe/calculators/image:image_cropping_calculator",
+        "//mediapipe/calculators/image:image_properties_calculator",
+        "//mediapipe/calculators/image:image_transformation_calculator",
+        "//mediapipe/calculators/tflite:tflite_converter_calculator",
+        "//mediapipe/calculators/tflite:tflite_inference_calculator",
+        "//mediapipe/calculators/tflite:tflite_tensors_to_floats_calculator",
+        "//mediapipe/calculators/tflite:tflite_tensors_to_landmarks_calculator",
+        "//mediapipe/calculators/util:detections_to_rects_calculator",
+        "//mediapipe/calculators/util:landmark_letterbox_removal_calculator",
+        "//mediapipe/calculators/util:landmark_projection_calculator",
+        "//mediapipe/calculators/util:landmarks_to_detection_calculator",
+        "//mediapipe/calculators/util:rect_transformation_calculator",
+        "//mediapipe/calculators/util:thresholding_calculator",
+        "//myMediapipe/calculators/util:landmarks_to_angles_calculator",
+        "//myMediapipe/calculators/util:landmarks_and_angles_to_file_calculator",
+    ],
+)
+
 # hand detection CPU subgraph
 mediapipe_simple_subgraph(
     name = "hand_detection_cpu",
