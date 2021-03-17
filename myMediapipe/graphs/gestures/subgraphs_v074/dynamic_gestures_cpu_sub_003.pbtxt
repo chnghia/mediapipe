@@ -1,0 +1,148 @@
+# MyMediaPipe gestures recognition subgraph.
+
+type: "dynamicGesturesSubgraph"
+
+input_stream: "LANDMARKS:hand_landmarks"
+input_stream: "ANGLES:angles"
+input_stream: "DETECTIONS:detections"
+
+
+node {
+  calculator: "MergeCalculator"
+  input_stream: "trasition_gesture_clear"
+  input_stream: "moving_gesture_clear"
+  input_stream: "writing_gesture_clear"
+  input_stream: "tbd_gesture_clear"
+  input_stream: "fixed_gesture_clear"
+  output_stream: "gesture_clear"
+}
+
+node {
+  calculator: "FlowLimiterCalculator"
+  input_stream: "detections"
+  input_stream: "FINISHED:gesture_clear"
+  input_stream_info: {
+    tag_index: "FINISHED"
+    back_edge: true
+  }
+   output_stream: "throttled_detections"
+}
+
+node {
+   calculator: "gestureClassifierCalculator"
+   input_stream: "DETECTIONS:throttled_detections"
+   #input_stream: "CLEAR:gesture_clear"
+   output_stream: "LATCH_TRANSITION:transition_gesture_flag"
+   output_stream: "LATCH_MOVING:moving_gesture_flag"
+   output_stream: "LATCH_WRITING:writing_gesture_flag"
+   output_stream: "LATCH_FIXED:fixed_gesture_flag"
+   output_stream: "TBD:tbd_gesture_clear"
+    node_options: {
+     [type.googleapis.com/mediapipe.gestureClassifierCalculatorOptions] {
+       gestures_types_file_name: "myMediapipe/models/dynamic_gestures_map_003.txt"
+     }
+   }
+ }
+
+# only allow passage of packets related 
+# to transition gestures
+node {
+  calculator: "LatchCalculator"
+  input_stream: "hand_landmarks"
+  input_stream: "detections"
+  input_stream: "LATCH:transition_gesture_flag"
+  output_stream: "latched_transition_landmarks"
+  output_stream: "latched_transition_detection"
+
+}
+
+node {
+  calculator: "transitionDynamicGesturesCalculator"
+  input_stream: "NORM_LANDMARKS:latched_transition_landmarks"
+  input_stream: "DETECTIONS:latched_transition_detection"
+
+  output_stream: "FLAG:trasition_gesture_clear"
+  output_stream: "MQTT_MESSAGE:message_transition"
+  node_options: {
+    [type.googleapis.com/mediapipe.transitionDynamicGesturesCalculatorOptions] {
+      time_out_s: 1.50
+      actions_map { start_action: 0 end_action: 2 
+        mqtt_message{ topic: "handCommander/tv/ir_command" 
+                      payload: "KEY_POWER"}
+      }
+      actions_map { start_action: 2 end_action: 0 
+        mqtt_message{ topic: "handCommander/tv/ir_command" 
+                      payload: "KEY_POWER"}
+      }
+    }
+  }
+}
+
+# only allow passage of packets related 
+# to fixed gestures
+node {
+  calculator: "LatchCalculator"
+  input_stream: "hand_landmarks"
+  input_stream: "detections"
+  input_stream: "angles"
+  input_stream: "LATCH:fixed_gesture_flag"
+  output_stream: "latched_fixed_landmarks"
+  output_stream: "latched_fixed_detection"
+  output_stream: "latched_fixed_angles"
+}
+
+node {
+  calculator: "fixedDynamicGesturesCalculator"
+  input_stream: "NORM_LANDMARKS:latched_fixed_landmarks"
+  input_stream: "DETECTIONS:latched_fixed_detection"
+  input_stream: "ANGLES:latched_fixed_angles"
+  output_stream: "FLAG:fixed_gesture_clear"
+  output_stream: "MQTT_MESSAGE:message_fixed"
+  node_options: {
+
+    [type.googleapis.com/mediapipe.fixedDynamicGesturesCalculatorOptions] {
+      fixed_time_out_s: 0.5
+      fixed_actions_map { start_action: 0
+                          time_between_actions: 5.0
+                          auto_repeat: false
+                          mqtt_message{ topic: "handCommander/tv/ir_command" payload: "KEY_2"}
+                        }
+      fixed_actions_map { start_action: 1
+                          time_between_actions: 5.0
+                          auto_repeat: false
+                          mqtt_message{ topic: "handCommander/tv/ir_command" payload: "KEY_1"}
+                        }
+      fixed_actions_map { start_action: 2
+                          time_between_actions: 5.0
+                          auto_repeat: false
+                          mqtt_message{ topic: "handCommander/tv/ir_command" payload: "KEY_3"}
+                        }
+    }
+  }
+}
+node {
+  calculator: "MergeCalculator"
+  input_stream: "message_fixed"
+  input_stream: "message_writing"
+  input_stream: "message_moving"
+  input_stream: "message_transition"
+  output_stream: "message"
+}
+
+node {
+  calculator: "MqttPublisherCalculator"
+  input_stream: "MQTT_MESSAGE:message"
+  node_options: {
+
+   [type.googleapis.com/mediapipe.MqttPublisherCalculatorOptions] {
+      client_id: "HandCommander"
+      broker_ip:  "192.168.8.218"
+      broker_port: 1883
+      user: "nghia"          #optional
+      password: "123456"     #optional
+      
+    }
+  }
+}
+
+

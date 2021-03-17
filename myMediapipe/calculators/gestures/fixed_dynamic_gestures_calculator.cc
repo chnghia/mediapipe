@@ -215,7 +215,7 @@ REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
       } 
     }
     //no gesture found 
-    if(!currentAction.IsInitialized()){
+    if (!currentAction.IsInitialized()) {
       clear(currentAction, lastGesture);
     }
   }
@@ -226,43 +226,31 @@ REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
     //              << "\t :" << std::to_string(currentAction.time_between_actions())
     //              << "\t :" << std::to_string(currentAction.auto_repeat())
     //              << "\t angle :" << std::to_string(angles[0].angle1())
-                 
     //              << "\t :" << std::to_string(cc->InputTimestamp().Seconds())
     //              << "\t :" << std::to_string(lastGesture.notEmpty)
     //              << "\t :" << std::to_string(lastGesture.time)
     //              ;
     
     //first execution
-    if(!lastGesture.notEmpty){
-      executeAction(currentAction,lastGesture,
-                    cc->InputTimestamp().Seconds(),
-                    angles,
-                    cc);                            
+    if (!lastGesture.notEmpty) {
+      executeAction(currentAction,lastGesture, cc->InputTimestamp().Seconds(), angles, cc);
     }
-    
-    else{
-      if(currentAction.auto_repeat() && 
-         ((cc->InputTimestamp().Seconds() - 
-          lastGesture.time) >= currentAction.time_between_actions()))
-          executeAction(currentAction,lastGesture,
-                        cc->InputTimestamp().Seconds(),
-                        angles,
-                        cc);
+    else {
+      if (currentAction.auto_repeat() && 
+         ((cc->InputTimestamp().Seconds() - lastGesture.time) >= currentAction.time_between_actions()))
+          executeAction(currentAction, lastGesture, cc->InputTimestamp().Seconds(), angles, cc);
     }
-    
     
     // TimeOut
-    if((cc->InputTimestamp().Seconds() - 
-        lastGesture.time) >= options_.fixed_time_out_s()){
-           clear( currentAction, lastGesture);
+    if ((cc->InputTimestamp().Seconds() - lastGesture.time) >= options_.fixed_time_out_s()) {
+      clear( currentAction, lastGesture);
     }
 
   }
   if(!currentAction.IsInitialized()) 
      cc->Outputs().Tag(kFlagTag)
-      .AddPacket(MakePacket<bool>(true)
-                            .At(cc->InputTimestamp()
-                            .NextAllowedInStream()));
+                  .AddPacket(MakePacket<bool>(true)
+                  .At(cc->InputTimestamp().NextAllowedInStream()));
 
   return ::mediapipe::OkStatus();
 }
@@ -278,14 +266,13 @@ REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
   currCommand.set_topic("empty");
 
   if(currentAction.has_landmark_id()){ 
-    
     const auto currAngle = getAngle(currentAction.angle_number(),
                                     currentAction.landmark_id(),
                                     angles);
     
-    for(int i=0;i<currentAction.angle_limits().size();i++){
+    for(int i=0;i<currentAction.angle_limits().size();i++) {
       if((currAngle<=currentAction.angle_limits(i).angle_limit_pos()) &&
-        (currAngle>=currentAction.angle_limits(i).angle_limit_neg())){
+        (currAngle>=currentAction.angle_limits(i).angle_limit_neg())) {
       
         currCommand.set_topic(currentAction.mqtt_message(i).topic());
         currCommand.set_payload(currentAction.mqtt_message(i).payload());

@@ -58,7 +58,7 @@ node {
   output_stream: "TENSORS:detection_tensors"
   node_options: {
     [type.googleapis.com/mediapipe.TfLiteInferenceCalculatorOptions] {
-      model_path: "myMediapipe/models/gestures002.tflite"
+      model_path: "myMediapipe/models/gestures003.tflite"
     }
   }
 }
@@ -77,7 +77,7 @@ node {
 # Subgraph for dynamic gestures proccesing
 # (see dynamic_gestures_cpu_sub.pbtxt).
 node {
-  calculator: "dynamicGesturesSubgraph"
+  calculator: "dynamicGesturesSubgraph_003"
   input_stream: "LANDMARKS:vector_landmarks"
   input_stream: "ANGLES:angles"
   input_stream: "DETECTIONS:detections"
@@ -89,7 +89,7 @@ node {
   output_stream: "static_gesture_detections"
   node_options: {
     [type.googleapis.com/mediapipe.DetectionLabelIdToTextCalculatorOptions] {
-      label_map_path: "myMediapipe/models/static_gestures_labels.txt"
+      label_map_path: "myMediapipe/models/static_gestures_labels_003.txt"
     }
   }
 }
