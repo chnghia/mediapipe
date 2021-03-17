@@ -230,6 +230,7 @@ REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
     
     //first execution
     if (!lastGesture.notEmpty) {
+      std::cout << "First excution";
       executeAction(currentAction, lastGesture, cc->InputTimestamp().Seconds(), angles, cc);
     }
     else {
@@ -238,16 +239,19 @@ REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
           executeAction(currentAction, lastGesture, cc->InputTimestamp().Seconds(), angles, cc);
     }
     
+    std::cout << "Timeout";
     // TimeOut
     if ((cc->InputTimestamp().Seconds() - lastGesture.time) >= options_.fixed_time_out_s()) {
       clear( currentAction, lastGesture);
     }
-
   }
+
   if(!currentAction.IsInitialized()) 
      cc->Outputs().Tag(kFlagTag)
                   .AddPacket(MakePacket<bool>(true)
                   .At(cc->InputTimestamp().NextAllowedInStream()));
+  
+  std::cout << "end";
 
   return ::mediapipe::OkStatus();
 }
