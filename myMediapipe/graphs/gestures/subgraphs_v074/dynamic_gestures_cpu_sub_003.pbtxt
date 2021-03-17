@@ -101,7 +101,7 @@ node {
   node_options: {
 
     [type.googleapis.com/mediapipe.fixedDynamicGesturesCalculatorOptions] {
-      fixed_time_out_s: 1.50
+      fixed_time_out_s: 0.50
       fixed_actions_map { start_action: 0
                           time_between_actions: 15.0
                           auto_repeat: false

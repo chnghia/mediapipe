@@ -277,17 +277,17 @@ REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
       } 
     }
   }
-  else{
+  else {
     currCommand.set_topic(currentAction.mqtt_message(0).topic());
     currCommand.set_payload(currentAction.mqtt_message(0).payload());
   }
 
-  if(currCommand.topic().compare("empty") != 0){
+  if (currCommand.topic().compare("empty") != 0) {
     setLastGesture(lastGesture, currentAction, GestureTime);
     //  std::cout << "\n !!Action:" << std::to_string(currentAction.start_action())
     //        << "\t :" << currCommand.payload(); 
-     mqttMessages.emplace_back(currCommand);
-     cc->Outputs().Tag(kMqttMessageTag)
+    mqttMessages.emplace_back(currCommand);
+    cc->Outputs().Tag(kMqttMessageTag)
          .AddPacket(MakePacket<MqttMessages>(mqttMessages)
          .At(cc->InputTimestamp()
          .NextAllowedInStream()));        
