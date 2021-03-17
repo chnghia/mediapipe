@@ -61,8 +61,7 @@ class MqttPublisherCalculator : public CalculatorBase {
 };
 REGISTER_CALCULATOR(MqttPublisherCalculator);
 
-::mediapipe::Status MqttPublisherCalculator::GetContract(
-    CalculatorContract* cc) {
+::mediapipe::Status MqttPublisherCalculator::GetContract(CalculatorContract* cc) {
   RET_CHECK(cc->Inputs().HasTag(Kmessage));
 
   cc->Inputs().Tag(Kmessage).Set<MqttMessages>();
@@ -71,8 +70,7 @@ REGISTER_CALCULATOR(MqttPublisherCalculator);
   return ::mediapipe::OkStatus();
 }
 
-::mediapipe::Status MqttPublisherCalculator::Open(
-    CalculatorContext* cc) {
+::mediapipe::Status MqttPublisherCalculator::Open(CalculatorContext* cc) {
   cc->SetOffset(TimestampDiff(0));
 
   options_ = cc->Options<::mediapipe::MqttPublisherCalculatorOptions>();
