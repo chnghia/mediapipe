@@ -50,7 +50,6 @@ constexpr char kMqttMessageTag[] = "MQTT_MESSAGE";
  
 void clear(fixedActionMap &currentAction,
            LastGesture& lastGesture) {
-  
   currentAction.Clear();
   lastGesture = (struct LastGesture){0};
 }
@@ -59,14 +58,14 @@ void setLastGesture(LastGesture& lastGesture,
                     fixedActionMap currentAction,
                     decltype(Timestamp().Seconds()) lastGestureTime){
   
-  lastGesture.start_action= currentAction.start_action();
-  lastGesture.time=lastGestureTime;
-  lastGesture.notEmpty= true;
+  lastGesture.start_action = currentAction.start_action();
+  lastGesture.time = lastGestureTime;
+  lastGesture.notEmpty = true;
 }
 
 decltype(Angle().angle1()) getAngle(int angleNumber, int lmId, const Angles angles){
   // TODO: replace this literal (by changing the field angle in Angle message to repeated)
-  if(angleNumber==1) return angles[lmId].angle1();
+  if (angleNumber==1) return angles[lmId].angle1();
   else return angles[lmId].angle2();
 }
 
@@ -219,15 +218,15 @@ REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
   }
   if (currentAction.IsInitialized()){
 
-    //  std::cout << "\n !!Gesture:" << std::to_string(label_id)
-    //              << "\t :" << std::to_string(currentAction.start_action())
-    //              << "\t :" << std::to_string(currentAction.time_between_actions())
-    //              << "\t :" << std::to_string(currentAction.auto_repeat())
-    //              << "\t angle :" << std::to_string(angles[0].angle1())
-    //              << "\t :" << std::to_string(cc->InputTimestamp().Seconds())
-    //              << "\t :" << std::to_string(lastGesture.notEmpty)
-    //              << "\t :" << std::to_string(lastGesture.time)
-    //              ;
+    std::cout << "\n !!Gesture:" << std::to_string(label_id)
+                << "\t :" << std::to_string(currentAction.start_action())
+                << "\t :" << std::to_string(currentAction.time_between_actions())
+                << "\t :" << std::to_string(currentAction.auto_repeat())
+                << "\t angle :" << std::to_string(angles[0].angle1())
+                << "\t :" << std::to_string(cc->InputTimestamp().Seconds())
+                << "\t :" << std::to_string(lastGesture.notEmpty)
+                << "\t :" << std::to_string(lastGesture.time)
+                ;
     
     //first execution
     if (!lastGesture.notEmpty) {
@@ -278,6 +277,7 @@ REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
     }
   }
   else {
+    std::cout << "set_topic & payload";
     currCommand.set_topic(currentAction.mqtt_message(0).topic());
     currCommand.set_payload(currentAction.mqtt_message(0).payload());
   }

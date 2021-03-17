@@ -65,9 +65,7 @@ REGISTER_CALCULATOR(MqttPublisherCalculator);
     CalculatorContract* cc) {
   RET_CHECK(cc->Inputs().HasTag(Kmessage));
 
-  cc->Inputs()
-      .Tag(Kmessage) 
-      .Set<MqttMessages>();
+  cc->Inputs().Tag(Kmessage).Set<MqttMessages>();
   //cc->Outputs().Tag(kDetectionTag).Set<Detection>();
   
   return ::mediapipe::OkStatus();
@@ -115,8 +113,7 @@ REGISTER_CALCULATOR(MqttPublisherCalculator);
   return ::mediapipe::OkStatus();
 }
 
-::mediapipe::Status MqttPublisherCalculator::Close(
-    CalculatorContext* cc) {
+::mediapipe::Status MqttPublisherCalculator::Close(CalculatorContext* cc) {
   //TODO: delete mqtt;    
   return ::mediapipe::OkStatus();
 }

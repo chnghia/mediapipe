@@ -105,17 +105,17 @@ node {
       fixed_actions_map { start_action: 0
                           time_between_actions: 15.0
                           auto_repeat: false
-                          mqtt_message{ topic: "handCommander/tv/ir_command" payload: "KEY_2"}
+                          mqtt_message { topic: "handCommander/tv/ir_command" payload: "KEY_2"}
                         }
       fixed_actions_map { start_action: 1
                           time_between_actions: 15.0
                           auto_repeat: false
-                          mqtt_message{ topic: "handCommander/tv/ir_command" payload: "KEY_1"}
+                          mqtt_message { topic: "handCommander/tv/ir_command" payload: "KEY_1"}
                         }
       fixed_actions_map { start_action: 2
                           time_between_actions: 15.0
                           auto_repeat: false
-                          mqtt_message{ topic: "handCommander/tv/ir_command" payload: "KEY_3"}
+                          mqtt_message { topic: "handCommander/tv/ir_command" payload: "KEY_3"}
                         }
     }
   }
