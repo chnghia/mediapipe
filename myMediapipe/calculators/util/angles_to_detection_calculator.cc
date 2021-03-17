@@ -112,10 +112,10 @@ REGISTER_CALCULATOR(AnglesToDetectionCalculator);
   
 
   for(int i=0;i<raw_tensor->dims->data[1]; i++){
-    if (options_.has_min_score_threshold() &&
-        raw_floats[i] < options_.min_score_threshold()) {
-      continue;
-    }
+    // if (options_.has_min_score_threshold() &&
+    //     raw_floats[i] < options_.min_score_threshold()) {
+    //   continue;
+    // }
     
     if(raw_floats[i]>currentInference.score_){
         currentInference.score_=raw_floats[i];
