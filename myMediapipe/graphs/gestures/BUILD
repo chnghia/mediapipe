@@ -121,7 +121,7 @@ cc_library(
         "//myMediapipe/graphs/gestures/subgraphs_v074:hand_landmark_gpu",
         "//myMediapipe/graphs/gestures/subgraphs_v074:renderer_gpu",
         "//myMediapipe/graphs/gestures/subgraphs_v074:dynamic_gestures_cpu",
-        "//myMediapipe/graphs/gestures/subgraphs_v074:dynamic_gestures_cpu_sub",
+        "//myMediapipe/graphs/gestures/subgraphs_v074:dynamic_gestures_cpu_sub_003",
         "//mediapipe/calculators/core:flow_limiter_calculator",
         "//mediapipe/calculators/core:gate_calculator",
         "//mediapipe/calculators/core:merge_calculator",
