@@ -198,18 +198,17 @@ REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
   //           << "\t :" << std::to_string(lastGesture.start_action)
   //           << "\t :" << std::to_string(lastGesture.start_action)
 
-  if(lastGesture.notEmpty &&
-     (lastGesture.start_action!=label_id))
+  if (lastGesture.notEmpty && (lastGesture.start_action != label_id))
     clear(currentAction, lastGesture);
   
   if (!currentAction.IsInitialized()){
-    for(auto act_ : options_.fixed_actions_map()){
-      if(act_.start_action()==label_id){
+    for (auto act_ : options_.fixed_actions_map()) {
+      if (act_.start_action() == label_id) {
         currentAction = act_;
-        if(currentAction.has_landmark_id()){ 
+        if (currentAction.has_landmark_id()) { 
           RET_CHECK(currentAction.has_angle_number())
             << "angle_number not provided";
-           RET_CHECK_EQ(currentAction.angle_limits().size(),currentAction.mqtt_message().size())
+          RET_CHECK_EQ(currentAction.angle_limits().size(),currentAction.mqtt_message().size())
              << "Command should have the same number of entries as angle_limits";
         }
       } 
@@ -233,7 +232,7 @@ REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
     
     //first execution
     if (!lastGesture.notEmpty) {
-      executeAction(currentAction,lastGesture, cc->InputTimestamp().Seconds(), angles, cc);
+      executeAction(currentAction, lastGesture, cc->InputTimestamp().Seconds(), angles, cc);
     }
     else {
       if (currentAction.auto_repeat() && 
