@@ -103,17 +103,17 @@ node {
     [type.googleapis.com/mediapipe.fixedDynamicGesturesCalculatorOptions] {
       fixed_time_out_s: 1.5
       fixed_actions_map { start_action: 0
-                          time_between_actions: 5.0
+                          time_between_actions: 10.0
                           auto_repeat: false
                           mqtt_message{ topic: "handCommander/tv/ir_command" payload: "KEY_2"}
                         }
       fixed_actions_map { start_action: 1
-                          time_between_actions: 5.0
+                          time_between_actions: 10.0
                           auto_repeat: false
                           mqtt_message{ topic: "handCommander/tv/ir_command" payload: "KEY_1"}
                         }
       fixed_actions_map { start_action: 2
-                          time_between_actions: 5.0
+                          time_between_actions: 10.0
                           auto_repeat: false
                           mqtt_message{ topic: "handCommander/tv/ir_command" payload: "KEY_3"}
                         }
