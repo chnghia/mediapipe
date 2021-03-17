@@ -3,11 +3,16 @@ import time
 from pynput.keyboard import Key, Controller
 
 keyboard = Controller()
+start_time = time.time()
 
 def on_message(client, userdata, message):
     # keyboard.press(Key.space)
     msg = str(message.payload.decode("utf-8"))
     print("received message: " , msg)
+    diff = time.time() - start_time
+    if diff < 2.5:
+      return
+
     if msg == "KEY_VOLUMEUP":
       keyboard.press(Key.space)
       time.sleep(0.1)
