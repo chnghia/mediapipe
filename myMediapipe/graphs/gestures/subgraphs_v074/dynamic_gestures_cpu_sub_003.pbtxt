@@ -123,8 +123,8 @@ node {
 node {
   calculator: "MergeCalculator"
   input_stream: "message_fixed"
-  input_stream: "message_writing"
-  input_stream: "message_moving"
+  # input_stream: "message_writing"
+  # input_stream: "message_moving"
   input_stream: "message_transition"
   output_stream: "message"
 }
