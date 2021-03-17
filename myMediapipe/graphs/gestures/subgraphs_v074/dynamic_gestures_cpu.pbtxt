@@ -75,7 +75,7 @@ node {
 }
 
 # Subgraph for dynamic gestures proccesing
-# (see dynamic_gestures_cpu.pbtxt).
+# (see dynamic_gestures_cpu_sub.pbtxt).
 node {
   calculator: "dynamicGesturesSubgraph"
   input_stream: "LANDMARKS:vector_landmarks"

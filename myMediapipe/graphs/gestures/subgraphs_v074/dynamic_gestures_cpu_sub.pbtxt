@@ -7,7 +7,6 @@ input_stream: "ANGLES:angles"
 input_stream: "DETECTIONS:detections"
 
 
-
 node {
   calculator: "MergeCalculator"
   input_stream: "trasition_gesture_clear"
@@ -68,10 +67,12 @@ node {
     [type.googleapis.com/mediapipe.transitionDynamicGesturesCalculatorOptions] {
       time_out_s: 1.50
       actions_map { start_action: 0 end_action: 2 
-        mqtt_message{ topic: "handCommander/tv/ir_command" payload: "KEY_POWER"}
+        mqtt_message{ topic: "handCommander/tv/ir_command" 
+                      payload: "KEY_POWER"}
       }
       actions_map { start_action: 2 end_action: 0 
-        mqtt_message{ topic: "handCommander/tv/ir_command" payload: "KEY_POWER"}
+        mqtt_message{ topic: "handCommander/tv/ir_command" 
+                      payload: "KEY_POWER"}
       }
     }
   }
@@ -105,13 +106,15 @@ node {
                            action_threshold: 0.1          time_between_actions: 0.5
                            auto_repeat: true              max_repeat: 5
                            topic: "handCommander/tv/ir_command"
-                           positive_payload: "KEY_VOLUMEUP"  negative_payload: "KEY_VOLUMEDOWN"}
+                           positive_payload: "KEY_VOLUMEUP"
+                           negative_payload: "KEY_VOLUMEDOWN"}
       moving_actions_map { start_action: 4                action_type: TRASLATION 
                            landmark_id: 0                 angle_number: 0
                            action_threshold: 0.1          time_between_actions: 0.5
                            auto_repeat: false
                            topic: "handCommander/VLC" 
-                           positive_payload: "next" negative_payload: "prev"}                     
+                           positive_payload: "next"
+                           negative_payload: "prev"}
     }
   }
 }
@@ -174,22 +177,24 @@ node {
 
     [type.googleapis.com/mediapipe.fixedDynamicGesturesCalculatorOptions] {
       fixed_time_out_s: 0.5
-      fixed_actions_map { start_action: 1                
+      fixed_actions_map { start_action: 1
                           time_between_actions: 5.0
-                          auto_repeat: false             
+                          auto_repeat: false
                           mqtt_message{ topic: "handCommander/tv/ir_command" payload: "KEY_MUTE"}
                         }
-      fixed_actions_map { start_action: 3                 
-                          landmark_id: 0                 angle_number: 1                
-                          angle_limits{angle_limit_pos: 1.8           
+      fixed_actions_map { start_action: 3
+                          landmark_id: 0
+                          angle_number: 1
+                          angle_limits{angle_limit_pos: 1.8
                                        angle_limit_neg: 1.2}
-                          angle_limits{angle_limit_pos: -0.8           
+                          angle_limits{angle_limit_pos: -0.8
                                        angle_limit_neg: -1.4} 
-                          angle_limits{angle_limit_pos: 0.85           
+                          angle_limits{angle_limit_pos: 0.85
                                        angle_limit_neg: 0.35}
-                          angle_limits{angle_limit_pos: 2.8           
-                                       angle_limit_neg: 2.4}            
-                          time_between_actions: 0.5      auto_repeat: false
+                          angle_limits{angle_limit_pos: 2.8
+                                       angle_limit_neg: 2.4}
+                          time_between_actions: 0.5
+                          auto_repeat: false
                           mqtt_message{ topic: "handCommander/tv/ir_command" payload: "KEY_VOLUMEUP"} 
                           mqtt_message{ topic: "handCommander/tv/ir_command" payload: "KEY_VOLUMEDOWN"}
                           mqtt_message{ topic: "handCommander/VLC" payload: "next"}          
