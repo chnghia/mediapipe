@@ -137,7 +137,6 @@ class fixedDynamicGesturesCalculator : public CalculatorBase {
   fixedActionMap currentAction;
   LastGesture lastGesture;
   MqttMessages mqttMessages;
-  
 };
 REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
 

@@ -25,23 +25,23 @@ node {
     tag_index: "FINISHED"
     back_edge: true
   }
-   output_stream: "throttled_detections"
+  output_stream: "throttled_detections"
 }
 
 node {
-   calculator: "gestureClassifierCalculator"
-   input_stream: "DETECTIONS:throttled_detections"
-   #input_stream: "CLEAR:gesture_clear"
-   output_stream: "LATCH_TRANSITION:transition_gesture_flag"
-   output_stream: "LATCH_MOVING:moving_gesture_flag"
-   output_stream: "LATCH_WRITING:writing_gesture_flag"
-   output_stream: "LATCH_FIXED:fixed_gesture_flag"
-   output_stream: "TBD:tbd_gesture_clear"
-    node_options: {
-     [type.googleapis.com/mediapipe.gestureClassifierCalculatorOptions] {
-       gestures_types_file_name: "myMediapipe/models/dynamic_gestures_map_003.txt"
-     }
-   }
+  calculator: "gestureClassifierCalculator"
+  input_stream: "DETECTIONS:throttled_detections"
+  #input_stream: "CLEAR:gesture_clear"
+  output_stream: "LATCH_TRANSITION:transition_gesture_flag"
+  output_stream: "LATCH_MOVING:moving_gesture_flag"
+  output_stream: "LATCH_WRITING:writing_gesture_flag"
+  output_stream: "LATCH_FIXED:fixed_gesture_flag"
+  output_stream: "TBD:tbd_gesture_clear"
+  node_options: {
+    [type.googleapis.com/mediapipe.gestureClassifierCalculatorOptions] {
+      gestures_types_file_name: "myMediapipe/models/dynamic_gestures_map_003.txt"
+    }
+  }
  }
 
 # only allow passage of packets related 
@@ -101,7 +101,7 @@ node {
   node_options: {
 
     [type.googleapis.com/mediapipe.fixedDynamicGesturesCalculatorOptions] {
-      fixed_time_out_s: 0.3
+      fixed_time_out_s: 2.50
       fixed_actions_map { start_action: 0
                           time_between_actions: 15.0
                           auto_repeat: false
@@ -135,11 +135,11 @@ node {
   node_options: {
 
    [type.googleapis.com/mediapipe.MqttPublisherCalculatorOptions] {
-      client_id: "HandCommander"
-      broker_ip:  "192.168.8.218"
-      broker_port: 1883
-      user: "nghia"          #optional
-      password: "123456"     #optional
+      client_id:    "HandCommander"
+      broker_ip:    "192.168.8.218"
+      broker_port:  1883
+      user:         "nghia"      #optional
+      password:     "123456"     #optional
       
     }
   }
