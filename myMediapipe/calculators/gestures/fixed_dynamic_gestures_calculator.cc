@@ -50,6 +50,7 @@ constexpr char kMqttMessageTag[] = "MQTT_MESSAGE";
  
 void clear(fixedActionMap &currentAction,
            LastGesture& lastGesture) {
+  
   currentAction.Clear();
   lastGesture = (struct LastGesture){0};
 }
@@ -58,14 +59,14 @@ void setLastGesture(LastGesture& lastGesture,
                     fixedActionMap currentAction,
                     decltype(Timestamp().Seconds()) lastGestureTime){
   
-  lastGesture.start_action = currentAction.start_action();
-  lastGesture.time = lastGestureTime;
-  lastGesture.notEmpty = true;
+  lastGesture.start_action= currentAction.start_action();
+  lastGesture.time=lastGestureTime;
+  lastGesture.notEmpty= true;
 }
 
 decltype(Angle().angle1()) getAngle(int angleNumber, int lmId, const Angles angles){
   // TODO: replace this literal (by changing the field angle in Angle message to repeated)
-  if (angleNumber==1) return angles[lmId].angle1();
+  if(angleNumber==1) return angles[lmId].angle1();
   else return angles[lmId].angle2();
 }
 
@@ -136,6 +137,7 @@ class fixedDynamicGesturesCalculator : public CalculatorBase {
   fixedActionMap currentAction;
   LastGesture lastGesture;
   MqttMessages mqttMessages;
+  
 };
 REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
 
@@ -196,62 +198,71 @@ REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
   //           << "\t :" << std::to_string(lastGesture.start_action)
   //           << "\t :" << std::to_string(lastGesture.start_action)
 
-  if (lastGesture.notEmpty && (lastGesture.start_action != label_id))
+  if(lastGesture.notEmpty &&
+     (lastGesture.start_action!=label_id))
     clear(currentAction, lastGesture);
   
   if (!currentAction.IsInitialized()){
-    for (auto act_ : options_.fixed_actions_map()) {
-      if (act_.start_action() == label_id) {
+    for(auto act_ : options_.fixed_actions_map()){
+      if(act_.start_action()==label_id){
         currentAction = act_;
-        if (currentAction.has_landmark_id()) { 
+        if(currentAction.has_landmark_id()){ 
           RET_CHECK(currentAction.has_angle_number())
             << "angle_number not provided";
-          RET_CHECK_EQ(currentAction.angle_limits().size(),currentAction.mqtt_message().size())
+           RET_CHECK_EQ(currentAction.angle_limits().size(),currentAction.mqtt_message().size())
              << "Command should have the same number of entries as angle_limits";
         }
       } 
     }
     //no gesture found 
-    if (!currentAction.IsInitialized()) {
+    if(!currentAction.IsInitialized()){
       clear(currentAction, lastGesture);
     }
   }
   if (currentAction.IsInitialized()){
 
-    std::cout << "\n !!Gesture:" << std::to_string(label_id)
-                << "\t :" << std::to_string(currentAction.start_action())
-                << "\t :" << std::to_string(currentAction.time_between_actions())
-                << "\t :" << std::to_string(currentAction.auto_repeat())
-                << "\t angle :" << std::to_string(angles[0].angle1())
-                << "\t :" << std::to_string(cc->InputTimestamp().Seconds())
-                << "\t :" << std::to_string(lastGesture.notEmpty)
-                << "\t :" << std::to_string(lastGesture.time)
-                ;
+    //  std::cout << "\n !!Gesture:" << std::to_string(label_id)
+    //              << "\t :" << std::to_string(currentAction.start_action())
+    //              << "\t :" << std::to_string(currentAction.time_between_actions())
+    //              << "\t :" << std::to_string(currentAction.auto_repeat())
+    //              << "\t angle :" << std::to_string(angles[0].angle1())
+                 
+    //              << "\t :" << std::to_string(cc->InputTimestamp().Seconds())
+    //              << "\t :" << std::to_string(lastGesture.notEmpty)
+    //              << "\t :" << std::to_string(lastGesture.time)
+    //              ;
     
     //first execution
-    if (!lastGesture.notEmpty) {
-      std::cout << "First excution";
-      executeAction(currentAction, lastGesture, cc->InputTimestamp().Seconds(), angles, cc);
-    }
-    else {
-      if (currentAction.auto_repeat() && 
-         ((cc->InputTimestamp().Seconds() - lastGesture.time) >= currentAction.time_between_actions()))
-          executeAction(currentAction, lastGesture, cc->InputTimestamp().Seconds(), angles, cc);
+    if(!lastGesture.notEmpty){
+      executeAction(currentAction,lastGesture,
+                    cc->InputTimestamp().Seconds(),
+                    angles,
+                    cc);                            
     }
     
-    std::cout << "Timeout";
-    // TimeOut
-    if ((cc->InputTimestamp().Seconds() - lastGesture.time) >= options_.fixed_time_out_s()) {
-      clear( currentAction, lastGesture);
+    else{
+      if(currentAction.auto_repeat() && 
+         ((cc->InputTimestamp().Seconds() - 
+          lastGesture.time) >= currentAction.time_between_actions()))
+          executeAction(currentAction,lastGesture,
+                        cc->InputTimestamp().Seconds(),
+                        angles,
+                        cc);
     }
-  }
+    
+    
+    // TimeOut
+    if((cc->InputTimestamp().Seconds() - 
+        lastGesture.time) >= options_.fixed_time_out_s()){
+           clear( currentAction, lastGesture);
+    }
 
+  }
   if(!currentAction.IsInitialized()) 
      cc->Outputs().Tag(kFlagTag)
-                  .AddPacket(MakePacket<bool>(true)
-                  .At(cc->InputTimestamp().NextAllowedInStream()));
-  
-  std::cout << "end";
+      .AddPacket(MakePacket<bool>(true)
+                            .At(cc->InputTimestamp()
+                            .NextAllowedInStream()));
 
   return ::mediapipe::OkStatus();
 }
@@ -267,31 +278,31 @@ REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
   currCommand.set_topic("empty");
 
   if(currentAction.has_landmark_id()){ 
+    
     const auto currAngle = getAngle(currentAction.angle_number(),
                                     currentAction.landmark_id(),
                                     angles);
     
-    for(int i=0;i<currentAction.angle_limits().size();i++) {
+    for(int i=0;i<currentAction.angle_limits().size();i++){
       if((currAngle<=currentAction.angle_limits(i).angle_limit_pos()) &&
-        (currAngle>=currentAction.angle_limits(i).angle_limit_neg())) {
+        (currAngle>=currentAction.angle_limits(i).angle_limit_neg())){
       
         currCommand.set_topic(currentAction.mqtt_message(i).topic());
         currCommand.set_payload(currentAction.mqtt_message(i).payload());
       } 
     }
   }
-  else {
-    std::cout << "set_topic & payload";
+  else{
     currCommand.set_topic(currentAction.mqtt_message(0).topic());
     currCommand.set_payload(currentAction.mqtt_message(0).payload());
   }
 
-  if (currCommand.topic().compare("empty") != 0) {
+  if(currCommand.topic().compare("empty") != 0){
     setLastGesture(lastGesture, currentAction, GestureTime);
     //  std::cout << "\n !!Action:" << std::to_string(currentAction.start_action())
     //        << "\t :" << currCommand.payload(); 
-    mqttMessages.emplace_back(currCommand);
-    cc->Outputs().Tag(kMqttMessageTag)
+     mqttMessages.emplace_back(currCommand);
+     cc->Outputs().Tag(kMqttMessageTag)
          .AddPacket(MakePacket<MqttMessages>(mqttMessages)
          .At(cc->InputTimestamp()
          .NextAllowedInStream()));        
