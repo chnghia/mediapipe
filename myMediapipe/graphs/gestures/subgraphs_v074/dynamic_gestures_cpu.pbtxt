@@ -69,9 +69,9 @@ node {
   output_stream: "detections"
     node_options: {
     [type.googleapis.com/mediapipe.AnglesToDetectionCalculatorOptions] {
-      queue_size: 20
+      queue_size: 10
       min_score_threshold: 0.995
-      queue_time_out_s: 5.0
+      queue_time_out_s: 3.0
     }
   }
 }
