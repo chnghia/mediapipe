@@ -121,7 +121,7 @@ decltype(Angle().angle1()) getAngle(int angleNumber, int lmId, const Angles angl
 // }
 
 class fixedDynamicGesturesCalculator : public CalculatorBase {
- public:
+public:
   static ::mediapipe::Status GetContract(CalculatorContract* cc);
   ::mediapipe::Status Open(CalculatorContext* cc) override;
   ::mediapipe::Status Process(CalculatorContext* cc) override;
@@ -137,12 +137,10 @@ class fixedDynamicGesturesCalculator : public CalculatorBase {
   fixedActionMap currentAction;
   LastGesture lastGesture;
   MqttMessages mqttMessages;
-  
 };
 REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
 
-::mediapipe::Status fixedDynamicGesturesCalculator::GetContract(
-    CalculatorContract* cc) {
+::mediapipe::Status fixedDynamicGesturesCalculator::GetContract(CalculatorContract* cc) {
   RET_CHECK(cc->Inputs().HasTag(kNormLandmarksTag))
       << "Normalized Landmark input stream is NOT provided.";
   RET_CHECK(cc->Inputs().HasTag(kDetectionTag))
@@ -167,8 +165,7 @@ REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
   return ::mediapipe::OkStatus();
 }
 
-::mediapipe::Status fixedDynamicGesturesCalculator::Open(
-    CalculatorContext* cc) {
+::mediapipe::Status fixedDynamicGesturesCalculator::Open(CalculatorContext* cc) {
   cc->SetOffset(TimestampDiff(0));
   options_ = cc->Options<::mediapipe::fixedDynamicGesturesCalculatorOptions>();
   RET_CHECK_GE(options_.fixed_actions_map_size(),0) 
@@ -186,40 +183,38 @@ REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
   const int32 label_id = input_detection.label_id().Get(0);
   
   RET_CHECK(!cc->Inputs().Tag(kNormLandmarksTag).IsEmpty());
-  const auto &landmarks = cc->Inputs()
-                              .Tag(kNormLandmarksTag)
-                              .Get<std::vector<NormalizedLandmark>>();
+  const auto &landmarks = cc->Inputs().Tag(kNormLandmarksTag)
+                                      .Get<std::vector<NormalizedLandmark>>();
   RET_CHECK(!cc->Inputs().Tag(kAnglesTag).IsEmpty());
-  const auto &angles = cc->Inputs()
-                              .Tag(kAnglesTag)
-                              .Get<std::vector<Angle>>();
+  const auto &angles = cc->Inputs().Tag(kAnglesTag)
+                                   .Get<std::vector<Angle>>();
   
   // std::cout << "\n\t\t dbg:" << std::to_string(lastGesture.notEmpty)
   //           << "\t :" << std::to_string(lastGesture.start_action)
   //           << "\t :" << std::to_string(lastGesture.start_action)
 
-  if(lastGesture.notEmpty &&
-     (lastGesture.start_action!=label_id))
+  if(lastGesture.notEmpty && (lastGesture.start_action != label_id)) {
     clear(currentAction, lastGesture);
+  }
   
   if (!currentAction.IsInitialized()){
-    for(auto act_ : options_.fixed_actions_map()){
-      if(act_.start_action()==label_id){
+    for (auto act_ : options_.fixed_actions_map()) {
+      if (act_.start_action()==label_id) {
         currentAction = act_;
-        if(currentAction.has_landmark_id()){ 
+        if(currentAction.has_landmark_id()) { 
           RET_CHECK(currentAction.has_angle_number())
             << "angle_number not provided";
-           RET_CHECK_EQ(currentAction.angle_limits().size(),currentAction.mqtt_message().size())
-             << "Command should have the same number of entries as angle_limits";
+          RET_CHECK_EQ(currentAction.angle_limits().size(),currentAction.mqtt_message().size())
+            << "Command should have the same number of entries as angle_limits";
         }
       } 
     }
     //no gesture found 
-    if(!currentAction.IsInitialized()){
+    if (!currentAction.IsInitialized()) {
       clear(currentAction, lastGesture);
     }
   }
-  if (currentAction.IsInitialized()){
+  if (currentAction.IsInitialized()) {
 
     //  std::cout << "\n !!Gesture:" << std::to_string(label_id)
     //              << "\t :" << std::to_string(currentAction.start_action())
@@ -233,60 +228,49 @@ REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
     //              ;
     
     //first execution
-    if(!lastGesture.notEmpty){
-      executeAction(currentAction,lastGesture,
-                    cc->InputTimestamp().Seconds(),
-                    angles,
-                    cc);                            
+    if (!lastGesture.notEmpty) {
+      executeAction(currentAction,lastGesture, cc->InputTimestamp().Seconds(), angles, cc);
     }
     
     else{
-      if(currentAction.auto_repeat() && 
-         ((cc->InputTimestamp().Seconds() - 
-          lastGesture.time) >= currentAction.time_between_actions()))
-          executeAction(currentAction,lastGesture,
-                        cc->InputTimestamp().Seconds(),
-                        angles,
-                        cc);
+      if (currentAction.auto_repeat() && 
+         ((cc->InputTimestamp().Seconds() - lastGesture.time) >= currentAction.time_between_actions())) {
+           executeAction(currentAction,lastGesture, cc->InputTimestamp().Seconds(), angles, cc);
+         }
     }
     
     
     // TimeOut
-    if((cc->InputTimestamp().Seconds() - 
-        lastGesture.time) >= options_.fixed_time_out_s()){
-           clear( currentAction, lastGesture);
+    if ((cc->InputTimestamp().Seconds() - lastGesture.time) >= options_.fixed_time_out_s()) {
+      clear( currentAction, lastGesture);
     }
 
   }
   if(!currentAction.IsInitialized()) 
-     cc->Outputs().Tag(kFlagTag)
-      .AddPacket(MakePacket<bool>(true)
-                            .At(cc->InputTimestamp()
-                            .NextAllowedInStream()));
+     cc->Outputs().Tag(kFlagTag).AddPacket(MakePacket<bool>(true)
+                                           .At(cc->InputTimestamp()
+                                           .NextAllowedInStream()));
 
   return ::mediapipe::OkStatus();
 }
 
 ::mediapipe::Status
    fixedDynamicGesturesCalculator::executeAction(fixedActionMap& currentAction,
-                   LastGesture& lastGesture,
-                   decltype(Timestamp().Seconds()) GestureTime,
-                   const Angles angles,
-                   CalculatorContext* cc){
-  
+                                                 LastGesture& lastGesture,
+                                                 decltype(Timestamp().Seconds()) GestureTime,
+                                                 const Angles angles,
+                                                 CalculatorContext* cc) {
   Mqtt_Message currCommand;
   currCommand.set_topic("empty");
 
-  if(currentAction.has_landmark_id()){ 
-    
+  if (currentAction.has_landmark_id()) {
     const auto currAngle = getAngle(currentAction.angle_number(),
                                     currentAction.landmark_id(),
                                     angles);
     
-    for(int i=0;i<currentAction.angle_limits().size();i++){
-      if((currAngle<=currentAction.angle_limits(i).angle_limit_pos()) &&
-        (currAngle>=currentAction.angle_limits(i).angle_limit_neg())){
-      
+    for (int i=0;i<currentAction.angle_limits().size();i++) {
+      if ((currAngle<=currentAction.angle_limits(i).angle_limit_pos()) &&
+          (currAngle>=currentAction.angle_limits(i).angle_limit_neg())) {
         currCommand.set_topic(currentAction.mqtt_message(i).topic());
         currCommand.set_payload(currentAction.mqtt_message(i).payload());
       } 
@@ -301,11 +285,10 @@ REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
     setLastGesture(lastGesture, currentAction, GestureTime);
     //  std::cout << "\n !!Action:" << std::to_string(currentAction.start_action())
     //        << "\t :" << currCommand.payload(); 
-     mqttMessages.emplace_back(currCommand);
-     cc->Outputs().Tag(kMqttMessageTag)
-         .AddPacket(MakePacket<MqttMessages>(mqttMessages)
-         .At(cc->InputTimestamp()
-         .NextAllowedInStream()));        
+    mqttMessages.emplace_back(currCommand);
+    cc->Outputs().Tag(kMqttMessageTag).AddPacket(MakePacket<MqttMessages>(mqttMessages)
+                                                 .At(cc->InputTimestamp()
+                                                 .NextAllowedInStream()));        
   }
   currentAction.Clear();
   mqttMessages.clear();

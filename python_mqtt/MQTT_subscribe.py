@@ -18,9 +18,6 @@ def on_message(client, userdata, message):
     #print(diff)
     #if diff < 3:
     #  return
-    
-    
-    
 
     if msg == "KEY_VOLUMEUP":
       keyboard.press(Key.space)
