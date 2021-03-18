@@ -9,7 +9,7 @@ input_stream: "DETECTIONS:detections"
 
 node {
   calculator: "MergeCalculator"
-  input_stream: "trasition_gesture_clear"
+  # input_stream: "trasition_gesture_clear"
   # input_stream: "moving_gesture_clear"
   # input_stream: "writing_gesture_clear"
   input_stream: "tbd_gesture_clear"
@@ -46,37 +46,36 @@ node {
 
 # only allow passage of packets related 
 # to transition gestures
-node {
-  calculator: "LatchCalculator"
-  input_stream: "hand_landmarks"
-  input_stream: "detections"
-  input_stream: "LATCH:transition_gesture_flag"
-  output_stream: "latched_transition_landmarks"
-  output_stream: "latched_transition_detection"
+# node {
+#   calculator: "LatchCalculator"
+#   input_stream: "hand_landmarks"
+#   input_stream: "detections"
+#   input_stream: "LATCH:transition_gesture_flag"
+#   output_stream: "latched_transition_landmarks"
+#   output_stream: "latched_transition_detection"
+# }
 
-}
+# node {
+#   calculator: "transitionDynamicGesturesCalculator"
+#   input_stream: "NORM_LANDMARKS:latched_transition_landmarks"
+#   input_stream: "DETECTIONS:latched_transition_detection"
 
-node {
-  calculator: "transitionDynamicGesturesCalculator"
-  input_stream: "NORM_LANDMARKS:latched_transition_landmarks"
-  input_stream: "DETECTIONS:latched_transition_detection"
-
-  output_stream: "FLAG:trasition_gesture_clear"
-  output_stream: "MQTT_MESSAGE:message_transition"
-  node_options: {
-    [type.googleapis.com/mediapipe.transitionDynamicGesturesCalculatorOptions] {
-      time_out_s: 1.50
-      actions_map { start_action: 0 end_action: 2 
-        mqtt_message{ topic: "handCommander/tv/ir_command" 
-                      payload: "KEY_POWER"}
-      }
-      actions_map { start_action: 2 end_action: 0 
-        mqtt_message{ topic: "handCommander/tv/ir_command" 
-                      payload: "KEY_POWER"}
-      }
-    }
-  }
-}
+#   output_stream: "FLAG:trasition_gesture_clear"
+#   output_stream: "MQTT_MESSAGE:message_transition"
+#   node_options: {
+#     [type.googleapis.com/mediapipe.transitionDynamicGesturesCalculatorOptions] {
+#       time_out_s: 1.50
+#       actions_map { start_action: 0 end_action: 2 
+#         mqtt_message{ topic: "handCommander/tv/ir_command" 
+#                       payload: "KEY_POWER"}
+#       }
+#       actions_map { start_action: 2 end_action: 0 
+#         mqtt_message{ topic: "handCommander/tv/ir_command" 
+#                       payload: "KEY_POWER"}
+#       }
+#     }
+#   }
+# }
 
 # only allow passage of packets related 
 # to fixed gestures
@@ -105,17 +104,17 @@ node {
       fixed_actions_map { start_action: 0
                           time_between_actions: 5.0
                           auto_repeat: false
-                          mqtt_message{ topic: "handCommander/tv/ir_command" payload: "KEY_2"}
+                          mqtt_message{ topic: "handCommander/game/key_command" payload: "KEY_2"}
                         }
       fixed_actions_map { start_action: 1
                           time_between_actions: 5.0
                           auto_repeat: false
-                          mqtt_message{ topic: "handCommander/tv/ir_command" payload: "KEY_1"}
+                          mqtt_message{ topic: "handCommander/game/key_command" payload: "KEY_1"}
                         }
       fixed_actions_map { start_action: 2
                           time_between_actions: 5.0
                           auto_repeat: false
-                          mqtt_message{ topic: "handCommander/tv/ir_command" payload: "KEY_3"}
+                          mqtt_message{ topic: "handCommander/game/key_command" payload: "KEY_3"}
                         }
     }
   }
@@ -125,7 +124,7 @@ node {
   input_stream: "message_fixed"
   # input_stream: "message_writing"
   # input_stream: "message_moving"
-  input_stream: "message_transition"
+  # input_stream: "message_transition"
   output_stream: "message"
 }
 
@@ -135,11 +134,11 @@ node {
   node_options: {
 
    [type.googleapis.com/mediapipe.MqttPublisherCalculatorOptions] {
-      client_id: "HandCommander"
-      broker_ip:  "192.168.8.218"
-      broker_port: 1883
-      user: "nghia"          #optional
-      password: "123456"     #optional
+      client_id:    "HandCommander"
+      broker_ip:    "192.168.8.218"
+      broker_port:  1883
+      user:         "nghia"          #optional
+      password:     "123456"     #optional
       
     }
   }
