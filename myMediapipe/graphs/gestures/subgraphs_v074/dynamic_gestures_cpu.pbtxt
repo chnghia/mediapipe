@@ -59,7 +59,6 @@ node {
   node_options: {
     [type.googleapis.com/mediapipe.TfLiteInferenceCalculatorOptions] {
       model_path: "myMediapipe/models/gestures003.tflite"
-      use_gpu: true
     }
   }
 }
@@ -70,7 +69,9 @@ node {
   output_stream: "detections"
     node_options: {
     [type.googleapis.com/mediapipe.AnglesToDetectionCalculatorOptions] {
-      queue_size: 10
+      queue_size: 20
+      min_score_threshold: 0.995
+      queue_time_out_s: 5.0
     }
   }
 }

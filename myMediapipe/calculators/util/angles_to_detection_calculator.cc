@@ -54,17 +54,17 @@ constexpr char kTfLiteFloat32[] = "TENSORS";
 // }
 
 class AnglesToDetectionCalculator : public CalculatorBase {
- public:
+public:
   static ::mediapipe::Status GetContract(CalculatorContract* cc);
   ::mediapipe::Status Open(CalculatorContext* cc) override;
 
   ::mediapipe::Status Process(CalculatorContext* cc) override;
 
- private:
+private:
   typedef struct {
     float score_; 
     int label_;
-    } inValues_t ;
+  } inValues_t ;
  
   std::vector<inValues_t> inferenceQueue;
   decltype(Timestamp().Seconds()) startingGestureTime;
@@ -80,25 +80,22 @@ REGISTER_CALCULATOR(AnglesToDetectionCalculator);
   RET_CHECK(cc->Inputs().HasTag(kTfLiteFloat32));
   //RET_CHECK(cc->Outputs().HasTag(kDetectionTag));
   // TODO: Also support converting Landmark to Detection.
-  cc->Inputs()
-      .Tag(kTfLiteFloat32) 
-      .Set<std::vector<TfLiteTensor>>();
+  cc->Inputs().Tag(kTfLiteFloat32) 
+              .Set<std::vector<TfLiteTensor>>();
   //cc->Outputs().Tag(kDetectionTag).Set<Detection>();
   cc->Outputs().Index(0).Set<Detections>();
 
   return ::mediapipe::OkStatus();
 }
 
-::mediapipe::Status AnglesToDetectionCalculator::Open(
-    CalculatorContext* cc) {
+::mediapipe::Status AnglesToDetectionCalculator::Open(CalculatorContext* cc) {
   cc->SetOffset(TimestampDiff(0));
 
   options_ = cc->Options<::mediapipe::AnglesToDetectionCalculatorOptions>();
   return ::mediapipe::OkStatus();
 }
 
-::mediapipe::Status AnglesToDetectionCalculator::Process(
-    CalculatorContext* cc) {
+::mediapipe::Status AnglesToDetectionCalculator::Process(CalculatorContext* cc) {
   RET_CHECK(!cc->Inputs().Tag(kTfLiteFloat32).IsEmpty());
 
   const auto& input_tensors =
@@ -170,33 +167,30 @@ void AnglesToDetectionCalculator::mostFrequent(inValues_t &currentInference,
 
   inferenceQueue.emplace_back(currentInference);
 
-  if(options_.has_queue_time_out_s() && (startingGestureTime)){
-    if((currGestureTime - 
-        startingGestureTime) >= options_.queue_time_out_s()){
+  if (options_.has_queue_time_out_s() && (startingGestureTime)) {
+    if ((currGestureTime - startingGestureTime) >= options_.queue_time_out_s()) {
       inferenceQueue.clear();    
     }
   }  
   startingGestureTime = currGestureTime;
 
 
-  if(inferenceQueue.size()>=options_.queue_size()){
+  if (inferenceQueue.size()>=options_.queue_size()) {
     inferenceQueue.erase(inferenceQueue.begin());
 
-    for(auto cInference: inferenceQueue){
-      
-       
+    for(auto cInference: inferenceQueue) {
       it = trackInferences.find(cInference.label_);
-      if(it == trackInferences.end()) {
+      if (it == trackInferences.end()) {
         inferenceAttr.counts=1;
         inferenceAttr.sumScores=cInference.score_;
         trackInferences.emplace(cInference.label_,inferenceAttr);
       }
-      else{
+      else {
         trackInferences[cInference.label_].counts++;
         trackInferences[cInference.label_].sumScores+=cInference.score_;
       }
       
-      if(trackInferences[cInference.label_].counts > highestOccurrence.count){ 
+      if (trackInferences[cInference.label_].counts > highestOccurrence.count) {
         highestOccurrence.label = cInference.label_;
         highestOccurrence.count = trackInferences[cInference.label_].counts;
       }
@@ -209,9 +203,8 @@ void AnglesToDetectionCalculator::mostFrequent(inValues_t &currentInference,
     
     }
   
-    currentInference.label_=highestOccurrence.label;
-    currentInference.score_= trackInferences[highestOccurrence.label].sumScores / 
-                          highestOccurrence.count;
+    currentInference.label_ = highestOccurrence.label;
+    currentInference.score_ = trackInferences[highestOccurrence.label].sumScores / highestOccurrence.count;
 
     trackInferences.clear();  
   }  
