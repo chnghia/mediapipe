@@ -71,7 +71,7 @@ node {
     [type.googleapis.com/mediapipe.AnglesToDetectionCalculatorOptions] {
       queue_size: 15
       min_score_threshold: 0.995
-      queue_time_out_s: 3.0
+      queue_time_out_s: 2.0
     }
   }
 }
