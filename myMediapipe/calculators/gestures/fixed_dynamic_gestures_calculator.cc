@@ -193,7 +193,7 @@ REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
   //           << "\t :" << std::to_string(lastGesture.start_action)
   //           << "\t :" << std::to_string(lastGesture.start_action)
 
-  if(lastGesture.notEmpty && (lastGesture.start_action != label_id)) {
+  if (lastGesture.notEmpty && (lastGesture.start_action != label_id)) {
     clear(currentAction, lastGesture);
   }
   
@@ -215,7 +215,6 @@ REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
     }
   }
   if (currentAction.IsInitialized()) {
-
     //  std::cout << "\n !!Gesture:" << std::to_string(label_id)
     //              << "\t :" << std::to_string(currentAction.start_action())
     //              << "\t :" << std::to_string(currentAction.time_between_actions())
@@ -231,14 +230,12 @@ REGISTER_CALCULATOR(fixedDynamicGesturesCalculator);
     if (!lastGesture.notEmpty) {
       executeAction(currentAction,lastGesture, cc->InputTimestamp().Seconds(), angles, cc);
     }
-    
     else{
       if (currentAction.auto_repeat() && 
          ((cc->InputTimestamp().Seconds() - lastGesture.time) >= currentAction.time_between_actions())) {
            executeAction(currentAction,lastGesture, cc->InputTimestamp().Seconds(), angles, cc);
          }
     }
-    
     
     // TimeOut
     if ((cc->InputTimestamp().Seconds() - lastGesture.time) >= options_.fixed_time_out_s()) {
