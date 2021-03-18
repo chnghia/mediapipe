@@ -69,7 +69,8 @@ bool Mqtt::publish(string message)
      * false: set to true to make the message retained.
      *
      */
-    int answer = mosqpp::mosquittopp::publish(nullptr, publish_topic.c_str(), message.length(), message.c_str(), 1, false);
+    int answer = mosqpp::mosquittopp::publish(nullptr, publish_topic.c_str(), message.length(), message.c_str(), 0, false);
+    // int answer = mosqpp::mosquittopp::publish(nullptr, publish_topic.c_str(), message.length(), message.c_str(), 1, false);
     return (answer == MOSQ_ERR_SUCCESS);
 }
 
