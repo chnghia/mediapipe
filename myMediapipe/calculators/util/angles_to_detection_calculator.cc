@@ -105,8 +105,7 @@ REGISTER_CALCULATOR(AnglesToDetectionCalculator);
   const float* raw_floats = raw_tensor->data.f;
   
   //std::cout  << raw_tensor->name;
-  inValues_t currentInference; 
-  
+  inValues_t currentInference;
 
   for(int i=0;i<raw_tensor->dims->data[1]; i++){
     if (options_.has_min_score_threshold() &&
