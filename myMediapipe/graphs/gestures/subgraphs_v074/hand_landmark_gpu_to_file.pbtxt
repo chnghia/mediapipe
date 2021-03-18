@@ -96,7 +96,7 @@ node {
   output_stream: "FLAG:hand_presence"
   node_options: {
     [type.googleapis.com/mediapipe.ThresholdingCalculatorOptions] {
-      threshold: 0.3
+      threshold: 0.8
     }
   }
 }
@@ -157,9 +157,9 @@ node {
   input_stream: "ANGLES:angles"
   node_options: {
     [type.googleapis.com/mediapipe.LandmarksAndAnglesToFileCalculatorOptions] {
-      file_name: "myMediapipe/trainingData/staticGestures/210317_0940/test.csv" 
+      file_name: "myMediapipe/trainingData/staticGestures/210318_0950/test.csv" 
       debug_to_terminal: true
-      minFPS: 7
+      minFPS: 15
     }
   }
 }

@@ -110,7 +110,7 @@ node {
       h_scale: 256.0
       w_scale: 256.0
       # min_score_thresh: 0.7
-      min_score_thresh: 0.9
+      min_score_thresh: 0.995
     }
   }
 }
