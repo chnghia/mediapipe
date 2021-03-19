@@ -57,7 +57,7 @@ public:
 
 private:
   uint16_t getFPS(double currentUS); 
-  FaceDetectionToConsoleCalculator options_;
+  // FaceDetectionToConsoleCalculator options_;
   uint32_t processedFrames; 
   std::ofstream outputFile;
 };
@@ -77,13 +77,13 @@ REGISTER_CALCULATOR(FaceDetectionToConsoleCalculator);
 
 ::mediapipe::Status FaceDetectionToConsoleCalculator::Open(CalculatorContext* cc) {
   cc->SetOffset(TimestampDiff(0));
-  options_ = cc->Options<FaceDetectionToConsoleCalculator>();
+  // options_ = cc->Options<FaceDetectionToConsoleCalculator>();
   
   processedFrames = 0;
 
-  if(options_.has_file_name()){
-    outputFile.open(options_.file_name());  
-  }
+  // if(options_.has_file_name()){
+  //   outputFile.open(options_.file_name());  
+  // }
     
   return ::mediapipe::OkStatus();
   
@@ -110,11 +110,11 @@ REGISTER_CALCULATOR(FaceDetectionToConsoleCalculator);
   // if(!landmarks[0].x()) return ::mediapipe::OkStatus(); 
   
   const auto fps = getFPS(cc->InputTimestamp().Seconds());
-  if(fps < options_.minfps())  return ::mediapipe::OkStatus();
+  // if(fps < options_.minfps())  return ::mediapipe::OkStatus();
 
   processedFrames++;
 
-  if(options_.debug_to_terminal()){
+  if(true) /*options_.debug_to_terminal()*/{
      initscr(); /* Start curses mode */
      clear();
      std::string header = "Output: "; 
@@ -170,7 +170,8 @@ REGISTER_CALCULATOR(FaceDetectionToConsoleCalculator);
         std::cout  << "X:" << std::to_string(landmark.x()) << " - " << landmark_data->x() << "\n";
       }*/
   // }
-  if (options_.debug_to_terminal() refresh();			/* Print it on to the real screen */
+  // if (options_.debug_to_terminal()) refresh();			/* Print it on to the real screen */
+  refresh();
 
   // cc->Outputs()
   //     .Tag(kAngleDataTag)
