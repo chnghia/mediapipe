@@ -30,7 +30,24 @@ cc_binary(
 cc_binary(
     name = "face_detection_gpu",
     deps = [
-        "//mediapipe/examples/desktop:demo_run_graph_main_gpu",
+        "//myMediapipe/examples/desktop:demo_run_graph_main_gpu",
+        "//myMediapipe/graphs/face_detection_age:desktop_live_gpu_calculators",
+    ],
+)
+
+cc_binary(
+    name = "face_detection_cpu_tx2",
+    deps = [
+        "//myMediapipe/examples/desktop:demo_run_graph_main_tx2",
+        "//myMediapipe/graphs/face_detection_age:desktop_live_calculators",
+    ],
+)
+
+# Linux only
+cc_binary(
+    name = "face_detection_gpu_tx2",
+    deps = [
+        "//myMediapipe/examples/desktop:demo_run_graph_main_gpu_tx2",
         "//myMediapipe/graphs/face_detection_age:desktop_live_gpu_calculators",
     ],
 )
