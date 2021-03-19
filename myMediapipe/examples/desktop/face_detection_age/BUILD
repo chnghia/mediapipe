@@ -30,7 +30,7 @@ cc_binary(
 cc_binary(
     name = "face_detection_gpu",
     deps = [
-        "//myMediapipe/examples/desktop:demo_run_graph_main_gpu",
+        "//mediapipe/examples/desktop:demo_run_graph_main_gpu",
         "//myMediapipe/graphs/face_detection_age:desktop_live_gpu_calculators",
     ],
 )
