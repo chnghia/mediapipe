@@ -18,7 +18,6 @@
 #include "mediapipe/framework/calculator_framework.h"
 #include "mediapipe/framework/calculator_options.pb.h"
 #include "mediapipe/framework/formats/detection.pb.h"
-#include "myMediapipe/framework/formats/angles.pb.h"
 #include "mediapipe/framework/port/ret_check.h"
 #include "ncurses.h"
 #include <fstream>
