@@ -65,7 +65,7 @@ private:
 REGISTER_CALCULATOR(FaceDetectionToConsoleCalculator);
 
 ::mediapipe::Status FaceDetectionToConsoleCalculator::GetContract(CalculatorContract* cc) {
-  RET_CHECK(cc->Inputs().HasTag(kDetectionsTag)
+  RET_CHECK(cc->Inputs().HasTag(kDetectionsTag))
       << "None of the input streams are provided.";
 
   if (cc->Inputs().HasTag(kDetectionsTag)) {
