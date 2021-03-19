@@ -126,17 +126,17 @@ REGISTER_CALCULATOR(FaceDetectionToConsoleCalculator);
      printw(header.c_str());
   }
  
-  // for (const auto &landmark : landmarks)
-  // {
+  for (const auto &detection : detections)
+  {
   //   const unsigned char lmIndex = (&landmark - &landmarks[0]);
     
   //   if(options_.debug_to_terminal()){
-  //     std::string dispText = "LM:"; 
-  //     dispText.append(std::to_string(lmIndex));
-  //     dispText.append("\tX:");
-  //     dispText.append(std::to_string(landmark.x()));
-  //     dispText.append("\tY:");
-  //     dispText.append(std::to_string(landmark.y()));
+      std::string dispText = "Face:"; 
+      dispText.append(std::to_string(detection.label()));
+      dispText.append("\tScore:");
+      dispText.append(std::to_string(detection.score()));
+      // dispText.append("\tY:");
+      // dispText.append(std::to_string(landmark.y()));
   //     dispText.append("\tDegrees 1:");
   //     dispText.append(std::to_string(angles[lmIndex].angle1()));
   //     dispText.append("\tDegrees 2:");
@@ -144,7 +144,7 @@ REGISTER_CALCULATOR(FaceDetectionToConsoleCalculator);
 
 
   //     move(lmIndex + 2,0);
-	//     printw(dispText.c_str());	
+	    printw(dispText.c_str());	
 	    
   //   }
 
@@ -169,7 +169,7 @@ REGISTER_CALCULATOR(FaceDetectionToConsoleCalculator);
     /*if((&landmark - &landmarks[0])==0){
         std::cout  << "X:" << std::to_string(landmark.x()) << " - " << landmark_data->x() << "\n";
       }*/
-  // }
+  }
   // if (options_.debug_to_terminal()) refresh();			/* Print it on to the real screen */
   refresh();
 
