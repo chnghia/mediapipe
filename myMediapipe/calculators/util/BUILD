@@ -172,4 +172,5 @@ cc_library(
         "@system_libs//:libncurses",
         "@system_headers//:headers",
     ],
+    alwayslink = 1,
 )
