@@ -45,6 +45,7 @@ cc_library(
         "//mediapipe/calculators/core:flow_limiter_calculator",
         "//mediapipe/calculators/util:annotation_overlay_calculator",
         "//mediapipe/calculators/util:detections_to_render_data_calculator",
+        "//myMediapipe/calculators/util:face_detection_to_console_calculator",
         "//mediapipe/modules/face_detection:face_detection_front_gpu",
     ],
 )

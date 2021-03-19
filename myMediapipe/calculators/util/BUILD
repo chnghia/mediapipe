@@ -157,3 +157,19 @@ cc_library(
     ],
     alwayslink = 1,
 )
+
+cc_library(
+    name = "face_detection_to_console_calculator",
+    srcs = ["face_detection_to_console_calculator.cc"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//mediapipe/framework:calculator_framework",
+        "//mediapipe/framework:calculator_options_cc_proto",
+        "//mediapipe/framework/formats:detection_cc_proto",
+        "//mediapipe/framework/port:ret_check",
+        "@com_google_absl//absl/memory",
+        "@com_google_absl//absl/strings",
+        "@system_libs//:libncurses",
+        "@system_headers//:headers",
+    ],
+)
