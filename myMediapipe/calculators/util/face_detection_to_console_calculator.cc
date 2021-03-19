@@ -132,7 +132,7 @@ REGISTER_CALCULATOR(FaceDetectionToConsoleCalculator);
     
   //   if(options_.debug_to_terminal()){
       std::string dispText = "Face:"; 
-      dispText.append(std::to_string(detection.label()));
+      dispText.append(detection.label());
       dispText.append("\tScore:");
       dispText.append(std::to_string(detection.score(0)));
       // dispText.append("\tY:");
