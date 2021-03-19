@@ -169,7 +169,7 @@ REGISTER_CALCULATOR(FaceDetectionToConsoleCalculator);
     /*if((&landmark - &landmarks[0])==0){
         std::cout  << "X:" << std::to_string(landmark.x()) << " - " << landmark_data->x() << "\n";
       }*/
-  }
+  // }
   if (options_.debug_to_terminal() refresh();			/* Print it on to the real screen */
 
   // cc->Outputs()
