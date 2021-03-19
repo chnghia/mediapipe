@@ -134,7 +134,7 @@ REGISTER_CALCULATOR(FaceDetectionToConsoleCalculator);
       std::string dispText = "Face:"; 
       dispText.append(std::to_string(detection.label()));
       dispText.append("\tScore:");
-      dispText.append(std::to_string(detection.score()));
+      dispText.append(std::to_string(detection.score(0)));
       // dispText.append("\tY:");
       // dispText.append(std::to_string(landmark.y()));
   //     dispText.append("\tDegrees 1:");
