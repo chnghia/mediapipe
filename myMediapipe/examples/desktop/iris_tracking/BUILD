@@ -14,7 +14,9 @@
 
 licenses(["notice"])
 
-package(default_visibility = ["//mediapipe/examples:__subpackages__"])
+package(default_visibility = [
+    "//visibility:public",
+])
 
 cc_binary(
     name = "iris_depth_from_image_desktop",
