@@ -19,6 +19,7 @@
 #include "mediapipe/framework/formats/classification.pb.h"
 #include "mediapipe/framework/formats/landmark.pb.h"
 #include "mediapipe/framework/formats/rect.pb.h"
+#include "mediapipe/framework/formats/detection.pb.h"
 #include "mediapipe/util/render_data.pb.h"
 #include "tensorflow/lite/interpreter.h"
 
@@ -45,5 +46,9 @@ REGISTER_CALCULATOR(EndLoopClassificationListCalculator);
 
 typedef EndLoopCalculator<std::vector<TfLiteTensor>> EndLoopTensorCalculator;
 REGISTER_CALCULATOR(EndLoopTensorCalculator);
+
+// testing detection loop
+typedef EndLoopCalculator<std::vector<Detection>> EndLoopDetectionsCalculator;
+REGISTER_CALCULATOR(EndLoopDetectionsCalculator);
 
 }  // namespace mediapipe

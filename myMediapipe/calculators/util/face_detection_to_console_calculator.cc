@@ -26,7 +26,7 @@
 namespace mediapipe {
 
 namespace {
-constexpr char kDetectionsTag[] = "DETECTIONS";
+constexpr char kDetectionTag[] = "DETECTION";
 }  // namespace
 
 // Writes Landmarks and Angles to a CSV file with the intention to generate data_ 
@@ -65,12 +65,14 @@ private:
 REGISTER_CALCULATOR(FaceDetectionToConsoleCalculator);
 
 ::mediapipe::Status FaceDetectionToConsoleCalculator::GetContract(CalculatorContract* cc) {
-  RET_CHECK(cc->Inputs().HasTag(kDetectionsTag))
+  RET_CHECK(cc->Inputs().HasTag(kDetectionTag))
       << "None of the input streams are provided.";
 
-  if (cc->Inputs().HasTag(kDetectionsTag)) {
-    cc->Inputs().Tag(kDetectionsTag).Set<std::vector<Detection>>();
+  if (cc->Inputs().HasTag(kDetectionTag)) {
+    cc->Inputs().Tag(kDetectionTag).Set<Detection>();
   }
+    
+  cc->Outputs().Tag(kDetectionTag).Set<Detection>();
   
   return ::mediapipe::OkStatus();
 }
@@ -90,21 +92,22 @@ REGISTER_CALCULATOR(FaceDetectionToConsoleCalculator);
 }
 ::mediapipe::Status FaceDetectionToConsoleCalculator::Close(CalculatorContext* cc) {
   endwin();
-  if (outputFile.is_open()) outputFile.close();    
+  //if (outputFile.is_open()) outputFile.close();    
   return ::mediapipe::OkStatus();
 
 }
 
 ::mediapipe::Status FaceDetectionToConsoleCalculator::Process(CalculatorContext* cc) {
   // Only process if there's input landmarks.
-  if (cc->Inputs().Tag(kDetectionsTag).IsEmpty())
+  if (cc->Inputs().Tag(kDetectionTag).IsEmpty())
   {
     return ::mediapipe::OkStatus();
   }
 
-  const auto &detections = cc->Inputs()
-                              .Tag(kDetectionsTag)
-                              .Get<std::vector<Detection>>();
+  const auto &detection = cc->Inputs().Tag(kDetectionTag)
+                                      .Get<Detection>();
+    
+  auto detection_out = absl::make_unique<Detection>();
 
   //Do not process if no hand is present
   // if(!landmarks[0].x()) return ::mediapipe::OkStatus(); 
@@ -114,68 +117,66 @@ REGISTER_CALCULATOR(FaceDetectionToConsoleCalculator);
 
   processedFrames++;
 
-  if(true) /*options_.debug_to_terminal()*/{
-     initscr(); /* Start curses mode */
-     clear();
-     std::string header = "Output: "; 
+//  if(false) /*options_.debug_to_terminal()*/{
+//     initscr(); /* Start curses mode */
+//     clear();
+//     std::string header = "Output: "; 
     //  header.append(options_.file_name());
-     header.append("\nNumber of Processed Frames:");
-     header.append(std::to_string(processedFrames));
-     header.append("\tFPS:");
-     header.append(std::to_string(fps));
-     printw(header.c_str());
-  }
+//     header.append("\nNumber of Processed Frames:");
+//     header.append(std::to_string(processedFrames));
+//     header.append("\tFPS:");
+//     header.append(std::to_string(fps));
+//     header.append("\tDetection:");
+//     header.append(std::to_string(detection.score(0)));
+//     header.append("\n");
+//     printw(header.c_str());
+//  }
  
-  for (const auto &detection : detections)
-  {
-  //   const unsigned char lmIndex = (&landmark - &landmarks[0]);
+//  for (const auto &detection : detections)
+//  {
+//     const unsigned char lmIndex = (&landmark - &landmarks[0]);
     
-  //   if(options_.debug_to_terminal()){
-      std::string dispText = "Face:"; 
-      dispText.append(detection.label());
-      dispText.append("\tScore:");
-      dispText.append(std::to_string(detection.score(0)));
-      // dispText.append("\tY:");
-      // dispText.append(std::to_string(landmark.y()));
-  //     dispText.append("\tDegrees 1:");
-  //     dispText.append(std::to_string(angles[lmIndex].angle1()));
-  //     dispText.append("\tDegrees 2:");
-  //     dispText.append(std::to_string(angles[lmIndex].angle2()));
+//     if(options_.debug_to_terminal()){
+//      std::string dispText = "Face:"; 
+//       dispText.append(detection.label(0));
+//       dispText.append("\tScore:");
+//      dispText.append(std::to_string(detection.score(0)));
+//       dispText.append("\tY:");
+//       dispText.append(std::to_string(landmark.y()));
+//       dispText.append("\tDegrees 1:");
+//       dispText.append(std::to_string(angles[lmIndex].angle1()));
+//       dispText.append("\tDegrees 2:");
+//       dispText.append(std::to_string(angles[lmIndex].angle2()));
+//       move(lmIndex + 2,0);
+//      dispText.append("\n");
+//      printw(dispText.c_str());
+//     }
 
-
-  //     move(lmIndex + 2,0);
-	    printw(dispText.c_str());	
-	    
-  //   }
-
-  //   if (outputFile.is_open()){
-  //     const char* delimiter = ",";
-  //     std::string outText ="";
-  //     outText.append(std::to_string(lmIndex));
-  //     outText.append(delimiter);
-  //     outText.append(std::to_string(landmark.x()));
-  //     outText.append(delimiter);
-  //     outText.append(std::to_string(landmark.y()));
-  //     outText.append(delimiter);
-  //     outText.append(std::to_string(angles[lmIndex].angle1()));
-  //     outText.append(delimiter);
-  //     outText.append(std::to_string(angles[lmIndex].angle2()));
-  //     outText.append("\n");
-  //     outputFile << outText;
-
-  //   }
+//     if (outputFile.is_open()){
+//       const char* delimiter = ",";
+//       std::string outText ="";
+//       outText.append(std::to_string(lmIndex));
+//       outText.append(delimiter);
+//       outText.append(std::to_string(landmark.x()));
+//       outText.append(delimiter);
+//       outText.append(std::to_string(landmark.y()));
+//       outText.append(delimiter);
+//       outText.append(std::to_string(angles[lmIndex].angle1()));
+//       outText.append(delimiter);
+//       outText.append(std::to_string(angles[lmIndex].angle2()));
+//       outText.append("\n");
+//       outputFile << outText;
+//     }
 
 
     /*if((&landmark - &landmarks[0])==0){
         std::cout  << "X:" << std::to_string(landmark.x()) << " - " << landmark_data->x() << "\n";
       }*/
-  }
+//  }
   // if (options_.debug_to_terminal()) refresh();			/* Print it on to the real screen */
-  refresh();
+  //refresh();
 
-  // cc->Outputs()
-  //     .Tag(kAngleDataTag)
-  //     .Add(output_angles.release(), cc->InputTimestamp());
+  cc->Outputs().Tag(kDetectionTag).Add(detection_out.release(), cc->InputTimestamp());
   return ::mediapipe::OkStatus();
 }
 

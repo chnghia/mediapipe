@@ -49,6 +49,46 @@ node {
   }
 }
 
+# Calculate size of the image.
+node {
+  calculator: "ImagePropertiesCalculator"
+  input_stream: "IMAGE:throttled_input_video"
+  output_stream: "SIZE:throttled_input_video_size" #gated_image_size
+}
+
+# Outputs each element of face_detections at a fake timestamp for the rest of
+# the graph to process. Clones the image size packet for each face_detection at
+# the fake timestamp. At the end of the loop, outputs the BATCH_END timestamp
+# for downstream calculators to inform them that all elements in the vector have
+# been processed.
+node {
+  calculator: "BeginLoopDetectionCalculator"
+  input_stream: "ITERABLE:face_detections"
+  input_stream: "CLONE:throttled_input_video_size" # gated_image_size
+  output_stream: "ITEM:face_detection"
+  output_stream: "CLONE:detections_loop_image_size"
+  output_stream: "BATCH_END:detections_loop_end_timestamp"
+}
+
+# Calculates region of interest based on face detections, so that can be used
+# to detect landmarks.
+node {
+  calculator: "FaceAgeSubgraph"
+  input_stream: "DETECTION:face_detection"
+  input_stream: "IMAGE_SIZE:detections_loop_image_size"
+  output_stream: "DETECTION:face_rect_from_detection"
+}
+
+# Collects a NormalizedRect for each face into a vector. Upon receiving the
+# BATCH_END timestamp, outputs the vector of NormalizedRect at the BATCH_END
+# timestamp.
+node {
+  calculator: "EndLoopDetectionsCalculator"
+  input_stream: "ITEM:face_rect_from_detection"
+  input_stream: "BATCH_END:detections_loop_end_timestamp"
+  output_stream: "ITERABLE:face_rects_from_detections"
+}
+
 # Draws annotations and overlays them on top of the input images.
 node {
   calculator: "AnnotationOverlayCalculator"

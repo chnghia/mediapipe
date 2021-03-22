@@ -9,17 +9,18 @@ def on_message(client, userdata, message):
     print("received message: " , msg)
 
     if msg == "KEY_VOLUMEUP":
-      keyboard.press(Key.space)
-      time.sleep(0.1)
-      keyboard.release(Key.space)
+      keyboard.tap(Key.space)
     if msg == "KEY_1":
       keyboard.press('1')
+      time.sleep(0.1)
       keyboard.release('1')
     if msg == "KEY_2":
       keyboard.press('2')
+      time.sleep(0.1)
       keyboard.release('2')
     if msg == "KEY_3":
       keyboard.press('3')
+      time.sleep(0.1)
       keyboard.release('3')
 
 mqttBroker ="192.168.8.218"
