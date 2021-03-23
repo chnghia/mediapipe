@@ -12,89 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-licenses(["notice"])
-
 load(
     "//mediapipe/framework/tool:mediapipe_graph.bzl",
-    "mediapipe_simple_subgraph",
+    "mediapipe_binary_graph",
 )
+
+licenses(["notice"])
 
 package(default_visibility = ["//visibility:public"])
-
-# cc_library(
-#     name = "mobile_calculators",
-#     deps = [
-#         "//mediapipe/calculators/core:flow_limiter_calculator",
-#         "//mediapipe/calculators/util:annotation_overlay_calculator",
-#         "//mediapipe/calculators/util:detections_to_render_data_calculator",
-#         "//mediapipe/gpu:gpu_buffer_to_image_frame_calculator",
-#         "//mediapipe/gpu:image_frame_to_gpu_buffer_calculator",
-#         "//mediapipe/modules/face_detection:face_detection_front_cpu",
-#         "//mediapipe/modules/face_detection:face_detection_front_gpu",
-#     ],
-# )
-
-mediapipe_simple_subgraph(
-    name = "face_age_subgraph",
-    graph = "face_age_subgraph.pbtxt",
-    register_as = "FaceAgeSubgraph",
-    deps = [
-        "//mediapipe/calculators/core:begin_loop_calculator",
-        "//mediapipe/calculators/core:end_loop_calculator",
-        "//mediapipe/calculators/image:image_cropping_calculator",
-        "//mediapipe/calculators/image:image_transformation_calculator",
-        "//mediapipe/calculators/tflite:tflite_converter_calculator",
-        "//mediapipe/calculators/tflite:tflite_inference_calculator",
-        "//mediapipe/calculators/tflite:tflite_tensors_to_detections_calculator",
-    ],
-)
 
 cc_library(
     name = "desktop_live_calculators",
     deps = [
-        "face_age_subgraph",
+        "//mediapipe/calculators/core:constant_side_packet_calculator",
         "//mediapipe/calculators/core:flow_limiter_calculator",
-        "//mediapipe/calculators/util:annotation_overlay_calculator",
-        "//mediapipe/calculators/util:detections_to_render_data_calculator",
-        "//mediapipe/calculators/core:begin_loop_calculator",
-        "//mediapipe/calculators/core:end_loop_calculator",
-        "//mediapipe/modules/face_detection:face_detection_front_cpu",
-        "//mediapipe/calculators/image:image_properties_calculator",
-        "//myMediapipe/calculators/util:face_detection_to_console_calculator",
+        "//mediapipe/graphs/face_mesh/subgraphs:face_renderer_cpu",
+        "//mediapipe/modules/face_landmark:face_landmark_front_cpu",
     ],
 )
-
-cc_library(
-    name = "desktop_live_gpu_calculators",
-    deps = [
-        "face_age_subgraph",
-        "//mediapipe/calculators/core:flow_limiter_calculator",
-        "//mediapipe/calculators/util:annotation_overlay_calculator",
-        "//mediapipe/calculators/util:detections_to_render_data_calculator",
-        "//mediapipe/calculators/core:begin_loop_calculator",
-        "//mediapipe/calculators/core:end_loop_calculator",
-        "//myMediapipe/calculators/util:face_detection_to_console_calculator",
-        "//mediapipe/modules/face_detection:face_detection_front_gpu",
-    ],
-)
-
-
-
-# load(
-#     "//mediapipe/framework/tool:mediapipe_graph.bzl",
-#     "mediapipe_binary_graph",
-# )
-
-# mediapipe_binary_graph(
-#     name = "face_detection_mobile_cpu_binary_graph",
-#     graph = "face_detection_mobile_cpu.pbtxt",
-#     output_name = "face_detection_mobile_cpu.binarypb",
-#     deps = [":mobile_calculators"],
-# )
-
-# mediapipe_binary_graph(
-#     name = "face_detection_mobile_gpu_binary_graph",
-#     graph = "face_detection_mobile_gpu.pbtxt",
-#     output_name = "face_detection_mobile_gpu.binarypb",
-#     deps = [":mobile_calculators"],
-# )
