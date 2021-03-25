@@ -2,6 +2,8 @@ bazel-*
 mediapipe/MediaPipe.xcodeproj
 mediapipe/MediaPipe.tulsiproj/*.tulsiconf-user
 mediapipe/provisioning_profile.mobileprovision
+videos/
+myMediapipe/trainingData/
 .configure.bazelrc
 .user.bazelrc
 .DS_Store
