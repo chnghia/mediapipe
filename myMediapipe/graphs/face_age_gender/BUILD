@@ -26,7 +26,7 @@ cc_library(
     deps = [
         "//mediapipe/calculators/core:constant_side_packet_calculator",
         "//mediapipe/calculators/core:flow_limiter_calculator",
-        "//mediapipe/graphs/face_mesh/subgraphs:face_renderer_cpu",
+        "//myMediapipe/graphs/face_age_gender/face_mesh:face_renderer_cpu",
         "//myMediapipe/graphs/face_age_gender/face_landmark:face_landmark_front_cpu",
     ],
 )
