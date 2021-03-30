@@ -183,27 +183,27 @@ node {
 
 # Detects face landmarks within specified region of interest of the image.
 node {
-  calculator: "FaceLandmarkCpu"
+  calculator: "FaceAgeGenderCpu"
   input_stream: "IMAGE:landmarks_loop_image"
   input_stream: "ROI:face_rect"
-  output_stream: "LANDMARKS:face_landmarks"
+  output_stream: "TENSORS:output_tensors"
 }
 
-# Calculates region of interest based on face landmarks, so that can be reused
-# for subsequent image.
-node {
-  calculator: "FaceLandmarkLandmarksToRoi"
-  input_stream: "LANDMARKS:face_landmarks"
-  input_stream: "IMAGE_SIZE:landmarks_loop_image_size"
-  output_stream: "ROI:face_rect_from_landmarks"
-}
+# # Calculates region of interest based on face landmarks, so that can be reused
+# # for subsequent image.
+# node {
+#   calculator: "FaceLandmarkLandmarksToRoi"
+#   input_stream: "LANDMARKS:face_landmarks"
+#   input_stream: "IMAGE_SIZE:landmarks_loop_image_size"
+#   output_stream: "ROI:face_rect_from_landmarks"
+# }
 
 # Collects a set of landmarks for each face into a vector. Upon receiving the
 # BATCH_END timestamp, outputs the vector of landmarks at the BATCH_END
 # timestamp.
 node {
   calculator: "EndLoopNormalizedLandmarkListVectorCalculator"
-  input_stream: "ITEM:face_landmarks"
+  input_stream: "ITEM:output_tensors"
   input_stream: "BATCH_END:landmarks_loop_end_timestamp"
   output_stream: "ITERABLE:multi_face_landmarks"
 }
