@@ -72,18 +72,18 @@ node {
 }
 
 # Converts normalized rects to drawing primitives for annotation overlay.
-node {
-  calculator: "RectToRenderDataCalculator"
-  input_stream: "NORM_RECTS:rects"
-  output_stream: "RENDER_DATA:rects_render_data"
-  node_options: {
-    [type.googleapis.com/mediapipe.RectToRenderDataCalculatorOptions] {
-      filled: false
-      color { r: 255 g: 0 b: 0 }
-      thickness: 4.0
-    }
-  }
-}
+#node {
+#  calculator: "RectToRenderDataCalculator"
+#  input_stream: "NORM_RECTS:rects"
+#  output_stream: "RENDER_DATA:rects_render_data"
+#  node_options: {
+#    [type.googleapis.com/mediapipe.RectToRenderDataCalculatorOptions] {
+#      filled: false
+#      color { r: 255 g: 0 b: 0 }
+#      thickness: 4.0
+#    }
+#  }
+#}
 
 # Draws annotations and overlays them on top of the input images.
 node {
@@ -91,6 +91,6 @@ node {
   input_stream: "IMAGE:input_image"
   input_stream: "detections_render_data"
   input_stream: "VECTOR:0:multi_face_landmarks_render_data"
-  input_stream: "rects_render_data"
+  #input_stream: "rects_render_data"
   output_stream: "IMAGE:output_image"
 }

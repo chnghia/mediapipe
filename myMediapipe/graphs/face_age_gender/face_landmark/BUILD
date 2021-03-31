@@ -59,12 +59,28 @@ mediapipe_simple_subgraph(
 )
 
 mediapipe_simple_subgraph(
+    name = "face_age_gender_cpu",
+    graph = "face_age_gender_cpu.pbtxt",
+    register_as = "FaceAgeGenderCpu",
+    deps = [
+        "//mediapipe/calculators/core:gate_calculator",
+        "//mediapipe/calculators/core:split_vector_calculator",
+        "//mediapipe/calculators/tensor:image_to_tensor_calculator",
+        "//mediapipe/calculators/tensor:inference_calculator",
+        "//mediapipe/calculators/tensor:tensors_to_floats_calculator",
+        "//mediapipe/calculators/tensor:tensors_to_landmarks_calculator",
+        "//mediapipe/calculators/util:landmark_projection_calculator",
+        "//mediapipe/calculators/util:thresholding_calculator",
+    ],
+)
+
+mediapipe_simple_subgraph(
     name = "face_landmark_front_cpu",
     graph = "face_landmark_front_cpu.pbtxt",
     register_as = "FaceLandmarkFrontCpu",
     deps = [
         ":face_detection_front_detection_to_roi",
-        ":face_landmark_cpu",
+        ":face_age_gender_cpu",
         ":face_landmark_landmarks_to_roi",
         "//mediapipe/calculators/core:begin_loop_calculator",
         "//mediapipe/calculators/core:clip_vector_size_calculator",
