@@ -203,7 +203,7 @@ node {
 # timestamp.
 node {
   calculator: "EndLoopAgeGendersCalculator"
-  input_stream: "ITEM:agegender_tensors"
+  input_stream: "ITEM:agegenders"
   input_stream: "BATCH_END:landmarks_loop_end_timestamp"
   output_stream: "ITERABLE:multi_face_agegenders"
 }

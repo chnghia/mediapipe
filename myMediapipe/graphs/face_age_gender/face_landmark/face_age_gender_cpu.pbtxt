@@ -31,7 +31,7 @@ output_stream: "AGEGENDERS:agegenders"
 # Transforms the input image into a 192x192 tensor.
 node: {
   calculator: "ImageToTensorCalculator"
-  input_stream: "IMAGE:image"7
+  input_stream: "IMAGE:image"
   input_stream: "NORM_RECT:roi"
   output_stream: "TENSORS:input_tensors"
   options: {
@@ -56,24 +56,24 @@ node {
   options: {
     [mediapipe.InferenceCalculatorOptions.ext] {
       model_path: "myMediapipe/models/age_gender.tflite"
-      delegate { xnnpack {} }
+      # delegate { xnnpack {} }
     }
   }
 }
 
 # Splits a vector of tensors into multiple vectors.
-node {
-  calculator: "SplitTensorVectorCalculator"
-  input_stream: "output_tensors"
-  output_stream: "agegender_tensors"
-  output_stream: "face_flag_tensor"
-  options: {
-    [mediapipe.SplitVectorCalculatorOptions.ext] {
-      ranges: { begin: 0 end: 1 }
-      ranges: { begin: 1 end: 2 }
-    }
-  }
-}
+#node {
+#  calculator: "SplitTensorVectorCalculator"
+#  input_stream: "output_tensors"
+#  output_stream: "agegender_tensors"
+#  output_stream: "face_flag_tensor"
+#  options: {
+#    [mediapipe.SplitVectorCalculatorOptions.ext] {
+#      ranges: { begin: 0 end: 1 }
+#      ranges: { begin: 1 end: 2 }
+#    }
+#  }
+#}
 
 # Converts the face-flag tensor into a float that represents the confidence
 # score of face presence.
@@ -113,10 +113,10 @@ node {
 # coordinates are normalized by the size of the input image to the model.
 node {
   calculator: "TensorsToAgeGenderCalculator"
-  input_stream: "TENSORS:agegender_tensors"
+  input_stream: "TENSORS:output_tensors"
   output_stream: "AGEGENDERS:agegenders"
   options: {
-    [mediapipe.TensorsToLandmarksCalculatorOptions.ext] {
+    [mediapipe.TensorsToAgeGenderCalculatorOptions.ext] {
       num_landmarks: 468
       input_image_width: 192
       input_image_height: 192

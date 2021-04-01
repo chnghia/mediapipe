@@ -26,17 +26,17 @@ namespace {
 
 inline float Sigmoid(float value) { return 1.0f / (1.0f + std::exp(-value)); }
 
-float ApplyActivation(
-    ::mediapipe::TensorsToLandmarksCalculatorOptions::Activation activation,
-    float value) {
-  switch (activation) {
-    case ::mediapipe::TensorsToLandmarksCalculatorOptions::SIGMOID:
-      return Sigmoid(value);
-      break;
-    default:
-      return value;
-  }
-}
+// float ApplyActivation(
+//     ::mediapipe::TensorsToLandmarksCalculatorOptions::Activation activation,
+//     float value) {
+//   switch (activation) {
+//     case ::mediapipe::TensorsToLandmarksCalculatorOptions::SIGMOID:
+//       return Sigmoid(value);
+//       break;
+//     default:
+//       return value;
+//   }
+// }
 
 }  // namespace
 
@@ -104,7 +104,7 @@ class TensorsToAgeGenderCalculator : public Node {
 
  private:
   mediapipe::Status LoadOptions(CalculatorContext* cc);
-  int num_landmarks_ = 0;
+//   int num_landmarks_ = 0;
   ::mediapipe::TensorsToAgeGenderCalculatorOptions options_;
 };
 MEDIAPIPE_REGISTER_NODE(TensorsToAgeGenderCalculator);
@@ -138,6 +138,29 @@ mediapipe::Status TensorsToAgeGenderCalculator::Process(CalculatorContext* cc) {
   // bool flip_vertically = kFlipVertically(cc).GetOr(options_.flip_vertically());
 
   const auto& input_tensors = *kInTensors(cc);
+  std::cout << "input_tensors size: " << input_tensors.size() << "\n";
+  // std::cout << "input_tensors age: " << input_tensors[0];
+  int num_classes1 = input_tensors[0].shape().num_elements();
+  int num_classes2 = input_tensors[1].shape().num_elements();
+  std::cout << "input_tensors age: " << num_classes1  << "\n";
+  auto a_view = input_tensors[0].GetCpuReadView();
+  auto a_raw_scores = a_view.buffer<float>();
+  std::vector<float> a_scores {a_raw_scores, a_raw_scores+num_classes1};
+  
+  std::vector<float> matrix_a(101);
+  std::iota(matrix_a.begin(), matrix_a.end(), 0);
+  double result = 0;
+  result = std::inner_product(a_scores.begin(), a_scores.end(), matrix_a.begin(), 0.0);
+
+  std::cout << "age score: " << result << "\n";
+
+  std::cout << "input_tensors gender: " << num_classes2  << "\n";
+    
+  auto view = input_tensors[1].GetCpuReadView();
+  auto raw_scores = view.buffer<float>();
+  std::cout << "gender score: " << raw_scores[0] << "," << raw_scores[1] << "\n";
+    
+
   int num_values = input_tensors[0].shape().num_elements();
   // const int num_dimensions = num_values / num_landmarks_;
   // CHECK_GT(num_dimensions, 0);
@@ -198,9 +221,9 @@ mediapipe::Status TensorsToAgeGenderCalculator::Process(CalculatorContext* cc) {
   //   kOutNormalizedLandmarkList(cc).Send(std::move(output_norm_landmarks));
   // }
 
-  // Output absolute landmarks.
-  if (kOutLandmarkList(cc).IsConnected()) {
-    kOutLandmarkList(cc).Send(std::move(output_agegenders));
+  // Output absolute age genders.
+  if (kOutAgeGenderList(cc).IsConnected()) {
+    kOutAgeGenderList(cc).Send(std::move(output_agegenders));
   }
 
   return mediapipe::OkStatus();

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "mediapipe/calculators/core/end_loop_calculator.h"
+#include "end_loop_calculator.h"
 
 #include <vector>
 
@@ -23,7 +23,7 @@
 namespace mediapipe {
 
 // testing detection loop
-typedef EndLoopCalculator<std::vector<AgeGender>> EndLoopAgeGendersCalculator;
+typedef EndLoopCalculator<std::vector<AgeGenderList>> EndLoopAgeGendersCalculator;
 REGISTER_CALCULATOR(EndLoopAgeGendersCalculator);
 
 }  // namespace mediapipe

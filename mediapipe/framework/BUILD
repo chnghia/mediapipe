@@ -18,7 +18,7 @@ load("//mediapipe/framework/port:build_config.bzl", "mediapipe_proto_library")
 
 licenses(["notice"])
 
-package(default_visibility = ["//visibility:private"])
+package(default_visibility = ["//visibility:public"])
 
 package_group(
     name = "mediapipe_internal",
@@ -157,7 +157,8 @@ cc_library(
     name = "calculator_context",
     srcs = ["calculator_context.cc"],
     hdrs = ["calculator_context.h"],
-    visibility = [":mediapipe_internal"],
+#     visibility = [":mediapipe_internal"],
+    visibility = ["//visibility:public"],
     deps = [
         ":calculator_state",
         ":counter",
@@ -195,9 +196,10 @@ cc_library(
     name = "calculator_contract",
     srcs = ["calculator_contract.cc"],
     hdrs = ["calculator_contract.h"],
-    visibility = [
-        ":mediapipe_internal",
-    ],
+#     visibility = [
+#         ":mediapipe_internal",
+#     ],
+    visibility = ["//visibility:public"],
     deps = [
         ":graph_service",
         ":packet_type",

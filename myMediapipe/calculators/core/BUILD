@@ -43,7 +43,7 @@ cc_library(
         "//mediapipe/framework:calculator_framework",
         "//mediapipe/framework:collection_item_id",
         "//mediapipe/framework:packet",
-        "//mediapipe/framework/formats:age_gender_cc_proto",
+        "//myMediapipe/framework/formats:age_gender_cc_proto",
         "//mediapipe/framework/port:integral_types",
         "//mediapipe/framework/port:ret_check",
         "//mediapipe/framework/port:status",

@@ -22,7 +22,7 @@ import "mediapipe/framework/calculator.proto";
 
 message TensorsToAgeGenderCalculatorOptions {
   extend .mediapipe.CalculatorOptions {
-    optional TensorsToLandmarksCalculatorOptions ext = 335742640;
+    optional TensorsToAgeGenderCalculatorOptions ext = 335742640;
   }
 
   enum Activation {

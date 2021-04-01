@@ -88,6 +88,7 @@ cc_library(
     name = "node",
     srcs = ["node.cc"],
     hdrs = ["node.h"],
+    visibility = ["//visibility:public"],
     deps = [
         ":const_str",
         ":contract",
