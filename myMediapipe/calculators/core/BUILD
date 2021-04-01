@@ -31,3 +31,24 @@ cc_library(
     ],
     alwayslink = 1,
 )
+
+cc_library(
+    name = "end_loop_calculator",
+    srcs = ["end_loop_calculator.cc"],
+    hdrs = ["end_loop_calculator.h"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//mediapipe/framework:calculator_context",
+        "//mediapipe/framework:calculator_contract",
+        "//mediapipe/framework:calculator_framework",
+        "//mediapipe/framework:collection_item_id",
+        "//mediapipe/framework:packet",
+        "//mediapipe/framework/formats:age_gender_cc_proto",
+        "//mediapipe/framework/port:integral_types",
+        "//mediapipe/framework/port:ret_check",
+        "//mediapipe/framework/port:status",
+        "//mediapipe/util:render_data_cc_proto",
+        "@org_tensorflow//tensorflow/lite:framework",
+    ],
+    alwayslink = 1,
+)

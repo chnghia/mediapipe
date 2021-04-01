@@ -32,7 +32,7 @@ input_side_packet: "NUM_FACES:num_faces"
 # particular timestamp if none of faces detected. However, the MediaPipe
 # framework will internally inform the downstream calculators of the absence of
 # this packet so that they don't wait for it unnecessarily.
-output_stream: "LANDMARKS:multi_face_landmarks"
+output_stream: "AGEGENDERS:multi_face_agegenders"
 
 # Extra outputs (for debugging, for instance).
 # Detected faces. (std::vector<Detection>)
@@ -186,7 +186,7 @@ node {
   calculator: "FaceAgeGenderCpu"
   input_stream: "IMAGE:landmarks_loop_image"
   input_stream: "ROI:face_rect"
-  output_stream: "TENSORS:agegender_tensors"
+  output_stream: "AGEGENDERS:agegenders"
 }
 
 # # Calculates region of interest based on face landmarks, so that can be reused
@@ -202,10 +202,10 @@ node {
 # BATCH_END timestamp, outputs the vector of landmarks at the BATCH_END
 # timestamp.
 node {
-  calculator: "EndLoopTensorCalculator"
+  calculator: "EndLoopAgeGendersCalculator"
   input_stream: "ITEM:agegender_tensors"
   input_stream: "BATCH_END:landmarks_loop_end_timestamp"
-  output_stream: "ITERABLE:multi_face_landmarks"
+  output_stream: "ITERABLE:multi_face_agegenders"
 }
 
 # Collects a NormalizedRect for each face into a vector. Upon receiving the

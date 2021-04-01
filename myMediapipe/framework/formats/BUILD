@@ -34,7 +34,7 @@ mediapipe_cc_proto_library(
     name = "angles_cc_proto",
     srcs = ["angles.proto"],
     visibility = ["//myMediapipe:__subpackages__"],
-) 
+)
 
 proto_library(
     name = "mqtt_message_proto",
@@ -47,3 +47,15 @@ mediapipe_cc_proto_library(
     srcs = ["mqtt_message.proto"],
     visibility = ["//myMediapipe:__subpackages__"],
 ) 
+
+proto_library(
+    name = "age_gender_proto",
+    srcs = ["age_gender.proto"],
+    visibility = ["//myMediapipe:__subpackages__"],
+)
+
+mediapipe_cc_proto_library(
+    name = "age_gender_cc_proto",
+    srcs = ["age_gender.proto"],
+    visibility = ["//myMediapipe:__subpackages__"],
+)
