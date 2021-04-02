@@ -94,6 +94,11 @@ node {
   output_stream: "DETECTIONS:all_face_detections"
 }
 
+node {
+  calculator: "DetectionDebuggerCalculator"
+  input_stream: "DETECTIONS:all_face_detections"
+}
+
 # Makes sure there are no more detections than the provided num_faces.
 #node {
 #  calculator: "ClipDetectionVectorSizeCalculator"
