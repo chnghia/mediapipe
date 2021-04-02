@@ -21,6 +21,19 @@ private:
 REGISTER_CALCULATOR(DetectionDebuggerCalculator);
 
 ::mediapipe::Status DetectionDebuggerCalculator::GetContract(CalculatorContract* cc) {
+  RET_CHECK(cc->Inputs().HasTag(kDetectionsTag))
+      << "None of the input streams are provided.";
+
+//   if (cc->Inputs().HasTag(kDetectionTag)) {
+//     cc->Inputs().Tag(kDetectionTag).Set<Detection>();
+//   }
+//   if (cc->Inputs().HasTag(kDetectionListTag)) {
+//     cc->Inputs().Tag(kDetectionListTag).Set<DetectionList>();
+//   }
+  if (cc->Inputs().HasTag(kDetectionsTag)) {
+    cc->Inputs().Tag(kDetectionsTag).Set<std::vector<Detection>>();
+  }
+//   cc->Outputs().Tag(kRenderDataTag).Set<RenderData>();
   return ::mediapipe::OkStatus();
 }
 
@@ -36,7 +49,7 @@ REGISTER_CALCULATOR(DetectionDebuggerCalculator);
 
   std::vector<Detection> detections;
   detections = cc->Inputs().Tag(kDetectionsTag).Get<std::vector<Detection>>();
-  std::cout << "detections size: " << detections.size();
+  std::cout << "detections size: " << detections.size() << std::endl;
 
   // debug here
 
