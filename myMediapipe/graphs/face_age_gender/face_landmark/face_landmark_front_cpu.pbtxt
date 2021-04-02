@@ -24,7 +24,7 @@ type: "FaceLandmarkFrontCpu"
 input_stream: "IMAGE:image"
 
 # Max number of faces to detect/track. (int)
-input_side_packet: "NUM_FACES:num_faces"
+#input_side_packet: "NUM_FACES:num_faces"
 
 # Collection of detected/predicted faces, each represented as a list of 468 face
 # landmarks. (std::vector<NormalizedLandmarkList>)
@@ -36,7 +36,7 @@ output_stream: "AGEGENDERS:multi_face_agegenders"
 
 # Extra outputs (for debugging, for instance).
 # Detected faces. (std::vector<Detection>)
-output_stream: "DETECTIONS:face_detections"
+output_stream: "DETECTIONS:all_face_detections"
 # Regions of interest calculated based on landmarks.
 # (std::vector<NormalizedRect>)
 # output_stream: "ROIS_FROM_LANDMARKS:face_rects_from_landmarks"
@@ -95,12 +95,12 @@ node {
 }
 
 # Makes sure there are no more detections than the provided num_faces.
-node {
-  calculator: "ClipDetectionVectorSizeCalculator"
-  input_stream: "all_face_detections"
-  output_stream: "face_detections"
-  input_side_packet: "num_faces"
-}
+#node {
+#  calculator: "ClipDetectionVectorSizeCalculator"
+#  input_stream: "all_face_detections"
+#  output_stream: "face_detections"
+#  input_side_packet: "num_faces"
+#}
 
 # Calculate size of the image.
 node {
@@ -116,7 +116,7 @@ node {
 # been processed.
 node {
   calculator: "BeginLoopDetectionCalculator"
-  input_stream: "ITERABLE:face_detections"
+  input_stream: "ITERABLE:all_face_detections"
   input_stream: "CLONE:image_size" # gated_image_size
   output_stream: "ITEM:face_detection"
   output_stream: "CLONE:detections_loop_image_size"
