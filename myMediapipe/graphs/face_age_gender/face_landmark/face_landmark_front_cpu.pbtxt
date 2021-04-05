@@ -137,6 +137,11 @@ node {
   output_stream: "ROI:face_rect_from_detection"
 }
 
+node {
+  calculator: "RectDebuggerCalculator"
+  input_stream: "NORM_RECT:face_rect_from_detection"
+}
+
 # Collects a NormalizedRect for each face into a vector. Upon receiving the
 # BATCH_END timestamp, outputs the vector of NormalizedRect at the BATCH_END
 # timestamp.

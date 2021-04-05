@@ -33,3 +33,29 @@ cc_library(
     ],
     alwayslink = 1,
 )
+
+cc_library(
+    name = "rect_debugger_calculator",
+    srcs = ["rect_debugger_calculator.cc"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//mediapipe/framework:calculator_framework",
+        "//mediapipe/framework:calculator_options_cc_proto",
+        "//mediapipe/framework/port:ret_check",
+        "@com_google_absl//absl/memory",
+    ],
+    alwayslink = 1,
+)
+
+cc_library(
+    name = "common_debugger_calculator",
+    srcs = ["common_debugger_calculator.cc"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//mediapipe/framework:calculator_framework",
+        "//mediapipe/framework:calculator_options_cc_proto",
+        "//mediapipe/framework/port:ret_check",
+        "@com_google_absl//absl/memory",
+    ],
+    alwayslink = 1,
+)
