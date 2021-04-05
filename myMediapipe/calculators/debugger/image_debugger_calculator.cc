@@ -34,7 +34,7 @@ REGISTER_CALCULATOR(ImageDebuggerCalculator);
 
 ::mediapipe::Status ImageDebuggerCalculator::Process(CalculatorContext* cc) {
   // RET_CHECK(!cc->Inputs().Tag(kDetectionsTag).IsEmpty());
-  const auto& input_img = cc->Inputs().Tag(kImageTag).Get<ImageFrame>();
+  const auto& input_img = cc->Inputs().Tag(kImageFrameTag).Get<ImageFrame>();
   // cv::Mat input_mat = formats::MatView(&input_img);
 
   // RectSpec specs = GetCropSpecs(cc, input_img.Width(), input_img.Height());
