@@ -43,27 +43,27 @@ REGISTER_CALCULATOR(RectDebuggerCalculator);
     // Only use the rect if it is valid.
     // if (rect.width() > 0 && rect.height() > 0 && rect.x_center() >= 0 &&
     //     rect.y_center() >= 0) {
-      x_center = rect.x_center();
-      y_center = rect.y_center();
-      crop_width = rect.width();
-      crop_height = rect.height();
-      rotation = rect.rotation();
+    int x_center = rect.x_center();
+    int y_center = rect.y_center();
+    int crop_width = rect.width();
+    int crop_height = rect.height();
+    float rotation = rect.rotation();
     // }
     std::cout << "rect (x_center, y_center, crop_width, crop_height, rotation): " 
               << x_center << "," 
               << y_center << ","
               << crop_width << ","
-              << crop_heigt << ","
+              << crop_height << ","
               << rotation << std::endl;
   } else if (cc->Inputs().HasTag(kNormRectTag)) {
     const auto& norm_rect =
         cc->Inputs().Tag(kNormRectTag).Get<NormalizedRect>();
     // if (norm_rect.width() > 0.0 && norm_rect.height() > 0.0) {
-      normalized_width = norm_rect.width();
-      normalized_height = norm_rect.height();
-      x_center = std::round(norm_rect.x_center() * src_width);
-      y_center = std::round(norm_rect.y_center() * src_height);
-      rotation = norm_rect.rotation();
+    float normalized_width = norm_rect.width();
+    float normalized_height = norm_rect.height();
+    float x_center = norm_rect.x_center();
+    float y_center = norm_rect.y_center();
+    float rotation = norm_rect.rotation();
     // }
     std::cout << "norm_rect (x_center, y_center, norm_width, norm_height, rotation): " 
               << x_center << "," 
