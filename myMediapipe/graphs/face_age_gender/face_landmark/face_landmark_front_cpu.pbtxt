@@ -191,6 +191,11 @@ node {
   output_stream: "BATCH_END:landmarks_loop_end_timestamp"
 }
 
+node { 
+  calculator: "ImageDebuggerCalculator"
+  input_stream: "IMAGE:landmarks_loop_image"
+}
+
 # Detects face landmarks within specified region of interest of the image.
 node {
   calculator: "FaceAgeGenderCpu"

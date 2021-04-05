@@ -49,6 +49,22 @@ cc_library(
 )
 
 cc_library(
+    name = "image_debugger_calculator",
+    srcs = ["image_debugger_calculator.cc"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//mediapipe/framework:calculator_framework",
+        "//mediapipe/framework:calculator_options_cc_proto",
+        "//mediapipe/framework/formats:image_format_cc_proto",
+        "//mediapipe/framework/formats:image_frame",
+        "//mediapipe/framework/formats:image_frame_opencv",
+        "//mediapipe/framework/port:ret_check",
+        "@com_google_absl//absl/memory",
+    ],
+    alwayslink = 1,
+)
+
+cc_library(
     name = "common_debugger_calculator",
     srcs = ["common_debugger_calculator.cc"],
     visibility = ["//visibility:public"],

@@ -95,5 +95,6 @@ mediapipe_simple_subgraph(
         "//myMediapipe/graphs/face_age_gender/face_detection:face_detection_front_cpu",
         "//myMediapipe/calculators/debugger:detection_debugger_calculator",
         "//myMediapipe/calculators/debugger:rect_debugger_calculator",
+        "//myMediapipe/calculators/debugger:image_debugger_calculator",
     ],
 )
