@@ -38,7 +38,7 @@ REGISTER_CALCULATOR(ImageDebuggerCalculator);
   // cv::Mat input_mat = formats::MatView(&input_img);
 
   // RectSpec specs = GetCropSpecs(cc, input_img.Width(), input_img.Height());
-  std:cout << "image size: w=" << input_img.Width() << ", h=" << input_img.Height() << std:endl; 
+  std::cout << "image size: w=" << input_img.Width() << ", h=" << input_img.Height() << std::endl; 
 
   // std::vector<Detection> detections;
   // detections = cc->Inputs().Tag(kDetectionsTag).Get<std::vector<Detection>>();
