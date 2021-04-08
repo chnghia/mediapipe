@@ -98,5 +98,6 @@ mediapipe_simple_subgraph(
         "//myMediapipe/calculators/debugger:detection_debugger_calculator",
         "//myMediapipe/calculators/debugger:rect_debugger_calculator",
         "//myMediapipe/calculators/debugger:image_debugger_calculator",
+        "//myMediapipe/calculators/debugger:age_gender_debugger_calculator",
     ],
 )

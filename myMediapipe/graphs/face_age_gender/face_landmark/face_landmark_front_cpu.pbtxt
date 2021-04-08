@@ -223,6 +223,11 @@ node {
   output_stream: "ITERABLE:multi_face_agegenders"
 }
 
+node {
+  calculator: "AgeGenderDebuggerCalculator"
+  input_stream: "AGEGENDERS:multi_face_agegenders"
+}
+
 # Collects a NormalizedRect for each face into a vector. Upon receiving the
 # BATCH_END timestamp, outputs the vector of NormalizedRect at the BATCH_END
 # timestamp.

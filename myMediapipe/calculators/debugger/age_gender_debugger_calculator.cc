@@ -25,6 +25,10 @@ REGISTER_CALCULATOR(AgeGenderDebuggerCalculator);
     cc->Inputs().Tag(kAgeGenderTag).Set<AgeGender>();
   }
 
+  if (cc->Inputs().HasTag(kAgeGendersTag)) {
+    cc->Inputs().Tag(kAgeGendersTag).Set<std::vector<AgeGender>>();
+  }
+
   return ::mediapipe::OkStatus();
 }
 
@@ -36,16 +40,22 @@ REGISTER_CALCULATOR(AgeGenderDebuggerCalculator);
 }
 
 ::mediapipe::Status AgeGenderDebuggerCalculator::Process(CalculatorContext* cc) {
-  RET_CHECK(!cc->Inputs().Tag(kAgeGenderTag).IsEmpty());
+  // RET_CHECK(!cc->Inputs().Tag(kAgeGenderTag).IsEmpty());
 
-  const auto& input_agegender =
-        cc->Inputs().Tag(kAgeGenderTag).Get<AgeGender>();
+  if (cc->Inputs().HasTag(kAgeGenderTag)) {
+    const auto& input_agegender =
+          cc->Inputs().Tag(kAgeGenderTag).Get<AgeGender>();
 
-  std::cout << "gender: " << input_agegender.gender() << std::endl;
-  std::cout << "age: " << input_agegender.age() << std::endl;
-  // std::vector<Detection> detections;
-  // detections = cc->Inputs().Tag(kDetectionsTag).Get<std::vector<Detection>>();
-  // std::cout << "detections size: " << detections.size() << std::endl;
+    std::cout << "gender: " << input_agegender.gender() << std::endl;
+    std::cout << "age: " << input_agegender.age() << std::endl;
+  }
+
+  if (cc->Inputs().HasTag(kAgeGendersTag)) {
+    const auto& input_agegenders =
+        cc->Inputs().Tag(kAgeGendersTag).Get<std::vector<AgeGender>>();
+    std::cout << "agegenders size: " << input_agegenders.size() << std::endl;
+  }
+  
 
   // debug here
 

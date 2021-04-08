@@ -129,10 +129,10 @@ node {
   }
 }
 
-node {
-  calculator: "AgeGenderDebuggerCalculator"
-  input_stream: "AGEGENDER:agegender"
-}
+# node {
+#   calculator: "AgeGenderDebuggerCalculator"
+#   input_stream: "AGEGENDER:agegender"
+# }
 
 # Projects the landmarks from the cropped face image to the corresponding
 # locations on the full image before cropping (input to the graph).
