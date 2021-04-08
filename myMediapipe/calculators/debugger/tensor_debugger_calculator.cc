@@ -1,5 +1,8 @@
+#include <vector>
 #include "mediapipe/framework/calculator_framework.h"
 #include "mediapipe/framework/port/ret_check.h"
+
+#include "mediapipe/framework/formats/tensor.h"
 
 namespace mediapipe {
 
@@ -19,8 +22,8 @@ REGISTER_CALCULATOR(TensorDebuggerCalculator);
 
 ::mediapipe::Status TensorDebuggerCalculator::GetContract(CalculatorContract* cc) {
   
-  RET_CHECK(cc->Outputs().HasTag(kTensorsTag));
-  cc->Outputs().Tag(kTensorsTag).Set<std::vector<Tensor>>();
+  RET_CHECK(cc->Inputs().HasTag(kTensorsTag));
+  cc->Inputs().Tag(kTensorsTag).Set<std::vector<Tensor>>();
   return ::mediapipe::OkStatus();
 }
 

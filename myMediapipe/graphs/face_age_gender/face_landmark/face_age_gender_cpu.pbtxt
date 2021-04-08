@@ -61,7 +61,7 @@ node {
   options: {
     [mediapipe.InferenceCalculatorOptions.ext] {
       model_path: "myMediapipe/models/age_gender_mnv2_224.tflite"
-      # delegate { xnnpack {} }
+      delegate { xnnpack {} }
     }
   }
 }
