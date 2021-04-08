@@ -94,10 +94,10 @@ class TensorsToAgeGenderCalculator : public Node {
   //     "FLIP_HORIZONTALLY"};
   // static constexpr Input<bool>::SideFallback::Optional kFlipVertically{
   //     "FLIP_VERTICALLY"};
-  static constexpr Output<AgeGenderList>::Optional kOutAgeGenderList{"AGEGENDERS"};
-  static constexpr Output<NormalizedAgeGenderList>::Optional
-      kOutNormalizedAgeGenderList{"NORM_AGEGENDERS"};
-  MEDIAPIPE_NODE_CONTRACT(kInTensors, kOutAgeGenderList, kOutNormalizedAgeGenderList);
+  static constexpr Output<AgeGender>::Optional kOutAgeGender{"AGEGENDER"};
+  static constexpr Output<NormalizedAgeGender>::Optional
+      kOutNormalizedAgeGenderList{"NORM_AGEGENDER"};
+  MEDIAPIPE_NODE_CONTRACT(kInTensors, kOutAgeGender, kOutNormalizedAgeGender);
 
   mediapipe::Status Open(CalculatorContext* cc) override;
   mediapipe::Status Process(CalculatorContext* cc) override;
@@ -138,11 +138,11 @@ mediapipe::Status TensorsToAgeGenderCalculator::Process(CalculatorContext* cc) {
   // bool flip_vertically = kFlipVertically(cc).GetOr(options_.flip_vertically());
 
   const auto& input_tensors = *kInTensors(cc);
-  std::cout << "input_tensors size: " << input_tensors.size() << "\n";
+  // std::cout << "input_tensors size: " << input_tensors.size() << "\n";
   // std::cout << "input_tensors age: " << input_tensors[0];
   int num_classes1 = input_tensors[0].shape().num_elements();
   int num_classes2 = input_tensors[1].shape().num_elements();
-  std::cout << "input_tensors age: " << num_classes1  << std::endl;
+  // std::cout << "input_tensors age: " << num_classes1  << std::endl;
   auto a_view = input_tensors[0].GetCpuReadView();
   auto a_raw_scores = a_view.buffer<float>();
   std::vector<float> a_scores {a_raw_scores, a_raw_scores+num_classes1};
@@ -152,78 +152,28 @@ mediapipe::Status TensorsToAgeGenderCalculator::Process(CalculatorContext* cc) {
   double result = 0;
   result = std::inner_product(a_scores.begin(), a_scores.end(), matrix_a.begin(), 0.0);
 
-  std::cout << "age score: " << result << std::endl;
+  // std::cout << "age score: " << result << std::endl;
 
-  std::cout << "input_tensors gender: " << num_classes2  << std::endl;
+  // std::cout << "input_tensors gender: " << num_classes2  << std::endl;
     
   auto view = input_tensors[1].GetCpuReadView();
   auto raw_scores = view.buffer<float>();
-  std::cout << "gender score: " << raw_scores[0] << "," << raw_scores[1] << std::endl;
+  // std::cout << "gender score: " << raw_scores[0] << "," << raw_scores[1] << std::endl;
     
-
   int num_values = input_tensors[0].shape().num_elements();
-  // const int num_dimensions = num_values / num_landmarks_;
-  // CHECK_GT(num_dimensions, 0);
 
-  // auto view = input_tensors[0].GetCpuReadView();
-  // auto raw_landmarks = view.buffer<float>();
+  auto output_object = absl::make_unique<AgeGender>();
 
-  AgeGenderList output_agegenders;
+  output_object->set_age(result);
+  if (raw_scores[0] > 0.5) {
+    output_object->set_gender(0)
+  } else {
+    output_object->set_gender(1)
+  }
 
-  // for (int ld = 0; ld < num_landmarks_; ++ld) {
-  //   const int offset = ld * num_dimensions;
-  //   Landmark* landmark = output_landmarks.add_landmark();
-
-  //   if (flip_horizontally) {
-  //     landmark->set_x(options_.input_image_width() - raw_landmarks[offset]);
-  //   } else {
-  //     landmark->set_x(raw_landmarks[offset]);
-  //   }
-  //   if (num_dimensions > 1) {
-  //     if (flip_vertically) {
-  //       landmark->set_y(options_.input_image_height() -
-  //                       raw_landmarks[offset + 1]);
-  //     } else {
-  //       landmark->set_y(raw_landmarks[offset + 1]);
-  //     }
-  //   }
-  //   if (num_dimensions > 2) {
-  //     landmark->set_z(raw_landmarks[offset + 2]);
-  //   }
-  //   if (num_dimensions > 3) {
-  //     landmark->set_visibility(ApplyActivation(options_.visibility_activation(),
-  //                                              raw_landmarks[offset + 3]));
-  //   }
-  //   if (num_dimensions > 4) {
-  //     landmark->set_presence(ApplyActivation(options_.presence_activation(),
-  //                                            raw_landmarks[offset + 4]));
-  //   }
-  // }
-
-  // Output normalized landmarks if required.
-  // if (kOutNormalizedLandmarkList(cc).IsConnected()) {
-  //   NormalizedLandmarkList output_norm_landmarks;
-  //   for (int i = 0; i < output_landmarks.landmark_size(); ++i) {
-  //     const Landmark& landmark = output_landmarks.landmark(i);
-  //     NormalizedLandmark* norm_landmark = output_norm_landmarks.add_landmark();
-  //     norm_landmark->set_x(landmark.x() / options_.input_image_width());
-  //     norm_landmark->set_y(landmark.y() / options_.input_image_height());
-  //     // Scale Z coordinate as X + allow additional uniform normalization.
-  //     norm_landmark->set_z(landmark.z() / options_.input_image_width() /
-  //                          options_.normalize_z());
-  //     if (landmark.has_visibility()) {  // Set only if supported in the model.
-  //       norm_landmark->set_visibility(landmark.visibility());
-  //     }
-  //     if (landmark.has_presence()) {  // Set only if supported in the model.
-  //       norm_landmark->set_presence(landmark.presence());
-  //     }
-  //   }
-  //   kOutNormalizedLandmarkList(cc).Send(std::move(output_norm_landmarks));
-  // }
-
-  // Output absolute age genders.
-  if (kOutAgeGenderList(cc).IsConnected()) {
-    kOutAgeGenderList(cc).Send(std::move(output_agegenders));
+  // Output absolute age gender.
+  if (kOutAgeGender(cc).IsConnected()) {
+    kOutAgeGender(cc).Send(std::move(output_object));
   }
 
   return mediapipe::OkStatus();

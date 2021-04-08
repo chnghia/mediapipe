@@ -24,7 +24,7 @@ option java_outer_classname = "AgeGenderProto";
 // matrix_data.proto.
 message AgeGender {
   optional float age = 1;
-  optional float gender = 2;
+  optional int32 gender = 2;
 }
 
 // Group of Landmark protos.
@@ -36,7 +36,7 @@ message AgeGenderList {
 // [0, 1].
 message NormalizedAgeGender {
   optional float age = 1;
-  optional float gender = 2;
+  optional int32 gender = 2;
 }
 
 // Group of NormalizedLandmark protos.

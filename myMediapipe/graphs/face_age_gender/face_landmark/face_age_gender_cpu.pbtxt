@@ -26,7 +26,7 @@ input_stream: "ROI:roi"
 # timestamp there will not be an output packet in the LANDMARKS stream. However,
 # the MediaPipe framework will internally inform the downstream calculators of
 # the absence of this packet so that they don't wait for it unnecessarily.
-output_stream: "AGEGENDERS:agegenders"
+output_stream: "AGEGENDER:agegender"
 
 # Transforms the input image into a 192x192 tensor.
 node: {
@@ -119,7 +119,7 @@ node {
 node {
   calculator: "TensorsToAgeGenderCalculator"
   input_stream: "TENSORS:output_tensors"
-  output_stream: "AGEGENDERS:agegenders"
+  output_stream: "AGEGENDER:agegender"
   options: {
     [mediapipe.TensorsToAgeGenderCalculatorOptions.ext] {
       num_landmarks: 468
@@ -127,6 +127,11 @@ node {
       input_image_height: 192
     }
   }
+}
+
+node {
+  calculator: "AgeGenderDebuggerCalculator"
+  output_stream: "AGEGENDER:agegender"
 }
 
 # Projects the landmarks from the cropped face image to the corresponding

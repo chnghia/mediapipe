@@ -201,7 +201,7 @@ node {
   calculator: "FaceAgeGenderCpu"
   input_stream: "IMAGE:landmarks_loop_image"
   input_stream: "ROI:face_rect"
-  output_stream: "AGEGENDERS:agegenders"
+  output_stream: "AGEGENDER:agegender"
 }
 
 # # Calculates region of interest based on face landmarks, so that can be reused
@@ -218,7 +218,7 @@ node {
 # timestamp.
 node {
   calculator: "EndLoopAgeGendersCalculator"
-  input_stream: "ITEM:agegenders"
+  input_stream: "ITEM:agegender"
   input_stream: "BATCH_END:landmarks_loop_end_timestamp"
   output_stream: "ITERABLE:multi_face_agegenders"
 }

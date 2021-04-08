@@ -72,6 +72,7 @@ mediapipe_simple_subgraph(
         "//mediapipe/calculators/util:landmark_projection_calculator",
         "//mediapipe/calculators/util:thresholding_calculator",
         "//myMediapipe/calculators/debugger:tensor_debugger_calculator",
+        "//myMediapipe/calculators/debugger:age_gender_debugger_calculator",
     ],
 )
 

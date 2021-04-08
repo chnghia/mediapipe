@@ -65,19 +65,6 @@ cc_library(
 )
 
 cc_library(
-    name = "common_debugger_calculator",
-    srcs = ["common_debugger_calculator.cc"],
-    visibility = ["//visibility:public"],
-    deps = [
-        "//mediapipe/framework:calculator_framework",
-        "//mediapipe/framework:calculator_options_cc_proto",
-        "//mediapipe/framework/port:ret_check",
-        "@com_google_absl//absl/memory",
-    ],
-    alwayslink = 1,
-)
-
-cc_library(
     name = "tensor_debugger_calculator",
     srcs = ["tensor_debugger_calculator.cc"],
     visibility = ["//visibility:public"],
@@ -86,6 +73,33 @@ cc_library(
         "//mediapipe/framework:calculator_options_cc_proto",
         "//mediapipe/framework/port:ret_check",
         "//mediapipe/framework/formats:tensor",
+        "@com_google_absl//absl/memory",
+    ],
+    alwayslink = 1,
+)
+
+cc_library(
+    name = "age_gender_debugger_calculator",
+    srcs = ["age_gender_debugger_calculator.cc"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//mediapipe/framework:calculator_framework",
+        "//mediapipe/framework:calculator_options_cc_proto",
+        "//myMediapipe/framework/formats:age_gender_cc_proto",
+        "//mediapipe/framework/port:ret_check",
+        "@com_google_absl//absl/memory",
+    ],
+    alwayslink = 1,
+)
+
+cc_library(
+    name = "common_debugger_calculator",
+    srcs = ["common_debugger_calculator.cc"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//mediapipe/framework:calculator_framework",
+        "//mediapipe/framework:calculator_options_cc_proto",
+        "//mediapipe/framework/port:ret_check",
         "@com_google_absl//absl/memory",
     ],
     alwayslink = 1,
