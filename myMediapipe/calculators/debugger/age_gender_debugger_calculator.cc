@@ -54,6 +54,10 @@ REGISTER_CALCULATOR(AgeGenderDebuggerCalculator);
     const auto& input_agegenders =
         cc->Inputs().Tag(kAgeGendersTag).Get<std::vector<AgeGender>>();
     std::cout << "agegenders size: " << input_agegenders.size() << std::endl;
+    for (const auto& input_agegender : input_agegenders) {
+      std::cout << "(" << input_agegender.age() << "," << input_agegender.gender() << "), ";
+    }
+    std::cout << std::endl;
   }
   
 

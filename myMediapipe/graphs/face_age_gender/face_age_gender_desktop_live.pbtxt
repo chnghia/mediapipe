@@ -56,7 +56,7 @@ node {
 node {
   calculator: "FaceRendererCpu"
   input_stream: "IMAGE:throttled_input_video"
-  # input_stream: "LANDMARKS:multi_face_landmarks"
+  input_stream: "AGEGENDERS:multi_face_agegenders"
   #input_stream: "NORM_RECTS:face_rects_from_landmarks"
   input_stream: "DETECTIONS:face_detections"
   output_stream: "IMAGE:output_video"

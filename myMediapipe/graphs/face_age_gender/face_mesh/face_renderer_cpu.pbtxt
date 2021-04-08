@@ -6,7 +6,7 @@ type: "FaceRendererCpu"
 input_stream: "IMAGE:input_image"
 # Collection of detected/predicted faces, each represented as a list of
 # landmarks. (std::vector<NormalizedLandmarkList>)
-# input_stream: "LANDMARKS:multi_face_landmarks"
+input_stream: "AGEGENDERS:multi_face_agegenders"
 # Regions of interest calculated based on palm detections.
 # (std::vector<NormalizedRect>)
 input_stream: "NORM_RECTS:rects"
