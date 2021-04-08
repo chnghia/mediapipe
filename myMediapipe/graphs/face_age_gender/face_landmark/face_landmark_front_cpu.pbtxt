@@ -94,9 +94,9 @@ node {
   output_stream: "DETECTIONS:all_face_detections"
 }
 
-node {
-  calculator: "DetectionDebuggerCalculator"
-  input_stream: "DETECTIONS:all_face_detections"
+# node {
+#   calculator: "DetectionDebuggerCalculator"
+#   input_stream: "DETECTIONS:all_face_detections"
 }
 
 # Makes sure there are no more detections than the provided num_faces.
@@ -137,10 +137,10 @@ node {
   output_stream: "ROI:face_rect_from_detection"
 }
 
-node {
-  calculator: "RectDebuggerCalculator"
-  input_stream: "NORM_RECT:face_rect_from_detection"
-}
+# node {
+#   calculator: "RectDebuggerCalculator"
+#   input_stream: "NORM_RECT:face_rect_from_detection"
+# }
 
 # Collects a NormalizedRect for each face into a vector. Upon receiving the
 # BATCH_END timestamp, outputs the vector of NormalizedRect at the BATCH_END
@@ -191,10 +191,10 @@ node {
   output_stream: "BATCH_END:landmarks_loop_end_timestamp"
 }
 
-node { 
-  calculator: "ImageDebuggerCalculator"
-  input_stream: "IMAGE:landmarks_loop_image"
-}
+# node { 
+#   calculator: "ImageDebuggerCalculator"
+#   input_stream: "IMAGE:landmarks_loop_image"
+# }
 
 # Detects face landmarks within specified region of interest of the image.
 node {
