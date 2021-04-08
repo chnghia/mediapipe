@@ -142,7 +142,7 @@ mediapipe::Status TensorsToAgeGenderCalculator::Process(CalculatorContext* cc) {
   // std::cout << "input_tensors age: " << input_tensors[0];
   int num_classes1 = input_tensors[0].shape().num_elements();
   int num_classes2 = input_tensors[1].shape().num_elements();
-  std::cout << "input_tensors age: " << num_classes1  << "\n";
+  std::cout << "input_tensors age: " << num_classes1  << std::endl;
   auto a_view = input_tensors[0].GetCpuReadView();
   auto a_raw_scores = a_view.buffer<float>();
   std::vector<float> a_scores {a_raw_scores, a_raw_scores+num_classes1};
@@ -152,13 +152,13 @@ mediapipe::Status TensorsToAgeGenderCalculator::Process(CalculatorContext* cc) {
   double result = 0;
   result = std::inner_product(a_scores.begin(), a_scores.end(), matrix_a.begin(), 0.0);
 
-  std::cout << "age score: " << result << "\n";
+  std::cout << "age score: " << result << std::endl;
 
-  std::cout << "input_tensors gender: " << num_classes2  << "\n";
+  std::cout << "input_tensors gender: " << num_classes2  << std::endl;
     
   auto view = input_tensors[1].GetCpuReadView();
   auto raw_scores = view.buffer<float>();
-  std::cout << "gender score: " << raw_scores[0] << "," << raw_scores[1] << "\n";
+  std::cout << "gender score: " << raw_scores[0] << "," << raw_scores[1] << std::endl;
     
 
   int num_values = input_tensors[0].shape().num_elements();

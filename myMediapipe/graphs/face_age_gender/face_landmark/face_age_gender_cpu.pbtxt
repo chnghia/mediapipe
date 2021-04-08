@@ -46,6 +46,11 @@ node: {
   }
 }
 
+node { 
+  calculator: "TensorDebuggerCalculator"
+  input_stream: "TENSORS:input_tensors"
+}
+
 # Runs a TensorFlow Lite model on CPU that takes an image tensor and outputs a
 # vector of tensors representing, for instance, detection boxes/keypoints and
 # scores.
@@ -55,7 +60,7 @@ node {
   output_stream: "TENSORS:output_tensors"
   options: {
     [mediapipe.InferenceCalculatorOptions.ext] {
-      model_path: "myMediapipe/models/age_gender.tflite"
+      model_path: "myMediapipe/models/age_gender_mnv2_224.tflite"
       # delegate { xnnpack {} }
     }
   }
