@@ -96,7 +96,7 @@ class TensorsToAgeGenderCalculator : public Node {
   //     "FLIP_VERTICALLY"};
   static constexpr Output<AgeGender>::Optional kOutAgeGender{"AGEGENDER"};
   static constexpr Output<NormalizedAgeGender>::Optional
-      kOutNormalizedAgeGenderList{"NORM_AGEGENDER"};
+      kOutNormalizedAgeGender{"NORM_AGEGENDER"};
   MEDIAPIPE_NODE_CONTRACT(kInTensors, kOutAgeGender, kOutNormalizedAgeGender);
 
   mediapipe::Status Open(CalculatorContext* cc) override;
@@ -166,9 +166,9 @@ mediapipe::Status TensorsToAgeGenderCalculator::Process(CalculatorContext* cc) {
 
   output_object->set_age(result);
   if (raw_scores[0] > 0.5) {
-    output_object->set_gender(0)
+    output_object->set_gender(0);
   } else {
-    output_object->set_gender(1)
+    output_object->set_gender(1);
   }
 
   // Output absolute age gender.

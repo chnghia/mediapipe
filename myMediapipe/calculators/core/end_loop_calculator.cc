@@ -23,7 +23,7 @@
 namespace mediapipe {
 
 // testing detection loop
-typedef EndLoopCalculator<std::vector<AgeGenderList>> EndLoopAgeGendersCalculator;
+typedef EndLoopCalculator<std::vector<AgeGender>> EndLoopAgeGendersCalculator;
 REGISTER_CALCULATOR(EndLoopAgeGendersCalculator);
 
 }  // namespace mediapipe

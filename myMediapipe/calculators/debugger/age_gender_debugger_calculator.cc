@@ -1,5 +1,6 @@
 #include "mediapipe/framework/calculator_framework.h"
 #include "mediapipe/framework/port/ret_check.h"
+#include "myMediapipe/framework/formats/age_gender.pb.h"
 
 namespace mediapipe {
 
@@ -40,8 +41,8 @@ REGISTER_CALCULATOR(AgeGenderDebuggerCalculator);
   const auto& input_agegender =
         cc->Inputs().Tag(kAgeGenderTag).Get<AgeGender>();
 
-  std::count << "gender: " << input_agegender->get_gender() << std:endl;
-  std::count << "age: " << input_agegender->get_age() << std:endl;
+  std::cout << "gender: " << input_agegender.gender() << std::endl;
+  std::cout << "age: " << input_agegender.age() << std::endl;
   // std::vector<Detection> detections;
   // detections = cc->Inputs().Tag(kDetectionsTag).Get<std::vector<Detection>>();
   // std::cout << "detections size: " << detections.size() << std::endl;
