@@ -20,7 +20,7 @@
 #include <vector>
 
 #include "absl/strings/str_cat.h"
-#include "mediapipe/calculators/util/labels_to_render_data_calculator.pb.h"
+#include "myMediapipe/calculators/util/age_genders_to_render_data_calculator.pb.h"
 #include "mediapipe/framework/calculator_framework.h"
 #include "myMediapipe/framework/formats/age_gender.pb.h"
 #include "mediapipe/framework/formats/video_stream_header.h"
@@ -75,7 +75,7 @@ REGISTER_CALCULATOR(AgeGendersToRenderDataCalculator);
 mediapipe::Status AgeGendersToRenderDataCalculator::GetContract(
     CalculatorContract* cc) {
   if (cc->Inputs().HasTag("AGEGENDERS")) {
-    cc->Inputs().Tag("AGEGENDERS").Set<AgeGenderList>();
+    cc->Inputs().Tag("AGEGENDERS").Set<std::vector<AgeGender>>();
   }
   if (cc->Inputs().HasTag("VIDEO_PRESTREAM")) {
     cc->Inputs().Tag("VIDEO_PRESTREAM").Set<VideoHeader>();
@@ -108,13 +108,14 @@ mediapipe::Status AgeGendersToRenderDataCalculator::Process(CalculatorContext* c
   std::vector<std::string> labels;
   std::vector<float> scores;
   if (cc->Inputs().HasTag("AGEGENDERS")) {
-    const AgeGenderList& agegenders =
-        cc->Inputs().Tag("AGEGENDERS").Get<AgeGenderList>();
-    labels.resize(agegenders.agegender_size());
-    scores.resize(agegenders.agegender_size());
-    for (int i = 0; i < agegenders.agegender_size(); ++i) {
-      labels[i] = (agegenders.agegender(i).gender() == 1) ? 'M' : 'F';
-      scores[i] = agegenders.agegender(i).age();
+    const auto& agegenders =
+        cc->Inputs().Tag("AGEGENDERS").Get<std::vector<AgeGender>>();
+    std::cout << "agegenders size: " << agegenders.size() << std::endl;
+    labels.resize(agegenders.size());
+    scores.resize(agegenders.size());
+    for (int i = 0; i < agegenders.size(); ++i) {
+      labels[i] = (agegenders[i].gender() == 1) ? 'M' : 'F';
+      scores[i] = agegenders[i].age();
     }
   } else {
     const std::vector<std::string>& label_vector =
@@ -137,6 +138,7 @@ mediapipe::Status AgeGendersToRenderDataCalculator::Process(CalculatorContext* c
 
   RenderData render_data;
   int num_label = std::min((int)labels.size(), options_.max_num_labels());
+  std::cout << "render data: " << num_label << std::endl;
   int label_baseline_px = options_.vertical_offset_px();
   if (options_.location() == AgeGendersToRenderDataCalculatorOptions::TOP_LEFT) {
     label_baseline_px += label_height_px_;
@@ -158,9 +160,9 @@ mediapipe::Status AgeGendersToRenderDataCalculator::Process(CalculatorContext* c
 
     auto* text = label_annotation->mutable_text();
     std::string display_text = labels[i];
-    if (cc->Inputs().HasTag("SCORES")) {
+//     if (cc->Inputs().HasTag("SCORES")) {
       absl::StrAppend(&display_text, ":", scores[i]);
-    }
+//     }
     text->set_display_text(display_text);
     text->set_font_height(options_.font_height_px());
     text->set_left(label_left_px_);

@@ -41,14 +41,14 @@ node {
   input_stream: "AGEGENDERS:multi_face_agegenders"
   output_stream: "RENDER_DATA:agegender_render_data"
   node_options: {
-    [type.googleapis.com/mediapipe.LabelsToRenderDataCalculatorOptions]: {
+    [type.googleapis.com/mediapipe.AgeGendersToRenderDataCalculatorOptions]: {
       color { r: 255 g: 0 b: 0 }
-      thickness: 10.0
+      thickness: 2.0
       font_height_px: 50
       horizontal_offset_px: 30
       vertical_offset_px: 50
 
-      max_num_labels: 1
+      max_num_labels: 10
       location: TOP_LEFT
     }
   }

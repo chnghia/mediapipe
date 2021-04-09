@@ -14,7 +14,7 @@
 
 licenses(["notice"])  # Apache 2.0
 
-package(default_visibility = ["//visibility:private"])
+package(default_visibility = ["//visibility:public"])
 
 exports_files(["LICENSE"])
 
@@ -175,7 +175,7 @@ cc_library(
     alwayslink = 1,
 )
 
-mediapipe_proto_library(
+proto_library(
     name = "age_genders_to_render_data_calculator_proto",
     srcs = ["age_genders_to_render_data_calculator.proto"],
     visibility = ["//visibility:public"],
@@ -187,6 +187,19 @@ mediapipe_proto_library(
     ],
 )
 
+mediapipe_cc_proto_library(
+    name = "age_genders_to_render_data_calculator_cc_proto",
+    srcs = ["age_genders_to_render_data_calculator.proto"],
+    cc_deps = [
+        "//mediapipe/framework:calculator_cc_proto",
+        "//mediapipe/util:color_cc_proto",
+    ],
+    visibility = ["//mediapipe:__subpackages__",
+                  "//myMediapipe:__subpackages__"],
+    deps = [":age_genders_to_render_data_calculator_proto"],
+)
+
+
 cc_library(
     name = "age_genders_to_render_data_calculator",
     srcs = ["age_genders_to_render_data_calculator.cc"],
@@ -195,7 +208,7 @@ cc_library(
         ":age_genders_to_render_data_calculator_cc_proto",
         "//mediapipe/framework:calculator_framework",
         "//mediapipe/framework:calculator_options_cc_proto",
-        "//mediapipe/framework/formats:age_genders_cc_proto",
+        "//myMediapipe/framework/formats:age_gender_cc_proto",
         "//mediapipe/framework/formats:video_stream_header",
         "//mediapipe/framework/port:ret_check",
         "//mediapipe/framework/port:status",
