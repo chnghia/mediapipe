@@ -35,6 +35,26 @@ node {
   }
 }
 
+# Converts classification to drawing primitives for annotation overlay.
+node {
+  calculator: "AgeGendersToRenderDataCalculator"
+  input_stream: "AGEGENDERS:multi_face_agegenders"
+  output_stream: "RENDER_DATA:agegender_render_data"
+  node_options: {
+    [type.googleapis.com/mediapipe.LabelsToRenderDataCalculatorOptions]: {
+      color { r: 255 g: 0 b: 0 }
+      thickness: 10.0
+      font_height_px: 50
+      horizontal_offset_px: 30
+      vertical_offset_px: 50
+
+      max_num_labels: 1
+      location: TOP_LEFT
+    }
+  }
+}
+
+
 # Outputs each element of multi_face_landmarks at a fake timestamp for the rest
 # of the graph to process. At the end of the loop, outputs the BATCH_END
 # timestamp for downstream calculators to inform them that all elements in the
@@ -91,6 +111,6 @@ node {
   input_stream: "IMAGE:input_image"
   input_stream: "detections_render_data"
   # input_stream: "VECTOR:0:multi_face_landmarks_render_data"
-  #input_stream: "rects_render_data"
+  input_stream: "agegender_render_data"
   output_stream: "IMAGE:output_image"
 }

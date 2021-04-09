@@ -30,6 +30,7 @@ cc_library(
         "//mediapipe/calculators/util:landmarks_to_render_data_calculator",
         "//mediapipe/calculators/util:rect_to_render_data_calculator",
         "//mediapipe/graphs/face_mesh/calculators:face_landmarks_to_render_data_calculator",
+        "//myMediapipe/calculators/util:age_genders_to_render_data_calculator",
     ],
 )
 

@@ -22,7 +22,7 @@
 #include "absl/strings/str_cat.h"
 #include "mediapipe/calculators/util/labels_to_render_data_calculator.pb.h"
 #include "mediapipe/framework/calculator_framework.h"
-#include "mediapipe/framework/formats/classification.pb.h"
+#include "myMediapipe/framework/formats/age_gender.pb.h"
 #include "mediapipe/framework/formats/video_stream_header.h"
 #include "mediapipe/framework/port/ret_check.h"
 #include "mediapipe/framework/port/status.h"
@@ -107,14 +107,14 @@ mediapipe::Status AgeGendersToRenderDataCalculator::Process(CalculatorContext* c
 
   std::vector<std::string> labels;
   std::vector<float> scores;
-  if (cc->Inputs().HasTag("CLASSIFICATIONS")) {
+  if (cc->Inputs().HasTag("AGEGENDERS")) {
     const AgeGenderList& agegenders =
-        cc->Inputs().Tag("CLASSIFICATIONS").Get<AgeGenderList>();
-    labels.resize(classifications.classification_size());
-    scores.resize(classifications.classification_size());
-    for (int i = 0; i < classifications.classification_size(); ++i) {
-      labels[i] = classifications.classification(i).label();
-      scores[i] = classifications.classification(i).score();
+        cc->Inputs().Tag("AGEGENDERS").Get<AgeGenderList>();
+    labels.resize(agegenders.agegender_size());
+    scores.resize(agegenders.agegender_size());
+    for (int i = 0; i < agegenders.agegender_size(); ++i) {
+      labels[i] = (agegenders.agegender(i).gender() == 1) ? 'M' : 'F';
+      scores[i] = agegenders.agegender(i).age();
     }
   } else {
     const std::vector<std::string>& label_vector =

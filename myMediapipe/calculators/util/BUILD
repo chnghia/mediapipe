@@ -174,3 +174,35 @@ cc_library(
     ],
     alwayslink = 1,
 )
+
+mediapipe_proto_library(
+    name = "age_genders_to_render_data_calculator_proto",
+    srcs = ["age_genders_to_render_data_calculator.proto"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//mediapipe/framework:calculator_options_proto",
+        "//mediapipe/framework:calculator_proto",
+        "//mediapipe/util:color_proto",
+        "//mediapipe/util:render_data_proto",
+    ],
+)
+
+cc_library(
+    name = "age_genders_to_render_data_calculator",
+    srcs = ["age_genders_to_render_data_calculator.cc"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":age_genders_to_render_data_calculator_cc_proto",
+        "//mediapipe/framework:calculator_framework",
+        "//mediapipe/framework:calculator_options_cc_proto",
+        "//mediapipe/framework/formats:age_genders_cc_proto",
+        "//mediapipe/framework/formats:video_stream_header",
+        "//mediapipe/framework/port:ret_check",
+        "//mediapipe/framework/port:status",
+        "//mediapipe/framework/port:statusor",
+        "//mediapipe/util:color_cc_proto",
+        "//mediapipe/util:render_data_cc_proto",
+        "@com_google_absl//absl/strings",
+    ],
+    alwayslink = 1,
+)
