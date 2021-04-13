@@ -77,6 +77,24 @@ mediapipe_simple_subgraph(
 )
 
 mediapipe_simple_subgraph(
+    name = "face_age_gender_gpu",
+    graph = "face_age_gender_gpu.pbtxt",
+    register_as = "FaceAgeGenderGpu",
+    deps = [
+        "//mediapipe/calculators/core:gate_calculator",
+        "//mediapipe/calculators/core:split_vector_calculator",
+        "//mediapipe/calculators/tensor:image_to_tensor_calculator",
+        "//mediapipe/calculators/tensor:inference_calculator",
+#        "//mediapipe/calculators/tensor:tensors_to_floats_calculator",
+        "//myMediapipe/calculators/tensor:tensors_to_age_gender_calculator",
+        "//mediapipe/calculators/util:landmark_projection_calculator",
+        "//mediapipe/calculators/util:thresholding_calculator",
+        "//myMediapipe/calculators/debugger:tensor_debugger_calculator",
+        "//myMediapipe/calculators/debugger:age_gender_debugger_calculator",
+    ],
+)
+
+mediapipe_simple_subgraph(
     name = "face_landmark_front_cpu",
     graph = "face_landmark_front_cpu.pbtxt",
     register_as = "FaceLandmarkFrontCpu",
@@ -95,6 +113,32 @@ mediapipe_simple_subgraph(
         "//mediapipe/calculators/util:association_norm_rect_calculator",
         "//mediapipe/calculators/util:collection_has_min_size_calculator",
         "//myMediapipe/graphs/face_age_gender/face_detection:face_detection_front_cpu",
+        "//myMediapipe/calculators/debugger:detection_debugger_calculator",
+        "//myMediapipe/calculators/debugger:rect_debugger_calculator",
+        "//myMediapipe/calculators/debugger:image_debugger_calculator",
+        "//myMediapipe/calculators/debugger:age_gender_debugger_calculator",
+    ],
+)
+
+mediapipe_simple_subgraph(
+    name = "face_landmark_front_gpu",
+    graph = "face_landmark_front_gpu.pbtxt",
+    register_as = "FaceLandmarkFrontGpu",
+    deps = [
+        ":face_detection_front_detection_to_roi",
+        ":face_age_gender_gpu",
+        ":face_landmark_landmarks_to_roi",
+        "//mediapipe/calculators/core:begin_loop_calculator",
+        "//mediapipe/calculators/core:clip_vector_size_calculator",
+        "//mediapipe/calculators/core:constant_side_packet_calculator",
+        "//mediapipe/calculators/core:end_loop_calculator",
+        "//myMediapipe/calculators/core:end_loop_calculator",
+        "//mediapipe/calculators/core:gate_calculator",
+        "//mediapipe/calculators/core:previous_loopback_calculator",
+        "//mediapipe/calculators/image:image_properties_calculator",
+        "//mediapipe/calculators/util:association_norm_rect_calculator",
+        "//mediapipe/calculators/util:collection_has_min_size_calculator",
+        "//myMediapipe/graphs/face_age_gender/face_detection:face_detection_front_gpu",
         "//myMediapipe/calculators/debugger:detection_debugger_calculator",
         "//myMediapipe/calculators/debugger:rect_debugger_calculator",
         "//myMediapipe/calculators/debugger:image_debugger_calculator",

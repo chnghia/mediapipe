@@ -30,3 +30,13 @@ cc_library(
         "//myMediapipe/graphs/face_age_gender/face_landmark:face_landmark_front_cpu",
     ],
 )
+
+cc_library(
+    name = "desktop_live_gpu_calculators",
+    deps = [
+        "//mediapipe/calculators/core:constant_side_packet_calculator",
+        "//mediapipe/calculators/core:flow_limiter_calculator",
+        "//myMediapipe/graphs/face_age_gender/face_mesh:face_renderer_gpu",
+        "//myMediapipe/graphs/face_age_gender/face_landmark:face_landmark_front_gpu",
+    ],
+)

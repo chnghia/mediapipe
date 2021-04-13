@@ -13,7 +13,7 @@
 #     output_stream: "LANDMARKS:face_landmarks"
 #   }
 
-type: "FaceAgeGenderGpu"
+type: "FaceAgeGenderCpu"
 
 # CPU image. (ImageFrame)
 input_stream: "IMAGE:image"
@@ -31,7 +31,7 @@ output_stream: "AGEGENDER:agegender"
 # Transforms the input image into a 192x192 tensor.
 node: {
   calculator: "ImageToTensorCalculator"
-  input_stream: "IMAGE:image"
+  input_stream: "IMAGE_GPU:image"
   input_stream: "NORM_RECT:roi"
   output_stream: "TENSORS:input_tensors"
   options: {
@@ -123,8 +123,8 @@ node {
   options: {
     [mediapipe.TensorsToAgeGenderCalculatorOptions.ext] {
       num_landmarks: 468
-      input_image_width: 224
-      input_image_height: 224
+      input_image_width: 192
+      input_image_height: 192
     }
   }
 }

@@ -34,3 +34,17 @@ mediapipe_simple_subgraph(
         "//mediapipe/calculators/util:non_max_suppression_calculator",
     ],
 )
+
+mediapipe_simple_subgraph(
+    name = "face_detection_front_gpu",
+    graph = "face_detection_front_gpu.pbtxt",
+    register_as = "FaceDetectionFrontGpu",
+    deps = [
+        "//mediapipe/calculators/tensor:image_to_tensor_calculator",
+        "//mediapipe/calculators/tensor:inference_calculator",
+        "//mediapipe/calculators/tensor:tensors_to_detections_calculator",
+        "//mediapipe/calculators/tflite:ssd_anchors_calculator",
+        "//mediapipe/calculators/util:detection_letterbox_removal_calculator",
+        "//mediapipe/calculators/util:non_max_suppression_calculator",
+    ],
+)
